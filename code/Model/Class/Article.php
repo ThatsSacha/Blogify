@@ -5,9 +5,27 @@ class Article {
     private string $teaser;
     private string $content;
     private string $cover;
-    private int  $authorId;
+    private int $authorId;
     private DateTime $createdAt;
     private DateTime $updatedAt;
+
+    public function __construct(
+        string $title,
+        string $teaser,
+        string $content,
+        string $cover,
+        int $authorId,
+        DateTime $createdAt,
+        DateTime $updatedAt
+    ) {
+        $this->setTitle($title);
+        $this->setTeaser($teaser);
+        $this->setContent($content);
+        $this->setCover($cover);
+        $this->setAuthorId($authorId);
+        $this->setCreatedAt($createdAt);
+        $this->setUpdatedAt($updatedAt);
+    }
 
     public function getTitle(): string {
         return $this->title;
