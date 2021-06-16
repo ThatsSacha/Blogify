@@ -3,11 +3,11 @@
 $url = $_SERVER['REQUEST_URI'];
 
 if ($url === '/') {
-    returnView('send home view');
+    returnView('index');
 }
 
 else if (strpos($url, 'blog')) {
-    returnView('send blog view');
+    returnView('blog');
 }
 
 else {
@@ -15,6 +15,6 @@ else {
 }
 
 function returnView(string $viewName, int $statusCode = 200) {
-    echo $viewName;
+    require '../View/' . $viewName . '.php';
     http_response_code($statusCode);
 }
