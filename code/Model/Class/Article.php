@@ -1,6 +1,7 @@
 <?php
 
 class Article {
+    private int $id;
     private string $title;
     private string $teaser;
     private string $content;
@@ -10,6 +11,7 @@ class Article {
     private DateTime $updatedAt;
 
     public function __construct(
+        int $id,
         string $title,
         string $teaser,
         string $content,
@@ -18,6 +20,7 @@ class Article {
         DateTime $createdAt,
         DateTime $updatedAt
     ) {
+        $this->setId($id);
         $this->setTitle($title);
         $this->setTeaser($teaser);
         $this->setContent($content);
@@ -25,6 +28,14 @@ class Article {
         $this->setAuthorId($authorId);
         $this->setCreatedAt($createdAt);
         $this->setUpdatedAt($updatedAt);
+    }
+
+    public function getId(): int {
+        return $this->id;
+    }
+
+    public function setId(int $id): void {
+        $this->id = $id;
     }
 
     public function getTitle(): string {
