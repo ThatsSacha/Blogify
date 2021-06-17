@@ -6,8 +6,9 @@
         <?php include('assets/inc/header-tags.php') ?>
     </head>
     <body>
+        <?php include('assets/inc/side-bar.php'); ?>
         <main>
-            <?php include('assets/inc/side-bar.php'); ?>
+            <h1>Home</h1>
         </main>
     </body>
 </html>

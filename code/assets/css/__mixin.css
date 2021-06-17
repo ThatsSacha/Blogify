@@ -5,16 +5,29 @@
   font-family: "Rubik";
 }
 
-html body aside {
+html, body, main {
+  height: 100%;
+}
+
+html body aside, html body main {
   background-color: #4b4875;
+}
+html body aside {
   position: fixed;
   width: 30%;
   height: 100%;
+  border-right: 1px solid rgba(165, 165, 165, 0.3);
 }
 html body aside svg {
   width: 100%;
   max-height: 170px;
   height: auto;
+}
+html body main {
+  width: 70%;
+  left: 30%;
+  position: relative;
+  padding: 0 2.5%;
 }
 
 /*# sourceMappingURL=__mixin.css.map */
