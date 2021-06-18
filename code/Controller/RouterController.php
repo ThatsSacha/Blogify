@@ -14,6 +14,13 @@ else {
 }
 
 function returnView(string $viewName, int $statusCode = 200) {
+    $controllerName = __DIR__ . '/' . ucfirst($viewName) . 'Controller.php';
+    $controllerExists = is_file($controllerName);
+
+    if ($controllerExists) {
+        require $controllerName;
+    }
+
     require __DIR__ . '../../View/'. $viewName .'.php';
     http_response_code($statusCode);
 }
