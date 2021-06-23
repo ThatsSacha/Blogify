@@ -9,11 +9,10 @@ class BlogManager {
 
     public function __construct()
     {
-        $db = new DatabaseManager();
-        $this->db = $db->connect();
+        
     }
 
     public function findAll() {
-        var_dump($this->db);
+        var_dump('coucou');
     }
 }
