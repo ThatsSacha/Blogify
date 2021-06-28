@@ -1,4 +1,7 @@
 <?php
+namespace App\Class;
+
+use DateTime;
 
 class Comment {
     private int $id;

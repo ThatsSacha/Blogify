@@ -17,7 +17,7 @@ class RouterController {
             $this->returnView('index');
         }
         
-        else if ($url === '/blog') {
+        else if ($url === '/blog' || strpos($url, 'blog')) {
             $this->returnView('blog', 200, BlogController::class);
         }
         
@@ -31,10 +31,23 @@ class RouterController {
         $controllerExists = is_file($controllerName);
     
         if ($controllerExists) {
-            $test = new $class();
+            $class = new $class($this->url);
         }
-    
-        require __DIR__ . '../../View/'. $viewName .'.php';
+
+        if ($_SERVER['HTTP_ACCEPT'] === 'application/json') {
+            isset($class->loadResult()['status'])
+                && 
+            $class->loadResult()['type'] === 'error' 
+                ?
+            $statusCode = $class->loadResult()['status']
+                : 
+            $statusCode;
+
+            echo json_encode($class->loadResult());
+        } else {
+            require __DIR__ . '../../View/'. $viewName .'.php';
+        }
+
         http_response_code($statusCode);
     }
 }

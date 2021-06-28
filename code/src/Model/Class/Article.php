@@ -1,4 +1,7 @@
 <?php
+namespace App\Model\Class;
+
+use DateTime;
 
 class Article {
     private int $id;
@@ -8,7 +11,7 @@ class Article {
     private string $cover;
     private int $authorId;
     private DateTime $createdAt;
-    private DateTime $updatedAt;
+    private DateTime|null $updatedAt;
 
     public function __construct(
         int $id,
@@ -18,7 +21,7 @@ class Article {
         string $cover,
         int $authorId,
         DateTime $createdAt,
-        DateTime $updatedAt
+        DateTime|null $updatedAt
     ) {
         $this->setId($id);
         $this->setTitle($title);
@@ -28,6 +31,22 @@ class Article {
         $this->setAuthorId($authorId);
         $this->setCreatedAt($createdAt);
         $this->setUpdatedAt($updatedAt);
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array {
+        return array(
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'teaser' => $this->getTeaser(),
+            'content' => $this->getContent(),
+            'cover' => $this->getCover(),
+            'author' => null,
+            'createdAt' => $this->getCreatedAt(),
+            'updatedAt' => $this->getUpdatedAt()
+        );
     }
 
     public function getId(): int {
@@ -86,11 +105,11 @@ class Article {
         $this->createdAt = $createdAt;
     }
 
-    public function getUpdatedAt(): DateTime {
+    public function getUpdatedAt(): DateTime|null {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTime $updatedAt): void {
+    public function setUpdatedAt(DateTime|null $updatedAt): void {
         $this->updatedAt = $updatedAt;
     }
 }
