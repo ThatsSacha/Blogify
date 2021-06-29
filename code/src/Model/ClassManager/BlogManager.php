@@ -5,7 +5,6 @@ namespace App\Model\ClassManager;
 use App\Model\Class\Article;
 use PDO;
 use PDOException;
-use PDOStatement;
 
 class BlogManager {
     private PDO|PDOException $db;
@@ -79,7 +78,6 @@ class BlogManager {
     
             return $article->jsonSerialize();
         }
-        
         
         return array();
     }
