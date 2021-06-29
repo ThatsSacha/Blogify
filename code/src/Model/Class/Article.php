@@ -43,7 +43,7 @@ class Article {
             'teaser' => $this->getTeaser(),
             'content' => $this->getContent(),
             'cover' => $this->getCover(),
-            'author' => null,
+            'author' => $this->getAuthorId(),
             'createdAt' => $this->getCreatedAt(),
             'updatedAt' => $this->getUpdatedAt()
         );
