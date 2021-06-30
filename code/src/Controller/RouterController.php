@@ -20,6 +20,10 @@ class RouterController {
         else if ($url === '/blog' || strpos($url, 'blog')) {
             $this->returnView('blog', 200, BlogController::class);
         }
+
+        else if ($url === '/user') {
+            $this->returnView('user', 200, UserController::class);
+        }
         
         else {
             $this->returnView('error', 404);
@@ -43,7 +47,9 @@ class RouterController {
                 : 
             $statusCode;
 
-            echo json_encode($class->loadResult());
+            if ($class->loadResult() !== null) {
+                echo json_encode($class->loadResult());
+            }
         } else {
             require __DIR__ . '../../View/'. $viewName .'.php';
         }
