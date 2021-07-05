@@ -1,15 +1,15 @@
 <?php
 namespace App\Controller;
-use App\Model\ClassManager\BlogManager;
+use App\Model\ClassManager\ArticleManager;
 
 class BlogController {
-    private BlogManager $blogManager;
+    private ArticleManager $blogManager;
     private string $url;
     private string $method;
     private $result;
 
     public function __construct(string $url) {
-        $this->blogManager = new BlogManager();
+        $this->blogManager = new ArticleManager();
         $this->url = $url;
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->checkRoute();

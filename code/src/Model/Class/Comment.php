@@ -1,9 +1,10 @@
 <?php
 namespace App\Class;
 
+use App\Model\Class\AbstractClass;
 use DateTime;
 
-class Comment {
+class Comment extends AbstractClass {
     private int $id;
     private string $comment;
     private DateTime $createdAt;
@@ -11,20 +12,8 @@ class Comment {
     private int $articleId;
     private bool $isActive;
 
-    public function __construct(
-        int $id,
-        string $comment,
-        DateTime $createdAt,
-        int $userId,
-        int $articleId,
-        bool $isActive
-    ) {
-        $this->setId($id);
-        $this->setComment($comment);
-        $this->setCreatedAt($createdAt);
-        $this->setUserId($userId);
-        $this->setArticleId($articleId);
-        $this->setIsActive($isActive);
+    public function __construct(array $data = []) {
+        parent::__construct($data);
     }
 
     public function getId(): int {

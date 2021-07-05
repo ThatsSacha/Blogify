@@ -2,22 +2,16 @@
 
 namespace App\Class;
 
-class Database {
+use App\Model\Class\AbstractClass;
+
+class Database extends AbstractClass {
     private string $host;
     private string $databaseName;
     private string $user;
     private string $password;
 
-    public function __construct(
-        string $host,
-        string $databaseName,
-        string $user,
-        string $password
-    ) {
-        $this->setHost($host);
-        $this->setDatabaseName($databaseName);
-        $this->setUser($user);
-        $this->setPassword($password);
+    public function __construct(array $data = []) {
+        parent::__construct($data);
     }
 
     public function getHost(): string {

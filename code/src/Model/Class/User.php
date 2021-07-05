@@ -3,7 +3,7 @@ namespace App\Model\Class;
 
 use DateTime;
 
-class User {
+class User extends AbstractClass {
     private int $id;
     private string $firstName;
     private string $lastName;
@@ -13,24 +13,8 @@ class User {
     private array $roles;
     private DateTime $registeredAt;
 
-    public function __construct(
-        int $id,
-        string $firstName,
-        string $lastName,
-        string $mail,
-        string $password,
-        string $pseudo,
-        array $roles = ['ROLE_USER'],
-        DateTime $registeredAt
-    ) {
-        $this->setId($id);
-        $this->setFirstName($firstName);
-        $this->setLastName($lastName);
-        $this->setMail($mail);
-        $this->setPassword($password);
-        $this->setPseudo($pseudo);
-        $this->setRoles($roles);
-        $this->setRegisteredAt($registeredAt);
+    public function __construct(array $data = []) {
+        parent::__construct($data);
     }
 
     /**

@@ -3,7 +3,7 @@ namespace App\Model\Class;
 
 use DateTime;
 
-class Article {
+class Article extends AbstractClass {
     private int $id;
     private string $title;
     private string $teaser;
@@ -13,24 +13,8 @@ class Article {
     private DateTime $createdAt;
     private DateTime|null $updatedAt;
 
-    public function __construct(
-        int $id,
-        string $title,
-        string $teaser,
-        string $content,
-        string $cover,
-        int $authorId,
-        DateTime $createdAt,
-        DateTime|null $updatedAt
-    ) {
-        $this->setId($id);
-        $this->setTitle($title);
-        $this->setTeaser($teaser);
-        $this->setContent($content);
-        $this->setCover($cover);
-        $this->setAuthorId($authorId);
-        $this->setCreatedAt($createdAt);
-        $this->setUpdatedAt($updatedAt);
+    public function __construct(array $data = []) {
+        parent::__construct($data);
     }
 
     /**

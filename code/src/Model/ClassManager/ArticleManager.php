@@ -6,7 +6,7 @@ use App\Model\Class\Article;
 use PDO;
 use PDOException;
 
-class BlogManager {
+class ArticleManager {
     private PDO|PDOException $db;
 
     public function __construct()
@@ -29,16 +29,16 @@ class BlogManager {
         
         if (count($responses) > 0) {
             foreach($responses as $response) {
-                $article = new Article(
-                    $response['id'],
-                    $response['title'],
-                    $response['teaser'],
-                    $response['content'],
-                    $response['cover'],
-                    $response['author_id'],
-                    date_create($response['created_at']),
-                    $response['updated_at'] === null ? null : date_create($response['updated_at'])
-                );
+                $article = new Article(array(
+                    'id' => $response['id'],
+                    'title' => $response['title'],
+                    'teaser' => $response['teaser'],
+                    'content' => $response['content'],
+                    'cover' => $response['cover'],
+                    'authorId' => $response['author_id'],
+                    'createdAt' => date_create($response['created_at']),
+                    'updatedAt' => $response['updated_at'] === null ? null : date_create($response['updated_at'])
+                ));
     
                 array_push($articles, $article->jsonSerialize());
             }
@@ -65,16 +65,16 @@ class BlogManager {
         if (count($response) > 0) {
             $response = $response[0];
 
-            $article = new Article(
-                $response['id'],
-                $response['title'],
-                $response['teaser'],
-                $response['content'],
-                $response['cover'],
-                $response['author_id'],
-                date_create($response['created_at']),
-                $response['updated_at'] === null ? null : date_create($response['updated_at'])
-            );
+            $article = new Article(array(
+                'id' => $response['id'],
+                'title' => $response['title'],
+                'teaser' => $response['teaser'],
+                'content' => $response['content'],
+                'cover' => $response['cover'],
+                'authorId' => $response['author_id'],
+                'createdAt' => date_create($response['created_at']),
+                'updatedAt' => $response['updated_at'] === null ? null : date_create($response['updated_at'])
+            ));
     
             return $article->jsonSerialize();
         }
