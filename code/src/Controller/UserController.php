@@ -64,20 +64,16 @@ class UserController {
 
             $this->result = $keyErrors;
         } else {
-            $mail = $data['mail'];
-            $pseudo = $data['pseudo'];
-            $password = $data['password'];
-
-            if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-                $isPasswordValid = $this->isPasswordValid($password);
+            if (filter_var($data['mail'], FILTER_VALIDATE_EMAIL)) {
+                $isPasswordValid = $this->isPasswordValid($data['password']);
 
                 if ($isPasswordValid['isValid']) {
-                    $password = $this->hashPassword($password);
-                    $isEmailAndPseudoUnique = $this->isEmailAndPseudoUnique($mail, $pseudo);
+                    $data['password'] = $this->hashPassword($data['password']);
+                    $isEmailAndPseudoUnique = $this->isEmailAndPseudoUnique($data['mail'], $data['pseudo']);
                     $this->result = $isEmailAndPseudoUnique;
 
                     if ($isEmailAndPseudoUnique) {
-
+                        $this->userManager->create(new User($data));
                     } else {
                         $this->result = array(
                             'type' => 'error',
@@ -130,10 +126,12 @@ class UserController {
                         'message' => 'This mail is already used')
                     );
                 }
-
-                array_push($response, array(
-                    'message' => 'This pseudo is already used')
-                );
+                
+                if ($user['pseudo'] === $pseudo) {
+                    array_push($response, array(
+                        'message' => 'This pseudo is already used')
+                    );
+                }
             }
 
             return $response;

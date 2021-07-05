@@ -2,15 +2,23 @@
 namespace App\Model\Class;
 
 abstract class AbstractClass {
-    public function __construct(array $data = []) {
+    public function __construct(array $data = [], array $mandatoryFields = []) {
         if (count($data) > 0) {
-			$this->hydrate($data);
+			$this->hydrate($data, $mandatoryFields);
 		}
     }
 
-    public function hydrate(array $data) {
-		foreach ($data as $key => $value)
-		{
+    public function hydrate(array $data, array $mandatoryFields = []) {
+		foreach ($data as $key => $value) {
+			/*if (in_array($key, $mandatoryFields)) {
+				
+			}*/
+			$keyUnderscore = strpos($key, '_');
+			if ($keyUnderscore > 0) {
+				$key = str_replace('_', '', $keyUnderscore);
+				$key = str_replace($key[$keyUnderscore], ucfirst($key[$keyUnderscore]), $key);
+			}
+
 			$setterMethod = 'set' . ucfirst($key);
 		
 			if (method_exists($this, $setterMethod)) {

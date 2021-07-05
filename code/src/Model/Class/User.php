@@ -10,8 +10,8 @@ class User extends AbstractClass {
     private string $mail;
     private string $password;
     private string $pseudo;
-    private array $roles;
-    private DateTime $registeredAt;
+    private array $roles = ["ROLE_USER"];
+    private DateTime|null $registeredAt;
 
     public function __construct(array $data = []) {
         parent::__construct($data);
@@ -81,11 +81,11 @@ class User extends AbstractClass {
         $this->pseudo = $pseudo;
     }
 
-    public function getRegisteredAt(): DateTime {
+    public function getRegisteredAt(): DateTime|null {
         return $this->registeredAt;
     }
 
-    public function setRegisteredAt(DateTime $registeredAt): void {
+    public function setRegisteredAt(DateTime|null $registeredAt): void {
         $this->registeredAt = $registeredAt;
     }
 
@@ -93,7 +93,7 @@ class User extends AbstractClass {
         return $this->roles;
     }
 
-    public function setRoles(array $roles): void {
+    public function setRoles(array|null $roles): void {
         $this->roles = $roles;
     }
 }

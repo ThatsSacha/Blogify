@@ -2,6 +2,7 @@
 
 namespace App\Model\ClassManager;
 
+use App\Model\Class\User;
 use PDO;
 use PDOException;
 
@@ -14,8 +15,40 @@ class UserManager {
         $this->db = $db->connect();
     }
 
-    public function create() {
-
+    public function create(User $data) {
+        try {
+            $query = $this->db->prepare(
+                "INSERT INTO user
+                    (
+                        first_name,
+                        last_name,
+                        mail,
+                        password,
+                        pseudo,
+                        roles
+                    )
+                    VALUES(
+                        first_name = :first_name,
+                        last_name = :last_name,
+                        mail = :mail,
+                        password = :password,
+                        pseudo = :pseudo,
+                        roles = :roles
+                    )"
+            );
+            echo json_encode($data->getRoles()); // expect : ["ROLE_USER"]
+            $query->execute(array(
+                ':first_name' => $data->getFirstName(),
+                ':last_name' => $data->getLastName(),
+                ':mail' => $data->getMail(),
+                ':password' => $data->getPassword(),
+                ':pseudo' => $data->getPseudo(),
+                ":roles" => json_encode($data->getRoles())
+            ));
+        } catch (PDOException $e) {
+            echo 'PDOException caught ' . $e->getMessage();
+            // PDOException caught SQLSTATE[22032]: <>: 3140 Invalid JSON text: "not a JSON text, may need CAST" at position 0 in value for column 'user.roles'.true
+        }
     }
 
     /**
