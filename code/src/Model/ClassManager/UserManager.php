@@ -28,22 +28,29 @@ class UserManager {
                         roles
                     )
                     VALUES(
-                        first_name = :first_name,
-                        last_name = :last_name,
-                        mail = :mail,
-                        password = :password,
-                        pseudo = :pseudo,
-                        roles = :roles
+                        ?, ?, ?, ?, ?, ?
                     )"
             );
-            echo json_encode($data->getRoles()); // expect : ["ROLE_USER"]
-            $query->execute(array(
+            var_dump(array(
                 ':first_name' => $data->getFirstName(),
                 ':last_name' => $data->getLastName(),
                 ':mail' => $data->getMail(),
                 ':password' => $data->getPassword(),
-                ':pseudo' => $data->getPseudo(),
-                ":roles" => json_encode($data->getRoles())
+                ':pseudo' => $data->getPseudo()
+            ));
+            /*$query->bindParam(':first_name', $data->getFirstName());
+            $query->bindParam(':last_name', $data->getLastName());
+            $query->bindParam(':mail', $data->getMail());
+            $query->bindParam(':password', $data->getPassword());
+            $query->bindParam(':Pseudo', $data->gePseudo());*/
+
+            $query->execute(array(
+                $data->getFirstName(),
+                $data->getLastName(),
+                $data->getMail(),
+                $data->getPassword(),
+                $data->getPseudo(),
+                json_encode($data->getRoles())
             ));
         } catch (PDOException $e) {
             echo 'PDOException caught ' . $e->getMessage();
