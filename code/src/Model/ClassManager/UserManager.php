@@ -3,6 +3,7 @@
 namespace App\Model\ClassManager;
 
 use App\Model\Class\User;
+use Exception;
 use PDO;
 use PDOException;
 
@@ -17,6 +18,7 @@ class UserManager {
 
     public function create(User $data) {
         try {
+            $this->db->beginTransaction();
             $query = $this->db->prepare(
                 "INSERT INTO user
                     (
@@ -29,21 +31,9 @@ class UserManager {
                     )
                     VALUES(
                         ?, ?, ?, ?, ?, ?
-                    )"
+                    );"
             );
-            var_dump(array(
-                ':first_name' => $data->getFirstName(),
-                ':last_name' => $data->getLastName(),
-                ':mail' => $data->getMail(),
-                ':password' => $data->getPassword(),
-                ':pseudo' => $data->getPseudo()
-            ));
-            /*$query->bindParam(':first_name', $data->getFirstName());
-            $query->bindParam(':last_name', $data->getLastName());
-            $query->bindParam(':mail', $data->getMail());
-            $query->bindParam(':password', $data->getPassword());
-            $query->bindParam(':Pseudo', $data->gePseudo());*/
-
+            
             $query->execute(array(
                 $data->getFirstName(),
                 $data->getLastName(),
@@ -52,9 +42,19 @@ class UserManager {
                 $data->getPseudo(),
                 json_encode($data->getRoles())
             ));
-        } catch (PDOException $e) {
-            echo 'PDOException caught ' . $e->getMessage();
-            // PDOException caught SQLSTATE[22032]: <>: 3140 Invalid JSON text: "not a JSON text, may need CAST" at position 0 in value for column 'user.roles'.true
+
+            $lastId = $this->db->lastInsertId();
+
+            $query = $this->db->prepare("SELECT * FROM user WHERE id = $lastId");
+            $query->execute();
+
+            $result = $query->fetchAll();
+            $query->closeCursor();
+            $this->db->commit();
+            
+            return $result;
+        } catch (Exception $e) {
+            return new Exception($e->getMessage());
         }
     }
 
