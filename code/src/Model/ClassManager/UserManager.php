@@ -18,7 +18,6 @@ class UserManager {
 
     public function create(User $data) {
         try {
-            $this->db->beginTransaction();
             $query = $this->db->prepare(
                 "INSERT INTO user
                     (
@@ -42,17 +41,6 @@ class UserManager {
                 $data->getPseudo(),
                 json_encode($data->getRoles())
             ));
-
-            $lastId = $this->db->lastInsertId();
-
-            $query = $this->db->prepare("SELECT * FROM user WHERE id = $lastId");
-            $query->execute();
-
-            $result = $query->fetchAll();
-            $query->closeCursor();
-            $this->db->commit();
-            
-            return $result;
         } catch (Exception $e) {
             return new Exception($e->getMessage());
         }

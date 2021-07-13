@@ -35,7 +35,7 @@ class ArticleManager {
                     'teaser' => $response['teaser'],
                     'content' => $response['content'],
                     'cover' => $response['cover'],
-                    'authorId' => $response['author_id'],
+                    'authorId' => $response['author_id'] === null ? 0 : $response['author_id'],
                     'createdAt' => date_create($response['created_at']),
                     'updatedAt' => $response['updated_at'] === null ? null : date_create($response['updated_at'])
                 ));
@@ -71,7 +71,7 @@ class ArticleManager {
                 'teaser' => $response['teaser'],
                 'content' => $response['content'],
                 'cover' => $response['cover'],
-                'authorId' => $response['author_id'],
+                'authorId' => $response['author_id'] === null ? 0 : $response['author_id'],
                 'createdAt' => date_create($response['created_at']),
                 'updatedAt' => $response['updated_at'] === null ? null : date_create($response['updated_at'])
             ));

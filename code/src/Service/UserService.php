@@ -16,10 +16,13 @@ class UserService {
     {
         $this->userManager = new UserManager();
     }
+
     /**
      * @param array $data
+     * 
+     * @return array
      */
-    public function create(array $data) {
+    public function create(array $data): array {
         $keyErrors = array();
         $mandatoryFields = array('firstName', 'lastName', 'mail', 'password', 'pseudo');
 
