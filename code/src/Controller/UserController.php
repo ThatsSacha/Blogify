@@ -6,14 +6,13 @@ use App\Model\ClassManager\UserManager;
 use App\Service\UserService;
 
 class UserController {
-    private UserManager $userManager;
+    private $data;
     private string $url;
     private string $method;
     private $result;
-    private $userService;
 
-    public function __construct(string $url) {
-        $this->userManager = new UserManager();
+    public function __construct(string $url, array $data = null) {
+        $this->data = $data;
         $this->url = $url;
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->checkRoute();
@@ -21,12 +20,13 @@ class UserController {
 
     private function checkRoute(): void {
         if (in_array($this->method, ['OPTIONS', 'POST'])) {
-            /*if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
-                $this->findOneBy();
+            if ($this->url === '/login') {
+                $this->login();
+            } else if ($this->url === '/logout') {
+                $this->logout();
             } else {
-                $this->findAll();
-            }*/
-            $this->create();
+                $this->create();
+            }
         } else {
             $this->result = [
                 'type' => 'error',
@@ -40,13 +40,22 @@ class UserController {
         return $this->result;
     }
 
+    public function login() {
+        $userService = new UserService();
+        $this->result = $userService->login($this->data);
+    }
+
+    public function logout() {
+        $userService = new UserService();
+        $userService->logout();
+    }
+
     /**
      * This function verify all fields and if match, create user
      */
     public function create() {
-        $data = json_decode(file_get_contents('php://input'), true);
         $userService = new UserService();
-        $this->result = $userService->create($data);
+        $this->result = $userService->create($this->data);
     }
 
     public function findAll() {

@@ -21,7 +21,7 @@ class RouterController {
             $this->returnView('blog', 200, BlogController::class);
         }
 
-        else if ($url === '/user') {
+        else if ($url === '/user' || $url === '/login' || $url === '/logout') {
             $this->returnView('user', 200, UserController::class);
         }
         
@@ -35,7 +35,8 @@ class RouterController {
         $controllerExists = is_file($controllerName);
     
         if ($controllerExists) {
-            $class = new $class($this->url);
+            $data = json_decode(file_get_contents('php://input'), true);
+            $class = new $class($this->url, $data);
         }
 
         if ($_SERVER['HTTP_ACCEPT'] === 'application/json') {

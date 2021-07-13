@@ -113,13 +113,24 @@ class UserManager {
         return array();
     }
 
-    public function findByMailAndPseudo(string $mail, string $pseudo) {
+    public function findByMailOrPseudo(string $mail = null, string $pseudo = null) {
         $query = $this->db->prepare(
             'SELECT * FROM user WHERE mail = :mail OR pseudo = :pseudo'
         );
         $query->execute(array(
             'mail' => $mail,
             'pseudo' => $pseudo
+        ));
+
+        return $query->fetchAll();
+    }
+
+    public function findByMail(string $mail) {
+        $query = $this->db->prepare(
+            'SELECT * FROM user WHERE mail = :mail'
+        );
+        $query->execute(array(
+            'mail' => $mail
         ));
 
         return $query->fetchAll();

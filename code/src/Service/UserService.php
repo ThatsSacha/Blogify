@@ -88,6 +88,47 @@ class UserService {
         }
     }
 
+    public function logout() {
+        $_SESSION = [];
+        session_destroy();
+    }
+
+    public function login(array $data) {
+        if (isset($data['mail']) && !empty($data['mail']) && isset($data['password']) && !empty($data['password'])) {
+            sleep(1);
+            $password = $this->hashPassword($data['password']);
+            $user = $this->userManager->findByMail($data['mail']);
+
+            if (count($user) > 0 && $password === $user[0]['password']) {
+                $_SESSION['logged'] = true;
+                $_SESSION['user'] = array(
+                    'firstName' => $user[0]['first_name'],
+                    'lastName' => $user[0]['last_name'],
+                    'mail' => $user[0]['mail'],
+                    'roles' => $user[0]['roles'],
+                );
+
+                return array(
+                    'type' => 'success',
+                    'status' => 200,
+                    'message' => 'Successfully logged in'
+                );
+            }
+            
+            return array(
+                'type' => 'error',
+                'status' => 401,
+                'message' => 'Invalid credentials'
+            );
+        }
+
+        return array(
+            'type' => 'error',
+            'status' => 400,
+            'message' => 'Email and password are mandatory and have to be filled'
+        );
+    }
+
     /**
      * @param string $password
      * 
@@ -105,7 +146,7 @@ class UserService {
     }
 
     public function isEmailAndPseudoUnique(string $mail, string $pseudo): array {
-        $query = $this->userManager->findByMailAndPseudo($mail, $pseudo);
+        $query = $this->userManager->findByMailOrPseudo($mail, $pseudo);
         $response = array();
 
         if (count($query) > 0) {
