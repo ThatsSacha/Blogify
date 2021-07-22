@@ -1,0 +1,81 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    input, button {
+        border: 1px solid transparent;
+        background-color: white;
+        border-radius: $th-border-radius;
+        padding: 10px;
+        height: 35px;
+        outline: none;
+    }
+
+    input, select, textarea {
+        margin-bottom: 10px;
+        width: 100%;
+        color: $th-main;
+        transition: 150ms;
+
+        &::placeholder {
+            color: $th-light;
+        }
+
+        &:focus {
+            height: 45px;
+        }
+    }
+
+    button {
+        width: 25%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-end;
+        cursor: pointer;
+        transition: 150ms;
+
+        .spinner-border, i {
+            margin-right: 5px;
+        }
+
+        &.red-btn {
+            background-color: $th-red;
+            color: white;
+
+            .spinner-border, i {
+                color: white;
+            }
+
+            &:hover {
+                background-color: $th-red-hover;
+            }
+        }
+    }
+
+    .form-space-between {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 10px;
+
+        a {
+            color: $th-grey;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 300;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

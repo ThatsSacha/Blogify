@@ -23,11 +23,218 @@ html body aside svg {
   max-height: 170px;
   height: auto;
 }
+html body aside ul {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 20%;
+}
+html body aside ul.secondary__menu {
+  bottom: 10%;
+  position: absolute;
+}
+html body aside ul li {
+  width: 100%;
+  list-style: none;
+  margin-bottom: 10px;
+}
+html body aside ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 400;
+  opacity: 0.8;
+  display: flex;
+  transition: 150ms;
+}
+html body aside ul li a:hover {
+  opacity: 1;
+}
+html body aside ul li a i {
+  margin-right: 5px;
+}
+html body h1, html body h2, html body h3 {
+  color: white;
+}
 html body main {
   width: 70%;
   left: 30%;
   position: relative;
-  padding: 0 2.5%;
+  padding: 25px 2.5%;
+}
+html body main.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-border, i {
+  display: none !important;
+}
+.spinner-border.is-active, i.is-active {
+  display: block !important;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+}
+form h1 {
+  margin-bottom: 10px;
+}
+form input, form button {
+  border: 1px solid transparent;
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px;
+  height: 35px;
+  outline: none;
+}
+form input, form select, form textarea {
+  margin-bottom: 10px;
+  width: 100%;
+  color: #4b4875;
+  transition: 150ms;
+}
+form input::placeholder, form select::placeholder, form textarea::placeholder {
+  color: #45426cc5;
+}
+form input:focus, form select:focus, form textarea:focus {
+  height: 45px;
+}
+form button {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  cursor: pointer;
+  transition: 150ms;
+}
+form button .spinner-border, form button i {
+  margin-right: 5px;
+}
+form button.red-btn {
+  background-color: #A53C65;
+  color: white;
+}
+form button.red-btn .spinner-border, form button.red-btn i {
+  color: white;
+}
+form button.red-btn:hover {
+  background-color: #98375c;
+}
+form .form-space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+form .form-space-between a {
+  color: #e0e0e0c5;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 300;
+}
+form .form-space-between a:hover {
+  text-decoration: underline;
+}
+
+.modal-background {
+  height: 100%;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  z-index: -999;
+  background: #45426cc5;
+  opacity: 0;
+  transition: 300ms;
+}
+.modal-background.is-active {
+  z-index: 999;
+  opacity: 1;
+}
+.modal-background i.close-modal {
+  left: 97%;
+  font-size: 30px;
+  color: white;
+  position: relative;
+  cursor: pointer;
+}
+.modal-background .modal {
+  border: 1px solid #45426cc5;
+  background-color: #4b4875;
+  margin: auto;
+  border-radius: 15px;
+  position: relative;
+  top: -50%;
+  padding: 30px 10px;
+  width: 70%;
+  box-shadow: 1px 1px 24px -20px black;
+  transition: 300ms;
+}
+.modal-background .modal.is-active {
+  top: 10%;
+}
+
+/*@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
+@include _assert-starts-at-zero($grid-breakpoints, "$grid-breakpoints");*/
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg) /* rtl:ignore */;
+  }
+}
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: -0.125em;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: 0.75s linear infinite spinner-border;
+}
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2em;
+}
+
+@keyframes spinner-grow {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.spinner-grow {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: -0.125em;
+  background-color: currentColor;
+  border-radius: 50%;
+  opacity: 0;
+  animation: 0.75s linear infinite spinner-grow;
+}
+
+.spinner-grow-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner-border,
+.spinner-grow {
+    animation-duration: 1.5s;
+  }
 }
 
 /*# sourceMappingURL=__mixin.css.map */

@@ -21,7 +21,11 @@ class RouterController {
             $this->returnView('blog', 200, BlogController::class);
         }
 
-        else if ($url === '/user' || $url === '/login' || $url === '/logout') {
+        else if ($url === '/login') {
+            $this->returnView('login');
+        }
+
+        else if ($url === '/user' || $url === '/login-check' || $url === '/logout') {
             $this->returnView('user', 200, UserController::class);
         }
         

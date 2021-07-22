@@ -1,0 +1,42 @@
+.modal-background {
+    height: 100%;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    z-index: -999;
+    background: $th-light;
+    opacity: 0;
+    transition: 300ms;
+
+    &.is-active {
+        z-index: 999;
+        opacity: 1;
+    }
+
+    i {
+        &.close-modal {
+            left: 97%;
+            font-size: 30px;
+            color: white;
+            position: relative;
+            cursor: pointer;
+        }
+    }
+
+    .modal {
+        border: 1px solid $th-light;
+        background-color: $th-main;
+        margin: auto;
+        border-radius: $th-border-radius;
+        position: relative;
+        top: -50%;
+        padding: 30px 10px;
+        width: 70%;
+        box-shadow: 1px 1px 24px -20px black;
+        transition: 300ms;
+
+        &.is-active {
+            top: 10%;
+        }
+    }
+}
