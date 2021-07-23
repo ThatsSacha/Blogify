@@ -11,7 +11,7 @@ class UserController {
     private string $method;
     private $result;
 
-    public function __construct(string $url, array $data = null) {
+    public function __construct(string $url, $data = null) {
         $this->data = $data;
         $this->url = $url;
         $this->method = $_SERVER['REQUEST_METHOD'];

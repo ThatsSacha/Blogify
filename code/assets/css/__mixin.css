@@ -96,6 +96,11 @@ html body main.center {
 .spinner-border.is-active, i.is-active {
   display: block !important;
 }
+.spinner-border.small, i.small {
+  width: 1rem !important;
+  height: 1rem !important;
+  border-width: 0.15rem !important;
+}
 
 form {
   display: flex;

@@ -39,7 +39,13 @@ class RouterController {
         $controllerExists = is_file($controllerName);
     
         if ($controllerExists) {
-            $data = json_decode(file_get_contents('php://input'), true);
+            if (isset($_POST) && count($_POST) > 0) {
+                $input = $_POST;
+            } else {
+                $input = json_decode(file_get_contents('php://input'), true);
+            }
+            
+            $data = $input;
             $class = new $class($this->url, $data);
         }
 

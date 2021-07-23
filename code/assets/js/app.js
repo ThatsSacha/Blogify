@@ -1,4 +1,5 @@
 $(function() {
+    const apiUrl = 'http://localhost:8000';
     setLogo();
 
     function setLogo() {
@@ -52,13 +53,54 @@ $(function() {
             e.preventDefault();
             const mail = $('form.login input.mail');
             const password = $('form.login input.password');
+
             if (mail.val().length > 0 && password.val().length > 0) {
+                showSpinner('form.login');
                 hideError($('form.login .error'));
+
+                $.ajax({
+                    method: 'POST',
+                    url: apiUrl + '/login-check',
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                    dataType: 'json',
+                    data: {
+                        mail: mail.val(),
+                        password: password.val()
+                    },
+                    success(response) {
+                        console.log(response);
+                        const now = new Date();
+                        const item = {
+                            value: 'connected',
+                            expiry: now.getTime() + 4600
+                        };
+
+                        localStorage.setItem('blogify', JSON.stringify(item));
+                    },
+                    error(error) {
+                        displayError($('form.login .error'), error.responseJSON.message);
+                    }
+                })
+                .always(function() {
+                    hideSpinner('form.login');
+                });
             } else {
                 displayError($('form.login .error'), 'Tous les champs sont requis');
             }
         })
     //
+
+    function showSpinner(element) {
+        $(element + ' button i').removeClass('is-active');
+        $(element + ' button .spinner-border').addClass('is-active');
+    }
+
+    function hideSpinner(element) {
+        $(element + ' button .spinner-border').removeClass('is-active');
+        $(element + ' button i').addClass('is-active');
+    }
 
     function displayError(domElement, text) {
         domElement.text(text);

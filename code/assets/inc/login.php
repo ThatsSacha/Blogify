@@ -8,7 +8,7 @@
     </div>
     <div class="error"></div>
     <button class="red-btn">
-        <div class="spinner-border text-light" role="status"></div>
+        <div class="spinner-border small text-light" role="status"></div>
         <i class="bi bi-box-arrow-in-right is-active"></i>
         Se connecter
     </button>
