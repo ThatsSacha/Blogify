@@ -13,7 +13,7 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="blog">
                 <i class="bi bi-newspaper is-active"></i>
                 Blog
             </a>

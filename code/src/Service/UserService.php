@@ -43,12 +43,13 @@ class UserService {
             $keyErrors = array_reverse($keyErrors);
 
             $this->result = $keyErrors;
+            return $keyErrors;
         } else {
             if (filter_var($data['mail'], FILTER_VALIDATE_EMAIL)) {
                 $isPasswordValid = $this->isPasswordValid($data['password']);
 
                 if ($isPasswordValid['isValid']) {
-                    $data['password'] = $this->hashPassword($data['password']);
+                    $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
                     $isEmailAndPseudoUnique = $this->isEmailAndPseudoUnique($data['mail'], $data['pseudo']);
 
                     if (count($isEmailAndPseudoUnique) <= 0) {
@@ -96,10 +97,10 @@ class UserService {
     public function login(array $data) {
         if (isset($data['mail']) && !empty($data['mail']) && isset($data['password']) && !empty($data['password'])) {
             sleep(1);
-            $password = $this->hashPassword($data['password']);
+            $password = $data['password'];
             $user = $this->userManager->findByMail($data['mail']);
 
-            if (count($user) > 0 && $password === $user[0]['password']) {
+            if (count($user) > 0 && password_verify($password, $user[0]['password'])) {
                 $_SESSION['logged'] = true;
                 $_SESSION['user'] = array(
                     'firstName' => $user[0]['first_name'],
@@ -127,22 +128,6 @@ class UserService {
             'status' => 400,
             'message' => 'Email and password are mandatory and have to be filled'
         );
-    }
-
-    /**
-     * @param string $password
-     * 
-     * @return string The hashed password
-     */
-    public function hashPassword(string $password): string {
-        $firstSalt = '*P56K4oBih0&li3dsPeY%g3^2';
-        $secondSalt = '51L$N2ln8qsY4i6QB2C@$gv9a';
-
-        $password = $firstSalt . $password . $secondSalt;
-        $password = hash('sha512', $password);
-        $password = strtoupper($password);
-
-        return $password;
     }
 
     public function isEmailAndPseudoUnique(string $mail, string $pseudo): array {

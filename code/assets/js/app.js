@@ -46,4 +46,35 @@ $(function() {
             $('.modal').addClass('is-active');
         }, 250);
     }
+
+    // LOGIN
+        $('body').on('submit', 'form.login', function(e) {
+            e.preventDefault();
+            const mail = $('form.login input.mail');
+            const password = $('form.login input.password');
+            if (mail.val().length > 0 && password.val().length > 0) {
+                hideError($('form.login .error'));
+            } else {
+                displayError($('form.login .error'), 'Tous les champs sont requis');
+            }
+        })
+    //
+
+    function displayError(domElement, text) {
+        domElement.text(text);
+        domElement.css('display', 'flex');
+
+        setTimeout(function() {
+            domElement.addClass('is-active');
+        }, 10);
+    }
+
+    function hideError(domElement) {
+        domElement.removeClass('is-active');
+
+        setTimeout(function() {
+            domElement.css('display', 'none');
+            domElement.empty();
+        }, 150);
+    }
 });

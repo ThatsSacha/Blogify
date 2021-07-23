@@ -56,6 +56,28 @@ html body aside ul li a i {
 html body h1, html body h2, html body h3 {
   color: white;
 }
+html body .error {
+  background-color: #A53C65;
+  width: 100%;
+  border-radius: 15px;
+  height: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  opacity: 0;
+  border: 1px solid #98375c;
+  color: white;
+  transition: 200ms;
+}
+html body .error.is-active {
+  height: 30px;
+  opacity: 1;
+}
+html body .error:hover {
+  background-color: #98375c;
+}
 html body main {
   width: 70%;
   left: 30%;

@@ -20,7 +20,7 @@ class UserController {
 
     private function checkRoute(): void {
         if (in_array($this->method, ['OPTIONS', 'POST'])) {
-            if ($this->url === '/login') {
+            if ($this->url === '/login-check') {
                 $this->login();
             } else if ($this->url === '/logout') {
                 $this->logout();

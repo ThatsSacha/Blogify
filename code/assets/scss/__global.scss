@@ -68,6 +68,31 @@ html {
             color: white;
         }
 
+        .error {
+            background-color: $th-red;
+            width: 100%;
+            border-radius: 15px;
+            height: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            opacity: 0;
+            border: 1px solid $th-red-hover;
+            color: white;
+            transition: 200ms;
+
+            &.is-active {
+                height: 30px;
+                opacity: 1;
+            }
+
+            &:hover {
+                background-color: $th-red-hover;
+            }
+        }
+
         main {
             width: 70%;
             left: 30%;
