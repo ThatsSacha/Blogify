@@ -1,6 +1,26 @@
 $(function() {
     const apiUrl = 'http://localhost:8000';
     setLogo();
+    isConnected();
+
+    function isConnected() {
+        $.ajax({
+            method: 'POST',
+            url: apiUrl + '/is-connected',
+            headers: {
+                Accept: 'application/json',
+            },
+            dataType: 'json',
+            success(response) {
+                if (response['logged']) {
+                    buildSideBarConnected();
+                }
+            },
+            error(error) {
+                displayError($('form.login .error'), error.responseJSON.message);
+            }
+        })
+    }
 
     function setLogo() {
         $.ajax({
@@ -22,6 +42,44 @@ $(function() {
         closeModal();
     });
 
+    // LOGIN
+        $('body').on('submit', 'form.login', function(e) {
+            e.preventDefault();
+            const mail = $('form.login input.mail');
+            const password = $('form.login input.password');
+
+            if (mail.val().length > 0 && password.val().length > 0) {
+                showSpinner('form.login');
+                hideError($('form.login .error'));
+
+                $.ajax({
+                    method: 'POST',
+                    url: apiUrl + '/login-check',
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                    dataType: 'json',
+                    data: {
+                        mail: mail.val(),
+                        password: password.val()
+                    },
+                    success(response) {
+                        buildSideBarConnected();
+                        closeModal();
+                    },
+                    error(error) {
+                        displayError($('form.login .error'), error.responseJSON.message);
+                    }
+                })
+                .always(function() {
+                    hideSpinner('form.login');
+                });
+            } else {
+                displayError($('form.login .error'), 'Tous les champs sont requis');
+            }
+        })
+    //
+    
     function closeModal() {
         $('.modal').removeClass('is-active');
 
@@ -48,49 +106,10 @@ $(function() {
         }, 250);
     }
 
-    // LOGIN
-        $('body').on('submit', 'form.login', function(e) {
-            e.preventDefault();
-            const mail = $('form.login input.mail');
-            const password = $('form.login input.password');
-
-            if (mail.val().length > 0 && password.val().length > 0) {
-                showSpinner('form.login');
-                hideError($('form.login .error'));
-
-                $.ajax({
-                    method: 'POST',
-                    url: apiUrl + '/login-check',
-                    headers: {
-                        Accept: 'application/json',
-                    },
-                    dataType: 'json',
-                    data: {
-                        mail: mail.val(),
-                        password: password.val()
-                    },
-                    success(response) {
-                        console.log(response);
-                        const now = new Date();
-                        const item = {
-                            value: 'connected',
-                            expiry: now.getTime() + 4600
-                        };
-
-                        localStorage.setItem('blogify', JSON.stringify(item));
-                    },
-                    error(error) {
-                        displayError($('form.login .error'), error.responseJSON.message);
-                    }
-                })
-                .always(function() {
-                    hideSpinner('form.login');
-                });
-            } else {
-                displayError($('form.login .error'), 'Tous les champs sont requis');
-            }
-        })
-    //
+    function buildSideBarConnected() {
+        $('aside ul.secondary__menu').empty();
+        $('aside ul.secondary__menu').append('<li><a href="profile"><i class="bi bi-person-circle is-active"></i>Profile</a></li><li><a href="logout"><i class="bi bi-box-arrow-left is-active"></i></i>Déconnexion</a></li>');
+    }
 
     function showSpinner(element) {
         $(element + ' button i').removeClass('is-active');

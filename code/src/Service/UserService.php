@@ -17,6 +17,20 @@ class UserService {
         $this->userManager = new UserManager();
     }
 
+    public function isConnected() {
+        if (isset($_SESSION['logged']) && $_SESSION['logged']) {
+            return array(
+                'logged' => true,
+                'code' => 200
+            );
+        }
+
+        return array(
+            'logged' => false,
+            'code' => 401
+        );
+    }
+
     /**
      * @param array $data
      * 

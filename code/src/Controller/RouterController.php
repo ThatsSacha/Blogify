@@ -28,6 +28,10 @@ class RouterController {
         else if ($url === '/user' || $url === '/login-check' || $url === '/logout') {
             $this->returnView('user', 200, UserController::class);
         }
+
+        else if ($url === '/is-connected') {
+            $this->returnView('user', 200, UserController::class);
+        }
         
         else {
             $this->returnView('error', 404);

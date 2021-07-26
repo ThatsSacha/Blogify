@@ -24,6 +24,8 @@ class UserController {
                 $this->login();
             } else if ($this->url === '/logout') {
                 $this->logout();
+            } else if ($this->url === '/is-connected') {
+                $this->isConnected();
             } else {
                 $this->create();
             }
@@ -48,6 +50,11 @@ class UserController {
     public function logout() {
         $userService = new UserService();
         $userService->logout();
+    }
+
+    public function isConnected() {
+        $userService = new UserService();
+        $this->result = $userService->isConnected();
     }
 
     /**
