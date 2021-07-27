@@ -27,13 +27,13 @@
     </ul>
     <ul class="secondary__menu">
         <li>
-            <a href="login" class="login">
+            <a href="login" class="login-modal">
                 <i class="bi bi-box-arrow-in-right is-active"></i>
                 Se connecter
             </a>
         </li>
         <li>
-            <a href="??">
+            <a href="register" class="register-modal">
                 <i class="bi bi-person-plus is-active"></i>
                 S'inscrire
             </a>

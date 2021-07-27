@@ -68,8 +68,7 @@ html {
             color: white;
         }
 
-        .error {
-            background-color: $th-red;
+        .notification {
             width: 100%;
             border-radius: 15px;
             height: 0;
@@ -79,7 +78,6 @@ html {
             padding: 10px;
             margin-bottom: 10px;
             opacity: 0;
-            border: 1px solid $th-red-hover;
             color: white;
             transition: 200ms;
 
@@ -88,8 +86,22 @@ html {
                 opacity: 1;
             }
 
-            &:hover {
-                background-color: $th-red-hover;
+            &.error {
+                background-color: $th-red;
+                border: 1px solid $th-red-hover;
+    
+                &:hover {
+                    background-color: $th-red-hover;
+                }
+            }
+
+            &.success {
+                background-color: $th-green;
+                border: 1px solid $th-green-hover;
+    
+                &:hover {
+                    background-color: $th-green-hover;
+                }
             }
         }
 

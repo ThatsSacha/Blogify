@@ -29,6 +29,10 @@ class UserController {
             } else {
                 $this->create();
             }
+        } else if (in_array($this->method, ['OPTIONS', 'GET'])) {
+            if ($this->url === '/logout') {
+                $this->logout();
+            }
         } else {
             $this->result = [
                 'type' => 'error',

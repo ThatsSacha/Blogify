@@ -41,6 +41,14 @@ class UserManager {
                 $data->getPseudo(),
                 json_encode($data->getRoles())
             ));
+
+            $query = $this->db->query('SELECT LAST_INSERT_ID()');
+            $id = $query->fetchAll()[0][0];
+            $user = $this->findOneBy($id);
+            var_dump($user);
+            die();
+            // Returns the id of element just created
+            return $user;
         } catch (Exception $e) {
             return new Exception($e->getMessage());
         }
@@ -83,11 +91,11 @@ class UserManager {
     /**
      * @param $id
      * 
-     * @return array
+     * @return User|null
      */
-    public function findOneBy($id): array {
+    public function findOneBy($id): User|null {
         $query = $this->db->query(
-            'SELECT * FROM article WHERE id = ' . $id
+            'SELECT * FROM user WHERE id = ' . $id
         );
         $query->execute();
 
@@ -95,22 +103,13 @@ class UserManager {
 
         if (count($response) > 0) {
             $response = $response[0];
-
-            $article = new Article(
-                $response['id'],
-                $response['title'],
-                $response['teaser'],
-                $response['content'],
-                $response['cover'],
-                $response['author_id'],
-                date_create($response['created_at']),
-                $response['updated_at'] === null ? null : date_create($response['updated_at'])
-            );
-    
-            return $article->jsonSerialize();
+            
+            $test =  new User($response);
+            print_r($test);
+            die();
         }
         
-        return array();
+        return null;
     }
 
     public function findByMailOrPseudo(string $mail = null, string $pseudo = null) {

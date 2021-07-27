@@ -56,8 +56,7 @@ html body aside ul li a i {
 html body h1, html body h2, html body h3 {
   color: white;
 }
-html body .error {
-  background-color: #A53C65;
+html body .notification {
   width: 100%;
   border-radius: 15px;
   height: 0;
@@ -67,16 +66,26 @@ html body .error {
   padding: 10px;
   margin-bottom: 10px;
   opacity: 0;
-  border: 1px solid #98375c;
   color: white;
   transition: 200ms;
 }
-html body .error.is-active {
+html body .notification.is-active {
   height: 30px;
   opacity: 1;
 }
-html body .error:hover {
+html body .notification.error {
+  background-color: #A53C65;
+  border: 1px solid #98375c;
+}
+html body .notification.error:hover {
   background-color: #98375c;
+}
+html body .notification.success {
+  background-color: #3ca574;
+  border: 1px solid #329064;
+}
+html body .notification.success:hover {
+  background-color: #329064;
 }
 html body main {
   width: 70%;

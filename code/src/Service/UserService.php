@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Serializer;
 class UserService {
     private $userManager;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->userManager = new UserManager();
     }
@@ -66,9 +66,11 @@ class UserService {
                     $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
                     $isEmailAndPseudoUnique = $this->isEmailAndPseudoUnique($data['mail'], $data['pseudo']);
 
-                    if (count($isEmailAndPseudoUnique) <= 0) {
+                    if (strlen($isEmailAndPseudoUnique) <= 0) {
                         $user = new User($data);
                         $insert = $this->userManager->create($user);
+                        return array('status' => 201, 'type' => 'success', 'data' => $insert);
+                        //$this->logUser(new User($insert));
 
                         if (!$insert instanceof Exception) {
                             return array('status' => 201, 'type' => 'success');
@@ -84,7 +86,7 @@ class UserService {
                     return array(
                         'type' => 'error',
                         'status' => 400,
-                        'messages' => $isEmailAndPseudoUnique
+                        'message' => $isEmailAndPseudoUnique
                     );
                 } else {
                     return array(
@@ -115,13 +117,7 @@ class UserService {
             $user = $this->userManager->findByMail($data['mail']);
 
             if (count($user) > 0 && password_verify($password, $user[0]['password'])) {
-                $_SESSION['logged'] = true;
-                $_SESSION['user'] = array(
-                    'firstName' => $user[0]['first_name'],
-                    'lastName' => $user[0]['last_name'],
-                    'mail' => $user[0]['mail'],
-                    'roles' => $user[0]['roles'],
-                );
+                $this->logUser(new User($user[0]));
 
                 return array(
                     'type' => 'success',
@@ -133,7 +129,7 @@ class UserService {
             return array(
                 'type' => 'error',
                 'status' => 401,
-                'message' => 'Invalid credentials'
+                'message' => 'Email et/ou mot de passe erroné'
             );
         }
 
@@ -144,24 +140,43 @@ class UserService {
         );
     }
 
-    public function isEmailAndPseudoUnique(string $mail, string $pseudo): array {
+    public function logUser(User $user): void {
+        $_SESSION['logged'] = true;
+        $_SESSION['user'] = array(
+            'firstName' => $user->getFirstName(),
+            'lastName' => $user->getLastName(),
+            'mail' => $user->getMail(),
+            'roles' => $user->getRoles(),
+        );
+    }
+
+    /**
+     * @param string $mail
+     * @param string pseudo
+     * 
+     * @return string
+     */
+    public function isEmailAndPseudoUnique(string $mail, string $pseudo): string {
         $query = $this->userManager->findByMailOrPseudo($mail, $pseudo);
-        $response = array();
+        $response = '';
 
         if (count($query) > 0) {
             foreach($query as $user) {
+                if ($user['mail'] === $mail && $user['pseudo'] === $pseudo) {
+                    $sentence = 'The mail and the pseudo are';
+                    break;
+                }
+
                 if ($user['mail'] === $mail) {
-                    array_push($response, array(
-                        'message' => 'This mail is already used')
-                    );
+                    $sentence = 'The mail is';
                 }
                 
                 if ($user['pseudo'] === $pseudo) {
-                    array_push($response, array(
-                        'message' => 'This pseudo is already used')
-                    );
+                    $sentence = 'The pseudo is';
                 }
             }
+
+            $response = "$sentence already used";
         }
 
         return $response;

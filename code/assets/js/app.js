@@ -17,7 +17,7 @@ $(function() {
                 }
             },
             error(error) {
-                displayError($('form.login .error'), error.responseJSON.message);
+                showNotification('form.login', 'error', error.responseJSON.message);
             }
         })
     }
@@ -33,9 +33,14 @@ $(function() {
         });
     }
 
-    $('aside a.login').on('click', function(e) {
+    $('.login-modal').on('click', function(e) {
         e.preventDefault();
         openLoginModal();
+    });
+
+    $('.register-modal').on('click', function(e) {
+        e.preventDefault();
+        openRegisterModal();
     });
 
     $('body').on('click', 'i.close-modal', function() {
@@ -50,7 +55,7 @@ $(function() {
 
             if (mail.val().length > 0 && password.val().length > 0) {
                 showSpinner('form.login');
-                hideError($('form.login .error'));
+                hideNotification('form.login');
 
                 $.ajax({
                     method: 'POST',
@@ -68,16 +73,88 @@ $(function() {
                         closeModal();
                     },
                     error(error) {
-                        displayError($('form.login .error'), error.responseJSON.message);
+                        showNotification('form.login', 'error', error.responseJSON.message);
                     }
                 })
                 .always(function() {
                     hideSpinner('form.login');
                 });
             } else {
-                displayError($('form.login .error'), 'Tous les champs sont requis');
+                showNotification('form.login', 'error', 'Tous les champs sont requis');
             }
         })
+    //
+
+    // LOGOUT
+        $('body').on('click', 'aside .logout', function() {
+            $('.modal-background').addClass('is-active');
+            $.ajax({
+                method: 'POST',
+                url: apiUrl + '/logout',
+                success() {
+                    window.location.reload();
+                    $('.modal-background').removeClass('is-active');
+                },
+                error(error) {
+                    console.log(error);
+                }
+            });
+        });
+    //
+    
+    // REGISTER
+        $('body').on('submit', 'form.register', function(e) {
+            e.preventDefault();
+            const firstName = $('form.register input.first-name');
+            const lastName = $('form.register input.last-name');
+            const pseudo = $('form.register input.pseudo');
+            const mail = $('form.register input.mail');
+            const password = $('form.register input.password');
+            const passwordConfirm = $('form.register input.password-confirm');
+
+            if (firstName.val().length > 0 && lastName.val().length > 0 && pseudo.val().length > 0 &&  mail.val().length > 0 && password.val().length > 0 && passwordConfirm.val().length > 0) {
+                if (password.val() === passwordConfirm.val()) {
+                    showSpinner('form.register');
+    
+                    $.ajax({
+                        method: 'POST',
+                        url: apiUrl + '/user',
+                        headers: {
+                            Accept: 'application/json',
+                        },
+                        dataType: 'json',
+                        data: {
+                            firstName: firstName.val(),
+                            lastName: lastName.val(),
+                            pseudo: pseudo.val(),
+                            mail: mail.val(),
+                            password: password.val()
+                        },
+                        success(response) {
+                            // Wait for hideNotification() ends
+                            setTimeout(function() {
+                                showNotification('form.register', 'success', 'Inscription terminée !');
+                            }, 151);
+
+                            hideNotification('form.register');
+                            buildSideBarConnected();
+                            $('form.register input').val('');
+                            closeModal();
+                        },
+                        error(error) {
+                            showNotification('form.register', 'error', error.responseJSON.message);
+                        }
+                    })
+                    .always(function() {
+                        hideSpinner('form.register');
+                    });
+                } else {
+                    showNotification('form.register', 'error', 'Les mots de passe ne correspondent pas');
+                }
+            } else {
+                showNotification('form.register', 'error', 'Tous les champs sont requis');
+            }
+        });
     //
     
     function closeModal() {
@@ -106,9 +183,26 @@ $(function() {
         }, 250);
     }
 
+    function openRegisterModal() {
+        $('.modal-background').addClass('is-active');
+
+        $.ajax({
+            url: './assets/inc/register-modal.php',
+            method: 'post',
+            dataType: "html",
+            success: (function(modal) {
+                $('.modal-background').append(modal);
+            })
+        });
+
+        setTimeout(function() {
+            $('.modal').addClass('is-active');
+        }, 250);
+    }
+
     function buildSideBarConnected() {
         $('aside ul.secondary__menu').empty();
-        $('aside ul.secondary__menu').append('<li><a href="profile"><i class="bi bi-person-circle is-active"></i>Profile</a></li><li><a href="logout"><i class="bi bi-box-arrow-left is-active"></i></i>Déconnexion</a></li>');
+        $('aside ul.secondary__menu').append('<li><a href="profile"><i class="bi bi-person-circle is-active"></i>Profile</a></li><li><a class="logout" href="javascript:;"><i class="bi bi-box-arrow-left is-active"></i></i>Déconnexion</a></li>');
     }
 
     function showSpinner(element) {
@@ -121,21 +215,27 @@ $(function() {
         $(element + ' button i').addClass('is-active');
     }
 
-    function displayError(domElement, text) {
-        domElement.text(text);
-        domElement.css('display', 'flex');
+    function showNotification(domElement, type, text) {
+        $(domElement + ' .notification').removeClass('error');
+        $(domElement + ' .notification').removeClass('success');
+        $(domElement + ' .notification').addClass(type);
+
+        $(domElement + ' .notification').text(text);
+        $(domElement + ' .notification').css('display', 'flex');
 
         setTimeout(function() {
-            domElement.addClass('is-active');
+            $(domElement + ' .notification').addClass('is-active');
         }, 10);
     }
 
-    function hideError(domElement) {
-        domElement.removeClass('is-active');
+    function hideNotification(domElement) {
+        $(domElement + ' .notification').removeClass('is-active');
+        $(domElement + ' .notification').removeClass('error');
+        $(domElement + ' .notification').removeClass('success');
 
         setTimeout(function() {
-            domElement.css('display', 'none');
-            domElement.empty();
+            $(domElement + ' .notification').css('display', 'none');
+            $(domElement + ' .notification').empty();
         }, 150);
     }
 });

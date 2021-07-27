@@ -10,6 +10,7 @@ abstract class AbstractClass {
 
     public function hydrate(array $data, array $mandatoryFields = []) {
 		foreach ($data as $key => $value) {
+			var_dump($value, $data);
 			/*if (in_array($key, $mandatoryFields)) {
 				
 			}*/

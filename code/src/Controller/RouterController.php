@@ -25,6 +25,10 @@ class RouterController {
             $this->returnView('login');
         }
 
+        else if ($url === '/register') {
+            $this->returnView('register');
+        }
+
         else if ($url === '/user' || $url === '/login-check' || $url === '/logout') {
             $this->returnView('user', 200, UserController::class);
         }
