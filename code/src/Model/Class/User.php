@@ -14,6 +14,14 @@ class User extends AbstractClass {
     private DateTime|null $registeredAt;
 
     public function __construct(array $data = []) {
+        if (isset($data['roles'])) {
+            $data['roles'] = json_decode($data['roles'], true);
+        }
+
+        if (isset($data['registered_at'])) {
+            $data['registered_at'] = date_create($data['registered_at']);
+        }
+
         parent::__construct($data);
     }
 
@@ -26,7 +34,6 @@ class User extends AbstractClass {
             'firstName' => $this->getFirstName(),
             'lastName' => $this->getLastName(),
             'mail' => $this->getMail(),
-            'password' => $this->getPassword(),
             'pseudo' => $this->getPseudo(),
             'roles' => $this->getRoles(),
             'registeredAt' => $this->getRegisteredAt()

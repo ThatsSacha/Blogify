@@ -69,8 +69,7 @@ class UserService {
                     if (strlen($isEmailAndPseudoUnique) <= 0) {
                         $user = new User($data);
                         $insert = $this->userManager->create($user);
-                        return array('status' => 201, 'type' => 'success', 'data' => $insert);
-                        //$this->logUser(new User($insert));
+                        $this->logUser($user);
 
                         if (!$insert instanceof Exception) {
                             return array('status' => 201, 'type' => 'success');
@@ -115,7 +114,7 @@ class UserService {
             sleep(1);
             $password = $data['password'];
             $user = $this->userManager->findByMail($data['mail']);
-
+            
             if (count($user) > 0 && password_verify($password, $user[0]['password'])) {
                 $this->logUser(new User($user[0]));
 
@@ -213,6 +212,34 @@ class UserService {
         return array(
             'isValid' => false,
             'message' => 'Your password should be equal or longer than 6 characters'
+        );
+    }
+
+    /**
+     * @return User|array
+     */
+    public function findOneByMail(): User|array {
+        if (isset($_SESSION) && $_SESSION['logged']) {
+            if (isset($_SESSION['user']['mail']) && !empty($_SESSION['user']['mail'])) {
+                $users = $this->userManager->findByMail($_SESSION['user']['mail']);
+
+                if (count($users) > 0) {
+                    $user = new User($users[0]);
+                    return $user;
+                }
+            }
+
+            return array(
+                'type' => 'error',
+                'status' => 401,
+                'message' => 'An error occured with this session'
+            );
+        }
+
+        return array(
+            'type' => 'error',
+            'status' => 401,
+            'message' => 'Unauthorized'
         );
     }
 }

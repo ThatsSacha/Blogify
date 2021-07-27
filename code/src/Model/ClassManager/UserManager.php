@@ -41,14 +41,6 @@ class UserManager {
                 $data->getPseudo(),
                 json_encode($data->getRoles())
             ));
-
-            $query = $this->db->query('SELECT LAST_INSERT_ID()');
-            $id = $query->fetchAll()[0][0];
-            $user = $this->findOneBy($id);
-            var_dump($user);
-            die();
-            // Returns the id of element just created
-            return $user;
         } catch (Exception $e) {
             return new Exception($e->getMessage());
         }
@@ -103,10 +95,7 @@ class UserManager {
 
         if (count($response) > 0) {
             $response = $response[0];
-            
-            $test =  new User($response);
-            print_r($test);
-            die();
+            //
         }
         
         return null;

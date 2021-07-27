@@ -3,6 +3,8 @@ namespace App\Controller;
 
 class RouterController {
     private $url;
+    public $result;
+    public $json = null;
 
     public function __construct()
     {
@@ -21,16 +23,16 @@ class RouterController {
             $this->returnView('blog', 200, BlogController::class);
         }
 
-        else if ($url === '/login') {
-            $this->returnView('login');
-        }
-
         else if ($url === '/register') {
             $this->returnView('register');
         }
 
         else if ($url === '/user' || $url === '/login-check' || $url === '/logout') {
             $this->returnView('user', 200, UserController::class);
+        }
+
+        else if ($url === '/profile') {
+            $this->returnView('profile', 200, UserController::class);
         }
 
         else if ($url === '/is-connected') {
@@ -43,9 +45,9 @@ class RouterController {
     }
     
     private function returnView(string $viewName, int $statusCode = 200, $class = null) {
-        $controllerName = __DIR__ . '/' . ucfirst($viewName) . 'Controller.php';
-        $controllerExists = is_file($controllerName);
-    
+        $controllerName = str_replace('App\\Controller\\', '', $class) . '.php';
+        $controllerExists = is_file(__DIR__ . '/' . $controllerName);
+        
         if ($controllerExists) {
             if (isset($_POST) && count($_POST) > 0) {
                 $input = $_POST;
@@ -57,6 +59,10 @@ class RouterController {
             $class = new $class($this->url, $data);
         }
 
+        if (isset($class) && method_exists($class, 'loadResult') && $class->loadResult() !== null) {
+            $this->json = json_encode($class->loadResult());
+        }
+
         if ($_SERVER['HTTP_ACCEPT'] === 'application/json') {
             isset($class->loadResult()['status'])
                 && 
@@ -66,10 +72,10 @@ class RouterController {
                 : 
             $statusCode;
 
-            if ($class->loadResult() !== null) {
-                echo json_encode($class->loadResult());
-            }
+            echo $this->json;
         } else {
+            $this->result = $this->json;
+            //echo $this->result;
             require __DIR__ . '../../View/'. $viewName .'.php';
         }
 

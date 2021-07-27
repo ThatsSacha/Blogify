@@ -10,8 +10,10 @@ class UserController {
     private string $url;
     private string $method;
     private $result;
+    private UserService $userService;
 
     public function __construct(string $url, $data = null) {
+        $this->userService = new UserService();
         $this->data = $data;
         $this->url = $url;
         $this->method = $_SERVER['REQUEST_METHOD'];
@@ -32,7 +34,9 @@ class UserController {
         } else if (in_array($this->method, ['OPTIONS', 'GET'])) {
             if ($this->url === '/logout') {
                 $this->logout();
-            }
+            } else if ($this->url === '/profile') {
+                $this->findOneBy();
+            } 
         } else {
             $this->result = [
                 'type' => 'error',
@@ -47,8 +51,7 @@ class UserController {
     }
 
     public function login() {
-        $userService = new UserService();
-        $this->result = $userService->login($this->data);
+        $this->result = $this->userService->login($this->data);
     }
 
     public function logout() {
@@ -57,16 +60,14 @@ class UserController {
     }
 
     public function isConnected() {
-        $userService = new UserService();
-        $this->result = $userService->isConnected();
+        $this->result = $this->userService->isConnected();
     }
 
     /**
      * This function verify all fields and if match, create user
      */
     public function create() {
-        $userService = new UserService();
-        $this->result = $userService->create($this->data);
+        $this->result = $this->userService->create($this->data);
     }
 
     public function findAll() {
@@ -74,6 +75,12 @@ class UserController {
     }
 
     public function findOneBy() {
-        $this->result = $this->blogManager->findOneBy($_GET['id']);
+        $resp = $this->userService->findOneByMail();
+
+        if ($resp instanceof User) {
+            $resp = $resp->jsonSerialize();
+        }
+
+        $this->result = $resp;
     }
 }
