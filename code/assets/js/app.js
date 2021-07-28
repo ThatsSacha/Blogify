@@ -157,6 +157,54 @@ $(function() {
         });
     //
     
+    // UPDATE PROFILE
+        $('form.update-profile').on('submit', function(e) {
+            e.preventDefault();
+            const firstName = $('form.update-profile input.first-name');
+            const lastName = $('form.update-profile input.last-name');
+            const pseudo = $('form.update-profile input.pseudo');
+            const mail = $('form.update-profile input.mail');
+
+            if (firstName.val().length > 0 && lastName.val().length > 0 && pseudo.val().length > 0 &&  mail.val().length > 0) {
+                showSpinner('form.update-profile');
+                
+                $.ajax({
+                    method: 'POST',
+                    url: apiUrl + '/user/update',
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                    dataType: 'json',
+                    data: {
+                        firstName: firstName.val(),
+                        lastName: lastName.val(),
+                        pseudo: pseudo.val(),
+                        mail: mail.val()
+                    },
+                    success(response) {
+                        // Wait for hideNotification() ends
+                        setTimeout(function() {
+                            showNotification('form.update-profile', 'success', 'Inscription terminée !');
+                        }, 151);
+                        
+                        hideNotification('form.update-profile');
+                        buildSideBarConnected();
+                        $('form.register input').val('');
+                        closeModal();
+                    },
+                    error(error) {
+                        showNotification('form.update-profile', 'error', error.responseJSON.message);
+                    }
+                })
+                .always(function() {
+                    hideSpinner('form.update-profile');
+                });
+            } else {
+                showNotification('form.update-profile', 'error', 'Tous les champs sont requis');
+            }
+        });
+    //
+    
     function closeModal() {
         $('.modal').removeClass('is-active');
 

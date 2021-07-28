@@ -1,6 +1,7 @@
 <?php
 
 require 'vendor/autoload.php';
+setlocale(LC_TIME, 'fr_FR');
 use App\Controller\RouterController;
 session_start();
 

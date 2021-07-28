@@ -3,7 +3,6 @@ namespace App\Controller;
 
 class RouterController {
     private $url;
-    public $result;
     public $json = null;
 
     public function __construct()
@@ -27,7 +26,11 @@ class RouterController {
             $this->returnView('register');
         }
 
-        else if ($url === '/user' || $url === '/login-check' || $url === '/logout') {
+        else if ($url === '/login') {
+            $this->returnView('login');
+        }
+
+        else if (strpos($url, 'user/update') || $url === '/user' || $url === '/login-check') {
             $this->returnView('user', 200, UserController::class);
         }
 
@@ -63,7 +66,7 @@ class RouterController {
             $this->json = json_encode($class->loadResult());
         }
 
-        if ($_SERVER['HTTP_ACCEPT'] === 'application/json') {
+        if ($_SERVER['HTTP_ACCEPT'] === 'application/json' && method_exists($class, 'loadResult')) {
             isset($class->loadResult()['status'])
                 && 
             $class->loadResult()['type'] === 'error' 
@@ -74,9 +77,11 @@ class RouterController {
 
             echo $this->json;
         } else {
-            $this->result = $this->json;
-            //echo $this->result;
-            require __DIR__ . '../../View/'. $viewName .'.php';
+            //echo $this->json;
+            $this->json = json_decode($this->json, true);
+            
+            $view = __DIR__ . '../../View/'. $viewName .'.php';
+            require $view;
         }
 
         http_response_code($statusCode);

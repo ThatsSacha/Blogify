@@ -87,6 +87,25 @@ html body .notification.success {
 html body .notification.success:hover {
   background-color: #329064;
 }
+html body .card {
+  padding: 10px;
+  background-color: #45426C;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+html body .card h3 {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #e0e0e0c5;
+}
+html body .card span {
+  color: white;
+  font-weight: 300;
+}
 html body main {
   width: 70%;
   left: 30%;
@@ -97,6 +116,12 @@ html body main.center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+html body main > h1 {
+  margin-bottom: 25px;
+}
+html body main h2 {
+  margin-bottom: 10px;
 }
 
 .spinner-border, i {
@@ -117,6 +142,10 @@ form {
   align-items: center;
   width: 80%;
   margin: auto;
+}
+form.w-100 {
+  margin: 0;
+  width: 100%;
 }
 form h1 {
   margin-bottom: 10px;
@@ -148,6 +177,7 @@ form button {
   justify-content: center;
   align-self: flex-end;
   cursor: pointer;
+  color: white;
   transition: 150ms;
 }
 form button .spinner-border, form button i {
@@ -155,13 +185,21 @@ form button .spinner-border, form button i {
 }
 form button.red-btn {
   background-color: #A53C65;
-  color: white;
 }
 form button.red-btn .spinner-border, form button.red-btn i {
   color: white;
 }
 form button.red-btn:hover {
   background-color: #98375c;
+}
+form button.green-btn {
+  background-color: #3ca574;
+}
+form button.green-btn .spinner-border, form button.green-btn i {
+  color: white;
+}
+form button.green-btn:hover {
+  background-color: #329064;
 }
 form .form-space-between {
   display: flex;

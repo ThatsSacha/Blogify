@@ -5,6 +5,11 @@ form {
     width: 80%;
     margin: auto;
 
+    &.w-100 {
+        margin: 0;
+        width: 100%;
+    }
+
     h1 {
         margin-bottom: 10px;
     }
@@ -40,6 +45,7 @@ form {
         justify-content: center;
         align-self: flex-end;
         cursor: pointer;
+        color: white;
         transition: 150ms;
 
         .spinner-border, i {
@@ -48,7 +54,6 @@ form {
 
         &.red-btn {
             background-color: $th-red;
-            color: white;
 
             .spinner-border, i {
                 color: white;
@@ -56,6 +61,18 @@ form {
 
             &:hover {
                 background-color: $th-red-hover;
+            }
+        }
+
+        &.green-btn {
+            background-color: $th-green;
+
+            .spinner-border, i {
+                color: white;
+            }
+
+            &:hover {
+                background-color: $th-green-hover;
             }
         }
     }

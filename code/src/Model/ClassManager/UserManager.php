@@ -105,6 +105,20 @@ class UserManager {
         $query = $this->db->prepare(
             'SELECT * FROM user WHERE mail = :mail OR pseudo = :pseudo'
         );
+
+        $query->execute(array(
+            'mail' => $mail,
+            'pseudo' => $pseudo
+        ));
+
+        return $query->fetchAll();
+    }
+
+    public function findWhereMailOrPseudoDifferent(int $id, string $mail = null, string $pseudo = null) {
+        $query = $this->db->prepare(
+            'SELECT * FROM user WHERE mail = :mail OR pseudo = :pseudo'
+        );
+
         $query->execute(array(
             'mail' => $mail,
             'pseudo' => $pseudo
@@ -122,5 +136,27 @@ class UserManager {
         ));
 
         return $query->fetchAll();
+    }
+
+    public function update(User $user) {
+        try {
+            $query = $this->db->prepare(
+                "UPDATE user SET
+                    first_name = :first_name,
+                    last_name = :last_name,
+                    mail = :mail,
+                    pseudo = :pseudo
+                WHERE mail = :mail"
+            );
+            
+            $query->execute(array(
+                $user->getFirstName(),
+                $user->getLastName(),
+                $user->getMail(),
+                $user->getPseudo()
+            ));
+        } catch (Exception $e) {
+            return new Exception($e->getMessage());
+        }
     }
 }

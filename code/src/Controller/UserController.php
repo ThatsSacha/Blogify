@@ -28,6 +28,8 @@ class UserController {
                 $this->logout();
             } else if ($this->url === '/is-connected') {
                 $this->isConnected();
+            } else if (strpos($this->url, '/update')) {
+                $this->update();
             } else {
                 $this->create();
             }
@@ -82,5 +84,9 @@ class UserController {
         }
 
         $this->result = $resp;
+    }
+
+    public function update(): void {
+        $this->result = $this->userService->update($this->data);
     }
 }

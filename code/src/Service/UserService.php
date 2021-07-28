@@ -5,9 +5,6 @@ namespace App\Service;
 use App\Model\Class\User;
 use App\Model\ClassManager\UserManager;
 use Exception;
-use PDOException;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class UserService {
     private $userManager;
@@ -98,7 +95,7 @@ class UserService {
                 return array(
                     'type' => 'error',
                     'status' => 400,
-                    'message' => 'The email format is wrong'
+                    'message' => 'Le format de l\'adresse mail est erroné'
                 );
             }
         }
@@ -142,6 +139,7 @@ class UserService {
     public function logUser(User $user): void {
         $_SESSION['logged'] = true;
         $_SESSION['user'] = array(
+            'id' => $user->getId(),
             'firstName' => $user->getFirstName(),
             'lastName' => $user->getLastName(),
             'mail' => $user->getMail(),
@@ -155,8 +153,8 @@ class UserService {
      * 
      * @return string
      */
-    public function isEmailAndPseudoUnique(string $mail, string $pseudo): string {
-        $query = $this->userManager->findByMailOrPseudo($mail, $pseudo);
+    public function isEmailAndPseudoUnique(string $mail, string $pseudo, $clause = null): string {
+        $query = $this->userManager->findByMailOrPseudo($mail, $pseudo, $clause);
         $response = '';
 
         if (count($query) > 0) {
@@ -227,6 +225,87 @@ class UserService {
                     $user = new User($users[0]);
                     return $user;
                 }
+            }
+
+            return array(
+                'type' => 'error',
+                'status' => 401,
+                'message' => 'An error occured with this session'
+            );
+        }
+
+        return array(
+            'type' => 'error',
+            'status' => 401,
+            'message' => 'Unauthorized'
+        );
+    }
+
+    public function update(array $data) {
+        if (isset($_SESSION) && $_SESSION['logged']) {
+            if (isset($_SESSION['user']['mail']) && !empty($_SESSION['user']['mail'])) {
+                if (isset($data['firstName']) && !empty($data['firstName']) && isset($data['lastName']) && !empty($data['lastName']) && isset($data['pseudo']) && !empty($data['pseudo']) && isset($data['mail']) && !empty($data['mail'])) {
+                    $firstName = htmlspecialchars($data['firstName']);
+                    $lastName = htmlspecialchars($data['lastName']);
+                    $pseudo = htmlspecialchars($data['pseudo']);
+                    $mail = htmlspecialchars($data['mail']);
+
+                    if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+                        $users = $this->userManager->findWhereMailOrPseudoDifferent($_SESSION['user']['id'], $mail, $pseudo);
+
+                        foreach($users as $user) {
+                            /* TODO */
+                            var_dump($user['pseudo'], $pseudo, $user['pseudo'] === $pseudo);
+                                die();
+                            if ($user['id'] != $_SESSION['user']['id']) {
+                                
+                                if ($user['mail'] === $mail || $user['pseudo'] === $pseudo) {
+                                    return array(
+                                        'type' => 'error',
+                                        'status' => 400,
+                                        'message' => "Cette adresse mail ou ce pseudo est déjà utilisé"
+                                    );
+                                }
+                            }
+                        }
+                        /*
+                            $data = array(
+                                'firstName' => $firstName,
+                                'lastName' => $lastName,
+                                'pseudo' => $pseudo,
+                                'mail' => $mail
+                            );
+                            var_dump($_SESSION);
+                            die();
+                            $user = new User($data);
+                            $insert = $this->userManager->update($user);
+                            $this->logUser($user);
+    
+                            if (!$insert instanceof Exception) {
+                                return array('status' => 201, 'type' => 'success');
+                            }
+    
+                            return array(
+                                'status' => 400,
+                                'type' => 'error',
+                                'message' => $insert->getMessage()
+                            );
+                        */
+                        return;
+                    }
+
+                    return array(
+                        'type' => 'error',
+                        'status' => 400,
+                        'message' => 'Le format de l\'adresse mail est erroné'
+                    );
+                }
+
+                return array(
+                    'type' => 'error',
+                    'status' => 400,
+                    'message' => 'Tous les champs sont requis'
+                );
             }
 
             return array(
