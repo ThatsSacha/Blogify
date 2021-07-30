@@ -35,6 +35,7 @@ class ArticleManager {
                     'teaser' => $response['teaser'],
                     'content' => $response['content'],
                     'cover' => $response['cover'],
+                    'coverCredit' => $response['cover_credit'],
                     'authorId' => $response['author_id'] === null ? 0 : $response['author_id'],
                     'createdAt' => date_create($response['created_at']),
                     'updatedAt' => $response['updated_at'] === null ? null : date_create($response['updated_at'])
@@ -52,9 +53,9 @@ class ArticleManager {
     /**
      * @param $id
      * 
-     * @return array
+     * @return Article|null
      */
-    public function findOneBy($id): array {
+    public function findOneBy($id): Article|null {
         $query = $this->db->query(
             'SELECT * FROM article WHERE id = ' . $id
         );
@@ -71,14 +72,15 @@ class ArticleManager {
                 'teaser' => $response['teaser'],
                 'content' => $response['content'],
                 'cover' => $response['cover'],
+                'coverCredit' => $response['cover_credit'],
                 'authorId' => $response['author_id'] === null ? 0 : $response['author_id'],
                 'createdAt' => date_create($response['created_at']),
                 'updatedAt' => $response['updated_at'] === null ? null : date_create($response['updated_at'])
             ));
     
-            return $article->jsonSerialize();
+            return $article;
         }
         
-        return array();
+        return null;
     }
 }

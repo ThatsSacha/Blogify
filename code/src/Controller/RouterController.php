@@ -13,13 +13,17 @@ class RouterController {
 
     public function checkRoute() {
         $url = $this->url;
-
+        
         if ($url === '/') {
             $this->returnView('index');
         }
         
         else if ($url === '/blog' || strpos($url, 'blog')) {
             $this->returnView('blog', 200, BlogController::class);
+        }
+
+        else if (strpos($url, '/article') !== false) {
+            $this->returnView('article', 200, BlogController::class);
         }
 
         else if ($url === '/register') {
@@ -30,7 +34,7 @@ class RouterController {
             $this->returnView('login');
         }
 
-        else if (strpos($url, 'user/update') || $url === '/user' || $url === '/login-check') {
+        else if (strpos($url, 'user/update') || $url === '/user' || $url === '/logout' || $url === '/login-check') {
             $this->returnView('user', 200, UserController::class);
         }
 

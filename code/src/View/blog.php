@@ -7,16 +7,22 @@
     </head>
     <body>
         <?php include('assets/inc/side-bar.php'); ?>
-        <main>
+        <main class="blog">
             <h1>Blog 📃</h1>
             <div class="article-container">
                 <?php
                     foreach($this->json as $article) {
                         ?>
                             <div class="card">
+                                <a href="article?id=<?= $article['id'] ?>"></a>
                                 <div class="cover" style="background-image: url(../../assets/img/blog/<?= $article['cover'] ?>)"></div>
-                                <h3><?= $article['title'] ?></h3>
-                                <span>Le 8 mars - Sacha COHEN</span>
+                                <div class="bottom">
+                                    <h3><?= $article['title'] ?></h3>
+                                    <span>Le 
+                                        <?= strftime('%d %B', strtotime($article['createdAt']['date'])); 
+                                        ?> ⸱ Sacha COHEN
+                                    </span>
+                                </div>
                             </div>
                         <?php
                     }

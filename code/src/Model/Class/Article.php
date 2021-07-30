@@ -9,6 +9,7 @@ class Article extends AbstractClass {
     private string $teaser;
     private string $content;
     private string $cover;
+    private string $coverCredit;
     private int $authorId;
     private DateTime $createdAt;
     private DateTime|null $updatedAt;
@@ -27,6 +28,7 @@ class Article extends AbstractClass {
             'teaser' => $this->getTeaser(),
             'content' => $this->getContent(),
             'cover' => $this->getCover(),
+            'coverCredit' => $this->getCoverCredit(),
             'author' => $this->getAuthorId(),
             'createdAt' => $this->getCreatedAt(),
             'updatedAt' => $this->getUpdatedAt()
@@ -71,6 +73,14 @@ class Article extends AbstractClass {
 
     public function setCover(string $cover): void {
         $this->cover = $cover;
+    }
+
+    public function getCoverCredit(): string {
+        return $this->coverCredit;
+    }
+
+    public function setCoverCredit(string $coverCredit): void {
+        $this->coverCredit = $coverCredit;
     }
 
     public function getAuthorId(): int {

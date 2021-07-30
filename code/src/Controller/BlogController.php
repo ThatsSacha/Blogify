@@ -40,6 +40,16 @@ class BlogController {
     }
 
     public function findOneBy() {
-        $this->result = $this->blogManager->findOneBy($_GET['id']);
+        $article = $this->blogManager->findOneBy($_GET['id']);
+
+        if ($article !== null) {
+            $this->result = $article->jsonSerialize();
+        } else {
+            $this->result = $this->result = [
+                'type' => 'error',
+                'status' => 404,
+                'message' => 'Not found'
+            ];
+        }
     }
 }

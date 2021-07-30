@@ -255,6 +255,71 @@ form .form-space-between a:hover {
   top: 10%;
 }
 
+html body main.blog .article-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+html body main.blog .article-container .card {
+  height: 250px;
+  width: 33.3%;
+  min-width: 300px;
+  padding: 0;
+  overflow: hidden;
+  margin: 10px;
+  position: relative;
+  opacity: 1;
+  box-shadow: 0 0 31px -25px transparent;
+  transition: 300ms;
+}
+html body main.blog .article-container .card:first-child {
+  margin-left: 0;
+}
+html body main.blog .article-container .card:hover {
+  opacity: 0.9;
+  box-shadow: 0 0 31px -25px white;
+}
+html body main.blog .article-container .card:hover .cover {
+  background-size: 103%;
+}
+html body main.blog .article-container .card a {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+html body main.blog .article-container .card .cover {
+  height: 70%;
+  width: 100%;
+  background-position: center;
+  background-size: 100%;
+  transition: 500ms;
+}
+html body main.blog .article-container .card .bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  height: 30%;
+  width: 100%;
+}
+html body main.article h2 {
+  color: #e0e0e0c5;
+}
+html body main.article .small-text {
+  color: white;
+  font-size: 12px;
+  font-weight: 300;
+}
+html body main.article .cover {
+  height: 300px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 10px 0;
+  border-radius: 2px;
+}
+
 /*@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
 @include _assert-starts-at-zero($grid-breakpoints, "$grid-breakpoints");*/
 @keyframes spinner-border {
