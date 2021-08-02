@@ -22,6 +22,10 @@ class RouterController {
             $this->returnView('blog', 200, BlogController::class);
         }
 
+        else if (strpos($url, '/add-article') !== false) {
+            $this->returnView('add-article', 200, BlogController::class);
+        }
+
         else if (strpos($url, '/article') !== false) {
             $this->returnView('article', 200, BlogController::class);
         }
@@ -61,7 +65,8 @@ class RouterController {
             } else {
                 $input = json_decode(file_get_contents('php://input'), true);
             }
-            
+            /*var_dump(file_get_contents('php://input'));
+            die();*/
             $data = $input;
             $class = new $class($this->url, $data);
         }

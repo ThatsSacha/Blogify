@@ -3,14 +3,16 @@ namespace App\Controller;
 use App\Model\ClassManager\ArticleManager;
 
 class BlogController {
+    private $data;
     private ArticleManager $blogManager;
     private string $url;
     private string $method;
     private $result;
 
-    public function __construct(string $url) {
+    public function __construct(string $url, $data = null) {
         $this->blogManager = new ArticleManager();
         $this->url = $url;
+        $this->data = $data;
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->checkRoute();
     }
@@ -22,6 +24,9 @@ class BlogController {
             } else {
                 $this->findAll();
             }
+        } else if (in_array($this->method, ['OPTIONS', 'POST'])) {
+            var_dump($this->data);
+            die();
         } else {
             $this->result = [
                 'type' => 'error',

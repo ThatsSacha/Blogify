@@ -204,6 +204,62 @@ $(function() {
             }
         });
     //
+
+    // ADD ARTICLE
+        $('form.add-article').on('submit', function(e) {
+            e.preventDefault();
+            const title = $('form.add-article input.title');
+            const teaser = $('form.add-article input.teaser');
+            const content = $('form.add-article textarea.content');
+            const coverCredit = $('form.add-article input.cover-credit');
+
+            if (title.val().length > 0 && teaser.val().length > 0 && content.val().length > 0 &&  coverCredit.val().length > 0) {
+                showSpinner('form.add-article');
+
+                const formData = new FormData();
+                formData.append($('form.add-article input.cover')[0].files[0].name, $('form.add-article input.cover')[0].files[0]);
+
+                const myData = {
+                    title: title.val(),
+                    teaser: teaser.val(),
+                    cover: formData,
+                    coverCredit: coverCredit.val(),
+                    content: content.val()
+                };
+                
+                $.ajax({
+                    method: 'POST',
+                    url: apiUrl + '/blog',
+                    processData: false,
+                    headers: {
+                        Accept: 'application/json',
+                        contentType: 'multipart/form-data'
+                    },
+                    dataType: 'json',
+                    data: myData,
+                    success(response) {
+                        // Wait for hideNotification() ends
+                        setTimeout(function() {
+                            showNotification('form.add-article', 'success', 'Inscription terminée !');
+                        }, 151);
+                        
+                        hideNotification('form.add-article');
+                        buildSideBarConnected();
+                        $('form.register input').val('');
+                        closeModal();
+                    },
+                    error(error) {
+                        showNotification('form.add-article', 'error', error.responseJSON.message);
+                    }
+                })
+                .always(function() {
+                    hideSpinner('form.add-article');
+                });
+            } else {
+                showNotification('form.add-article', 'error', 'Tous les champs sont requis');
+            }
+        });
+    //
     
     function closeModal() {
         $('.modal').removeClass('is-active');

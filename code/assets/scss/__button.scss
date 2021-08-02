@@ -1,0 +1,45 @@
+
+a {
+    &.btn {
+        text-decoration: none;
+    }
+}
+
+button {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    cursor: pointer;
+    color: white;
+    transition: 150ms;
+
+    .spinner-border, i {
+        margin-right: 5px;
+    }
+
+    &.red-btn {
+        background-color: $th-red;
+
+        .spinner-border, i {
+            color: white;
+        }
+
+        &:hover {
+            background-color: $th-red-hover;
+        }
+    }
+
+    &.green-btn {
+        background-color: $th-green;
+
+        .spinner-border, i {
+            color: white;
+        }
+
+        &:hover {
+            background-color: $th-green-hover;
+        }
+    }
+}

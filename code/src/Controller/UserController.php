@@ -37,7 +37,11 @@ class UserController {
             if ($this->url === '/logout') {
                 $this->logout();
             } else if ($this->url === '/profile') {
-                $this->findOneBy();
+                if (count($_SESSION) > 0 && $_SESSION['logged']) {
+                    $this->findOneBy();
+                } else {
+                    header('Location: /');
+                }
             } 
         } else {
             $this->result = [

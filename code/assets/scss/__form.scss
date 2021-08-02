@@ -1,3 +1,41 @@
+input, textarea, button {
+    border: 1px solid transparent;
+    background-color: white;
+    border-radius: $th-border-radius;
+    padding: 10px;
+    height: 35px;
+    outline: none;
+}
+
+input, select, textarea {
+    margin-bottom: 10px;
+    width: 100%;
+    color: $th-main;
+    transition: 150ms;
+
+    &::placeholder {
+        color: $th-light;
+    }
+
+    &:focus {
+        height: 45px;
+    }
+}
+
+textarea {
+    resize: vertical;
+    height: 200px;
+
+    &:focus {
+        height: 245px;
+    }
+}
+
+label {
+    color: white;
+    align-self: flex-start;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -12,69 +50,6 @@ form {
 
     h1 {
         margin-bottom: 10px;
-    }
-
-    input, button {
-        border: 1px solid transparent;
-        background-color: white;
-        border-radius: $th-border-radius;
-        padding: 10px;
-        height: 35px;
-        outline: none;
-    }
-
-    input, select, textarea {
-        margin-bottom: 10px;
-        width: 100%;
-        color: $th-main;
-        transition: 150ms;
-
-        &::placeholder {
-            color: $th-light;
-        }
-
-        &:focus {
-            height: 45px;
-        }
-    }
-
-    button {
-        width: 25%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        align-self: flex-end;
-        cursor: pointer;
-        color: white;
-        transition: 150ms;
-
-        .spinner-border, i {
-            margin-right: 5px;
-        }
-
-        &.red-btn {
-            background-color: $th-red;
-
-            .spinner-border, i {
-                color: white;
-            }
-
-            &:hover {
-                background-color: $th-red-hover;
-            }
-        }
-
-        &.green-btn {
-            background-color: $th-green;
-
-            .spinner-border, i {
-                color: white;
-            }
-
-            &:hover {
-                background-color: $th-green-hover;
-            }
-        }
     }
 
     .form-space-between {

@@ -136,6 +136,41 @@ html body main h2 {
   border-width: 0.15rem !important;
 }
 
+input, textarea, button {
+  border: 1px solid transparent;
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px;
+  height: 35px;
+  outline: none;
+}
+
+input, select, textarea {
+  margin-bottom: 10px;
+  width: 100%;
+  color: #4b4875;
+  transition: 150ms;
+}
+input::placeholder, select::placeholder, textarea::placeholder {
+  color: #45426cc5;
+}
+input:focus, select:focus, textarea:focus {
+  height: 45px;
+}
+
+textarea {
+  resize: vertical;
+  height: 200px;
+}
+textarea:focus {
+  height: 245px;
+}
+
+label {
+  color: white;
+  align-self: flex-start;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -149,57 +184,6 @@ form.w-100 {
 }
 form h1 {
   margin-bottom: 10px;
-}
-form input, form button {
-  border: 1px solid transparent;
-  background-color: white;
-  border-radius: 15px;
-  padding: 10px;
-  height: 35px;
-  outline: none;
-}
-form input, form select, form textarea {
-  margin-bottom: 10px;
-  width: 100%;
-  color: #4b4875;
-  transition: 150ms;
-}
-form input::placeholder, form select::placeholder, form textarea::placeholder {
-  color: #45426cc5;
-}
-form input:focus, form select:focus, form textarea:focus {
-  height: 45px;
-}
-form button {
-  width: 25%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: flex-end;
-  cursor: pointer;
-  color: white;
-  transition: 150ms;
-}
-form button .spinner-border, form button i {
-  margin-right: 5px;
-}
-form button.red-btn {
-  background-color: #A53C65;
-}
-form button.red-btn .spinner-border, form button.red-btn i {
-  color: white;
-}
-form button.red-btn:hover {
-  background-color: #98375c;
-}
-form button.green-btn {
-  background-color: #3ca574;
-}
-form button.green-btn .spinner-border, form button.green-btn i {
-  color: white;
-}
-form button.green-btn:hover {
-  background-color: #329064;
 }
 form .form-space-between {
   display: flex;
@@ -318,6 +302,42 @@ html body main.article .cover {
   background-size: cover;
   margin: 10px 0;
   border-radius: 2px;
+}
+
+a.btn {
+  text-decoration: none;
+}
+
+button {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  cursor: pointer;
+  color: white;
+  transition: 150ms;
+}
+button .spinner-border, button i {
+  margin-right: 5px;
+}
+button.red-btn {
+  background-color: #A53C65;
+}
+button.red-btn .spinner-border, button.red-btn i {
+  color: white;
+}
+button.red-btn:hover {
+  background-color: #98375c;
+}
+button.green-btn {
+  background-color: #3ca574;
+}
+button.green-btn .spinner-border, button.green-btn i {
+  color: white;
+}
+button.green-btn:hover {
+  background-color: #329064;
 }
 
 /*@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
