@@ -41,6 +41,9 @@ class UserManager {
                 $data->getPseudo(),
                 json_encode($data->getRoles())
             ));
+
+            $query = $this->db->query('SELECT * FROM user WHERE id = LAST_INSERT_ID()');
+            return $query->fetchAll()[0];
         } catch (Exception $e) {
             return new Exception($e->getMessage());
         }

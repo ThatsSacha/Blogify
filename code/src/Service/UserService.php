@@ -66,7 +66,7 @@ class UserService {
                     if (strlen($isEmailAndPseudoUnique) <= 0) {
                         $user = new User($data);
                         $insert = $this->userManager->create($user);
-                        $this->logUser($user);
+                        $this->logUser(new User($insert));
 
                         if (!$insert instanceof Exception) {
                             return array('status' => 201, 'type' => 'success');

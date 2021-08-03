@@ -65,8 +65,7 @@ class RouterController {
             } else {
                 $input = json_decode(file_get_contents('php://input'), true);
             }
-            /*var_dump(file_get_contents('php://input'));
-            die();*/
+            
             $data = $input;
             $class = new $class($this->url, $data);
         }

@@ -4,17 +4,14 @@ namespace App\Model\Class;
 use Exception;
 
 abstract class AbstractClass {
-    public function __construct(array $data = [], array $mandatoryFields = []) {
+    public function __construct(array $data = []) {
         if (count($data) > 0) {
-			$this->hydrate($data, $mandatoryFields);
+			$this->hydrate($data);
 		}
     }
 
-    public function hydrate(array $data, array $mandatoryFields = []) {
+    public function hydrate(array $data) {
 		foreach ($data as $key => $value) {
-			/*if (in_array($key, $mandatoryFields)) {
-				
-			}*/
 			$keyUnderscore = strpos($key, '_');
 			if ($keyUnderscore > 0) {
 				$key = str_replace('_', '', $key);
@@ -24,6 +21,10 @@ abstract class AbstractClass {
 			$setterMethod = 'set' . ucfirst($key);
 			
 			if (method_exists($this, $setterMethod)) {
+				if (gettype($value) === 'string') {
+					$value = htmlspecialchars($value);
+				}
+
 				$this->$setterMethod($value);
 			}
 		}
