@@ -1,16 +1,22 @@
 <?php
 namespace App\Controller;
+use Exception;
+use App\Service\AuthService;
+use App\Service\ArticleService;
 use App\Model\ClassManager\ArticleManager;
 
 class BlogController {
     private $data;
-    private ArticleManager $blogManager;
+    private ArticleManager $articleManager;
+    private ArticleService $articleService;
     private string $url;
     private string $method;
     private $result;
+    private $authService;
 
     public function __construct(string $url, $data = null) {
-        $this->blogManager = new ArticleManager();
+        $this->articleManager = new ArticleManager();
+        $this->articleService = new ArticleService();
         $this->url = $url;
         $this->data = $data;
         $this->method = $_SERVER['REQUEST_METHOD'];
@@ -18,6 +24,8 @@ class BlogController {
     }
 
     private function checkRoute(): void {
+        $this->authService = new AuthService();
+
         if (in_array($this->method, ['OPTIONS', 'GET'])) {
             if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
                 $this->findOneBy();
@@ -25,8 +33,25 @@ class BlogController {
                 $this->findAll();
             }
         } else if (in_array($this->method, ['OPTIONS', 'POST'])) {
-            var_dump($this->data);
-            die();
+            if ($this->url === '/add-article') {
+                if ($this->authService->isLogged()) {
+                    if ($this->authService->isAdmin() || $this->authService->isSuperAdmin()) {
+                        $this->create();
+                    } else {
+                        $this->result = [
+                            'type' => 'error',
+                            'status' => 401,
+                            'message' => 'You don\'t have the rights to add an article'
+                        ];
+                    }
+                } else {
+                    $this->result = [
+                        'type' => 'error',
+                        'status' => 401,
+                        'message' => 'You have to be logged in to add an article'
+                    ];
+                }
+            }
         } else {
             $this->result = [
                 'type' => 'error',
@@ -41,11 +66,11 @@ class BlogController {
     }
 
     public function findAll() {
-        $this->result = $this->blogManager->findAll();
+        $this->result = $this->articleManager->findAll();
     }
 
     public function findOneBy() {
-        $article = $this->blogManager->findOneBy($_GET['id']);
+        $article = $this->articleManager->findOneBy($_GET['id']);
 
         if ($article !== null) {
             $this->result = $article->jsonSerialize();
@@ -54,6 +79,18 @@ class BlogController {
                 'type' => 'error',
                 'status' => 404,
                 'message' => 'Not found'
+            ];
+        }
+    }
+
+    public function create() {
+        try {
+            $this->articleService->create($this->data);
+        } catch (Exception $e) {
+            $this->result = [
+                'type' => 'error',
+                'status' => 400,
+                'message' => $e->getMessage()
             ];
         }
     }

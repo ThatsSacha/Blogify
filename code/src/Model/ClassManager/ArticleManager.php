@@ -2,9 +2,10 @@
 
 namespace App\Model\ClassManager;
 
-use App\Model\Class\Article;
 use PDO;
+use Exception;
 use PDOException;
+use App\Model\Class\Article;
 
 class ArticleManager {
     private PDO|PDOException $db;
@@ -82,5 +83,35 @@ class ArticleManager {
         }
         
         return null;
+    }
+
+    public function create(Article $data) {
+        try {
+            $query = $this->db->prepare(
+                "INSERT INTO article
+                    (
+                        title,
+                        teaser,
+                        content,
+                        cover,
+                        cover_credit,
+                        author_id
+                    )
+                    VALUES(
+                        ?, ?, ?, ?, ?, ?
+                    );"
+            );
+            
+            $query->execute(array(
+                $data->getTitle(),
+                $data->getTeaser(),
+                $data->getContent(),
+                $data->getCover(),
+                $data->getCoverCredit(),
+                $data->getAuthorId()
+            ));
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 }
