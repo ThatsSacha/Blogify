@@ -18,7 +18,7 @@ class RouterController {
             $this->returnView('index');
         }
         
-        else if ($url === '/blog' || strpos($url, 'blog')) {
+        else if ($url === '/blog' || strpos($url, 'blog') || strpos($url, 'add-comment')) {
             $this->returnView('blog', 200, BlogController::class);
         }
 
@@ -65,7 +65,7 @@ class RouterController {
             } else {
                 $input = json_decode(file_get_contents('php://input'), true);
             }
-            
+
             $data = $input;
             $class = new $class($this->url, $data);
         }
@@ -85,8 +85,8 @@ class RouterController {
 
             echo $this->json;
         } else {
-            //echo $this->json;
             $this->json = json_decode($this->json, true);
+            //echo $this->json;
             
             $view = __DIR__ . '../../View/'. $viewName .'.php';
             require $view;

@@ -78,6 +78,16 @@ html {
                     margin: 10px 0;
                     border-radius: 2px;
                 }
+
+                form {
+                    display: none;
+
+                    &.is-active {
+                        display: flex;
+                        margin: 0;
+                        margin-top: 10px;
+                    }
+                }
             }
         }
     }

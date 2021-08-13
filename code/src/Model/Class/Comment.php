@@ -1,5 +1,5 @@
 <?php
-namespace App\Class;
+namespace App\Model\Class;
 
 use App\Model\Class\AbstractClass;
 use DateTime;

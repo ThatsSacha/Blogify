@@ -219,6 +219,8 @@ $(function() {
                 const formData = new FormData();
                 formData.append($('form.add-article input.cover')[0].files[0].name, $('form.add-article input.cover')[0].files[0]);
 
+                // error is from formData
+
                 const myData = {
                     title: title.val(),
                     teaser: teaser.val(),
@@ -226,16 +228,15 @@ $(function() {
                     coverCredit: coverCredit.val(),
                     content: content.val()
                 };
-                
+                console.log(myData);
                 $.ajax({
                     method: 'POST',
-                    url: apiUrl + '/blog',
-                    processData: false,
+                    url: apiUrl + '/add-article',
+                    processData: true,
                     headers: {
-                        Accept: 'application/json',
                         contentType: 'multipart/form-data'
                     },
-                    dataType: 'json',
+                    dataType: 'multipart/form-data',
                     data: myData,
                     success(response) {
                         // Wait for hideNotification() ends
@@ -249,7 +250,7 @@ $(function() {
                         closeModal();
                     },
                     error(error) {
-                        showNotification('form.add-article', 'error', error.responseJSON.message);
+                        showNotification('form.add-article', 'error', error);
                     }
                 })
                 .always(function() {
@@ -257,6 +258,41 @@ $(function() {
                 });
             } else {
                 showNotification('form.add-article', 'error', 'Tous les champs sont requis');
+            }
+        });
+    //
+
+    // ADD COMMENT
+        $('main.article button.add-comment').on('click', function() {
+            $('main.article form').toggleClass('is-active');
+        });
+
+        $('main.article form').on('submit', function(e) {
+            e.preventDefault();
+            const content = $('main.article form textarea');
+
+            if (content.val().length) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get('id');
+
+                if (urlParams.has('id') && Number.isInteger(parseInt(id))) {
+                    hideNotification('form');
+                    showSpinner('form');
+
+                    $.ajax({
+                        method: 'POST',
+                        url: apiUrl + '/add-comment',
+                        dataType: 'application/json',
+                        data: {
+                            articleId: id,
+                            comment: content.val()
+                        }
+                    });
+                } else {
+                    showNotification('form', 'error', 'Une erreur s\'est produite en lien avec l\'ID de l\'article');
+                }
+            } else {
+                showNotification('form', 'error', 'Vous devez saisir un commentaire');
             }
         });
     //

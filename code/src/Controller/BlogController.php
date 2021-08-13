@@ -51,6 +51,8 @@ class BlogController {
                         'message' => 'You have to be logged in to add an article'
                     ];
                 }
+            } else if ($this->url === '/add-comment') {
+                $this->addComment();
             }
         } else {
             $this->result = [
@@ -85,11 +87,23 @@ class BlogController {
 
     public function create() {
         try {
-            $this->articleService->create($this->data);
+            $this->result = $this->articleService->create($this->data);
         } catch (Exception $e) {
             $this->result = [
                 'type' => 'error',
                 'status' => 400,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function addComment() {
+        try {
+            $this->result = $this->articleService->addComment($this->data);
+        } catch (Exception $e) {
+            $this->result = [
+                'type' => 'error',
+                'status' => $e->getCode() ? $e->getCode() : 400,
                 'message' => $e->getMessage()
             ];
         }
