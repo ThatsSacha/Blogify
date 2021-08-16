@@ -97,8 +97,8 @@ class UserManager {
         $response = $query->fetchAll();
 
         if (count($response) > 0) {
-            $response = $response[0];
-            //
+            $user = new User($response[0]);
+            return $user;
         }
         
         return null;

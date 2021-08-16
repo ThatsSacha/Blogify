@@ -39,4 +39,25 @@ class CommentManager {
             throw new Exception($e->getMessage());
         }
     }
+
+    public function getByArticleId(int $id): array|null {
+        $query = $this->db->query(
+            'SELECT * FROM comment WHERE article_id = ' . $id
+        );
+        $query->execute();
+        $response = $query->fetchAll();
+        
+        if (count($response) > 0) {
+            $comments = [];
+
+            foreach($response as $comment) {
+                $comment['created_at'] = date_create($comment['created_at']);
+                $comments[] = new Comment($comment);
+            }
+
+            return $comments;
+        }
+        
+        return null;
+    }
 }

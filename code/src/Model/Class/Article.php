@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Class;
 
+use App\Model\ClassManager\CommentManager;
+use App\Model\ClassManager\UserManager;
 use DateTime;
 
 class Article extends AbstractClass {
@@ -13,9 +15,14 @@ class Article extends AbstractClass {
     private int $authorId;
     private DateTime $createdAt;
     private DateTime|null $updatedAt;
+    private CommentManager $commentManager;
+    private UserManager $userManager;
 
     public function __construct(array $data = []) {
         parent::__construct($data);
+
+        $this->commentManager = new CommentManager();
+        $this->userManager = new UserManager();
     }
 
     /**
@@ -29,9 +36,10 @@ class Article extends AbstractClass {
             'content' => $this->getContent(),
             'cover' => $this->getCover(),
             'coverCredit' => $this->getCoverCredit(),
-            'author' => $this->getAuthorId(),
+            'author' => $this->getAuthorSerialized(),
             'createdAt' => $this->getCreatedAt(),
-            'updatedAt' => $this->getUpdatedAt()
+            'updatedAt' => $this->getUpdatedAt(),
+            'comments' => $this->getCommentsSerialized()
         );
     }
 
@@ -91,6 +99,10 @@ class Article extends AbstractClass {
         $this->authorId = $authorId;
     }
 
+    public function getAuthorSerialized(): array {
+        return $this->userManager->findOneBy($this->getAuthorId())->jsonSerialize();
+    }
+
     public function getCreatedAt(): DateTime {
         return $this->createdAt;
     }
@@ -105,5 +117,20 @@ class Article extends AbstractClass {
 
     public function setUpdatedAt(DateTime|null $updatedAt): void {
         $this->updatedAt = $updatedAt;
+    }
+
+    public function getComments() {
+        return $this->commentManager->getByArticleId($this->getId());
+    }
+
+    public function getCommentsSerialized(): array {
+        $comments = $this->getComments();
+        $commentsSerialized = [];
+
+        foreach($comments as $comment) {
+            $commentsSerialized[] = $comment->jsonSerialize();
+        }
+        
+        return $commentsSerialized;
     }
 }

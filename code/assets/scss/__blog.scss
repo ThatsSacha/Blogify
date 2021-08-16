@@ -79,6 +79,12 @@ html {
                     border-radius: 2px;
                 }
 
+                button {
+                    &.add-comment {
+                        margin-top: 25px;
+                    }
+                }
+
                 form {
                     display: none;
 
@@ -86,6 +92,20 @@ html {
                         display: flex;
                         margin: 0;
                         margin-top: 10px;
+                    }
+                }
+
+                .not-connected {
+                    display: flex;
+                    margin-top: 25px;
+
+                    i {
+                        margin-right: 10px;
+                    }
+
+                    i, span {
+                        color: $th-grey;
+                        font-size: 13px;
                     }
                 }
             }

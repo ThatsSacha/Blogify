@@ -16,6 +16,17 @@ class Comment extends AbstractClass {
         parent::__construct($data);
     }
 
+    public function jsonSerialize(): array {
+        return array(
+            'id' => $this->getId(),
+            'comment' => $this->getComment(),
+            'createdAt' => $this->getCreatedAt(),
+            'user' => $this->getUserId(),
+            'article' => $this->getArticleId(),
+            'isActive' => $this->getIsActive()
+        );
+    }
+
     public function getId(): int {
         return $this->id;
     }

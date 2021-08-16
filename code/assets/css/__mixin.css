@@ -6,7 +6,8 @@
 }
 
 html, body, main {
-  height: 100%;
+  height: auto;
+  min-height: 100vh;
 }
 
 html body aside, html body main {
@@ -303,6 +304,9 @@ html body main.article .cover {
   margin: 10px 0;
   border-radius: 2px;
 }
+html body main.article button.add-comment {
+  margin-top: 25px;
+}
 html body main.article form {
   display: none;
 }
@@ -310,6 +314,17 @@ html body main.article form.is-active {
   display: flex;
   margin: 0;
   margin-top: 10px;
+}
+html body main.article .not-connected {
+  display: flex;
+  margin-top: 25px;
+}
+html body main.article .not-connected i {
+  margin-right: 10px;
+}
+html body main.article .not-connected i, html body main.article .not-connected span {
+  color: #e0e0e0c5;
+  font-size: 13px;
 }
 
 a.btn {

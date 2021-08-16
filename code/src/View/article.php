@@ -22,18 +22,32 @@
             <p>
                 <?= $this->json['content'] ?>
             </p>
-            <button class="green-btn add-comment">
-                <i class="bi bi-chat-left-text is-active"></i>
-                Ajouter un commentaire
-            </button>
-            <form action="">
-                <textarea placeholder="Votre commentaire..."></textarea>
-                <div class="notification"></div>
-                <button class="red-btn">
-                    <i class="bi bi-arrow-right is-active"></i>
-                    Commenter cet article
-                </button>
-            </form>
+            <?php
+                if (count($_SESSION) > 0 && $_SESSION['logged']) {
+                    ?>
+                        <button class="green-btn add-comment">
+                            <i class="bi bi-chat-left-text is-active"></i>
+                            Ajouter un commentaire
+                        </button>
+                        <form action="">
+                            <textarea placeholder="Votre commentaire..."></textarea>
+                            <div class="notification"></div>
+                            <button class="red-btn">
+                                <i class="bi bi-arrow-right is-active"></i>
+                                <div class="spinner-border"></div>
+                                Commenter cet article
+                            </button>
+                        </form>
+                    <?php
+                } else {
+                    ?>
+                        <div class="not-connected">
+                            <i class="bi bi-info-circle is-active"></i>
+                            <span>Vous devez être connecté(e) pour commenter !</span>
+                        </div>
+                    <?php
+                }
+            ?>
         </main>
     </body>
 </html>

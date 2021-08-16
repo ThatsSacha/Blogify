@@ -282,11 +282,16 @@ $(function() {
                     $.ajax({
                         method: 'POST',
                         url: apiUrl + '/add-comment',
+                        Accept: 'application/json',
                         dataType: 'application/json',
                         data: {
                             articleId: id,
                             comment: content.val()
                         }
+                    })
+                    .always(function() {
+                        hideSpinner('form');
+                        $('form textarea').val('');
                     });
                 } else {
                     showNotification('form', 'error', 'Une erreur s\'est produite en lien avec l\'ID de l\'article');
