@@ -2,6 +2,7 @@
 namespace App\Model\Class;
 
 use App\Model\Class\AbstractClass;
+use App\Model\ClassManager\UserManager;
 use DateTime;
 
 class Comment extends AbstractClass {
@@ -11,9 +12,12 @@ class Comment extends AbstractClass {
     private int $userId;
     private int $articleId;
     private bool $isActive;
+    private UserManager $userManager;
 
     public function __construct(array $data = []) {
         parent::__construct($data);
+
+        $this->userManager = new UserManager();
     }
 
     public function jsonSerialize(): array {
@@ -21,7 +25,8 @@ class Comment extends AbstractClass {
             'id' => $this->getId(),
             'comment' => $this->getComment(),
             'createdAt' => $this->getCreatedAt(),
-            'user' => $this->getUserId(),
+            'createdAtFrench' => strftime('%A %d %B %G à %H:%M', strtotime(date_format($this->getCreatedAt(), 'Y-m-d H:i:s'))),
+            'user' => $this->getUserSerialized(),
             'article' => $this->getArticleId(),
             'isActive' => $this->getIsActive()
         );
@@ -61,6 +66,10 @@ class Comment extends AbstractClass {
 
     public function getUserId(): int {
         return $this->userId;
+    }
+
+    public function getUserSerialized(): array {
+        return $this->userManager->findOneBy($this->getUserId())->jsonSerialize();
     }
 
     public function setUserId(int $userId): void {

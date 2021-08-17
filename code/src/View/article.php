@@ -48,6 +48,23 @@
                     <?php
                 }
             ?>
+            <div class="comment-list">
+                <?php
+                    foreach($this->json['comments'] as $comment) {
+                        ?>
+                            <div class="comment card">
+                                <div class="top">
+                                    <h6>Par <?= $comment['user']['firstName'] ?> <?= $comment['user']['lastName'] ?></h6>
+                                    <small>
+                                        <?= $comment['createdAtFrench'] ?>
+                                    </small>
+                                </div>
+                                <span><?= $comment['comment'] ?></span>
+                            </div>
+                        <?php
+                    }
+                ?>
+            </div>
         </main>
     </body>
 </html>

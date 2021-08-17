@@ -26,26 +26,14 @@ class ArticleManager {
         $query->execute();
 
         $responses = $query->fetchAll();
-        $articles = array();
-        
+        $articles = [];
+
         if (count($responses) > 0) {
             foreach($responses as $response) {
-                $article = new Article(array(
-                    'id' => $response['id'],
-                    'title' => $response['title'],
-                    'teaser' => $response['teaser'],
-                    'content' => $response['content'],
-                    'cover' => $response['cover'],
-                    'coverCredit' => $response['cover_credit'],
-                    'authorId' => $response['author_id'] === null ? 0 : $response['author_id'],
-                    'createdAt' => date_create($response['created_at']),
-                    'updatedAt' => $response['updated_at'] === null ? null : date_create($response['updated_at'])
-                ));
-    
-                array_push($articles, $article->jsonSerialize());
+                $response['created_at'] = date_create($response['created_at']);
+                $response['author_id'] = (int) $response['author_id'];
+                $articles[] = new Article($response);
             }
-        } else {
-            array_push($articles, array());
         }
 
         return $articles;

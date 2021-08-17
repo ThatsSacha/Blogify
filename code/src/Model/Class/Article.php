@@ -99,8 +99,14 @@ class Article extends AbstractClass {
         $this->authorId = $authorId;
     }
 
-    public function getAuthorSerialized(): array {
-        return $this->userManager->findOneBy($this->getAuthorId())->jsonSerialize();
+    public function getAuthorSerialized(): array|null {
+        $user = $this->userManager->findOneBy($this->getAuthorId());
+
+        if ($user !== null) {
+            $user = $this->userManager->findOneBy($this->getAuthorId())->jsonSerialize();
+        }
+
+        return $user;
     }
 
     public function getCreatedAt(): DateTime {
@@ -126,7 +132,7 @@ class Article extends AbstractClass {
     public function getCommentsSerialized(): array {
         $comments = $this->getComments();
         $commentsSerialized = [];
-
+        
         foreach($comments as $comment) {
             $commentsSerialized[] = $comment->jsonSerialize();
         }

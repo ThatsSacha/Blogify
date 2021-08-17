@@ -68,7 +68,14 @@ class BlogController {
     }
 
     public function findAll() {
-        $this->result = $this->articleManager->findAll();
+        $articles = $this->articleManager->findAll();
+        $articlesSerialized = [];
+        
+        foreach($articles as $article) {
+            $articlesSerialized[] = $article->jsonSerialize();
+        }
+
+        $this->result = $articlesSerialized;
     }
 
     public function findOneBy() {
