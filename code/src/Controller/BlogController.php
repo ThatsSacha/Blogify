@@ -4,19 +4,23 @@ use Exception;
 use App\Service\AuthService;
 use App\Service\ArticleService;
 use App\Model\ClassManager\ArticleManager;
+use App\Model\ClassManager\CommentManager;
 
 class BlogController {
     private $data;
     private ArticleManager $articleManager;
     private ArticleService $articleService;
+    private CommentManager $commentManager;
     private string $url;
     private string $method;
     private $result;
-    private $authService;
+    private AuthService $authService;
 
     public function __construct(string $url, $data = null) {
         $this->articleManager = new ArticleManager();
         $this->articleService = new ArticleService();
+        $this->authService = new AuthService();
+        $this->commentManager = new CommentManager();
         $this->url = $url;
         $this->data = $data;
         $this->method = $_SERVER['REQUEST_METHOD'];
@@ -24,10 +28,10 @@ class BlogController {
     }
 
     private function checkRoute(): void {
-        $this->authService = new AuthService();
-
         if (in_array($this->method, ['OPTIONS', 'GET'])) {
-            if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
+            if (strpos($this->url, 'validate-comment')) {
+                $this->validateComment();
+            } else if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
                 $this->findOneBy();
             } else {
                 $this->findAll();
@@ -113,6 +117,20 @@ class BlogController {
                 'status' => $e->getCode() ? $e->getCode() : 400,
                 'message' => $e->getMessage()
             ];
+        }
+    }
+
+    public function validateComment() {
+        if (isset($_GET['article_id']) && !empty($_GET['article_id']) && is_numeric($_GET['article_id']) && isset($_GET['comment_id']) && !empty($_GET['comment_id']) && is_numeric($_GET['comment_id'])) {
+            if ($this->authService->isAdmin()) {
+                $this->commentManager->validateComment($_GET['comment_id']);
+            } else {
+                $this->result = array(
+                    'status' => 401,
+                    'type' => 'error',
+                    'message' => "Vous n'êtes pas autorisé à valider cet article"
+                );
+            }
         }
     }
 }

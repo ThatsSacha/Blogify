@@ -57,4 +57,21 @@ class CommentManager {
         
         return $comments;
     }
+
+    public function validateComment($id) {
+        try {
+            $query = $this->db->prepare(
+                "UPDATE comment
+                    SET is_active = ?
+                WHERE id = ?;"
+            );
+            
+            $query->execute(array(
+                1,
+                $id
+            ));
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }

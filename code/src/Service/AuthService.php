@@ -8,8 +8,8 @@ class AuthService {
     }
 
     public function isAdmin(): bool {
-        if (isset($_SESSION) && isset($_SESSION['user'])) {
-            if (in_array('ROLE_ADMIN', $_SESSION['user']['roles'])) {
+        if (isset($_SESSION) && isset($_SESSION['user']) && $this->isLogged()) {
+            if (in_array('ROLE_ADMIN', $_SESSION['user']['roles']) || in_array('ROLE_SUPERADMIN', $_SESSION['user']['roles'])) {
                 return true;
             }
 
@@ -20,7 +20,7 @@ class AuthService {
     }
 
     public function isSuperAdmin(): bool {
-        if (isset($_SESSION) && isset($_SESSION['user'])) {
+        if (isset($_SESSION) && isset($_SESSION['user']) && $this->isLogged()) {
             if (in_array('ROLE_SUPERADMIN', $_SESSION['user']['roles'])) {
                 return true;
             }

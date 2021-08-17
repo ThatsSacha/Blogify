@@ -326,9 +326,14 @@ html body main.article .not-connected i, html body main.article .not-connected s
   color: #e0e0e0c5;
   font-size: 13px;
 }
+html body main.article .not-connected, html body main.article .add-comment {
+  margin-bottom: 25px;
+}
 html body main.article .comment-list .comment .top {
   display: flex;
   align-items: center;
+  position: relative;
+  width: 100%;
 }
 html body main.article .comment-list .comment .top h6 {
   color: #e0e0e0c5;
@@ -339,6 +344,11 @@ html body main.article .comment-list .comment .top small {
   font-size: 11px;
   font-weight: 100;
   color: white;
+}
+html body main.article .comment-list .comment .top button.validate-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 a.btn {

@@ -51,17 +51,29 @@
             <div class="comment-list">
                 <?php
                     foreach($this->json['comments'] as $comment) {
-                        ?>
-                            <div class="comment card">
-                                <div class="top">
-                                    <h6>Par <?= $comment['user']['firstName'] ?> <?= $comment['user']['lastName'] ?></h6>
-                                    <small>
-                                        <?= $comment['createdAtFrench'] ?>
-                                    </small>
+                        if ($comment['isActive'] || $this->authService->isAdmin()) {
+                            ?>
+                                <div class="comment card">
+                                    <div class="top">
+                                        <h6>Par <?= $comment['user']['firstName'] ?> <?= $comment['user']['lastName'] ?></h6>
+                                        <small>
+                                            <?= $comment['createdAtFrench'] ?>
+                                        </small>
+                                        <?php
+                                            if (!$comment['isActive'] && $this->authService->isAdmin()) {
+                                                ?>
+                                                   <button data-article="<?= $_GET['id'] ?>" data-comment="<?= $comment['id'] ?>" class="green-btn validate-btn">
+                                                        <i class="bi bi-check-circle is-active"></i>
+                                                        Valider cet article
+                                                   </button>
+                                                <?php
+                                            }
+                                        ?>
+                                    </div>
+                                    <span><?= $comment['comment'] ?></span>
                                 </div>
-                                <span><?= $comment['comment'] ?></span>
-                            </div>
-                        <?php
+                            <?php
+                        }
                     }
                 ?>
             </div>

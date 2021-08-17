@@ -1,12 +1,16 @@
 <?php
 namespace App\Controller;
 
+use App\Service\AuthService;
+
 class RouterController {
     private $url;
     public $json = null;
+    public AuthService $authService;
 
     public function __construct()
     {
+        $this->authService = new AuthService();
         $this->url = $_SERVER['REQUEST_URI'];
         $this->checkRoute();
     }
@@ -18,7 +22,7 @@ class RouterController {
             $this->returnView('index');
         }
         
-        else if ($url === '/blog' || strpos($url, 'blog') || strpos($url, 'add-comment')) {
+        else if ($url === '/blog' || strpos($url, '/validate-comment') !== false || strpos($url, 'blog') || strpos($url, 'add-comment')) {
             $this->returnView('blog', 200, BlogController::class);
         }
 

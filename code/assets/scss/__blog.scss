@@ -109,11 +109,17 @@ html {
                     }
                 }
 
+                .not-connected, .add-comment {
+                    margin-bottom: 25px;
+                }
+
                 .comment-list {
                     .comment {
                         .top {
                             display: flex;
                             align-items: center;
+                            position: relative;
+                            width: 100%;
                             
                             h6 {
                                 color: $th-grey;
@@ -125,6 +131,14 @@ html {
                                 font-size: 11px;
                                 font-weight: 100;
                                 color: white;
+                            }
+
+                            button {
+                                &.validate-btn {
+                                    position: absolute;
+                                    right: 0;
+                                    top: 0;
+                                }
                             }
                         }
                     }
