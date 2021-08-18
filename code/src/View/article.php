@@ -64,7 +64,7 @@
                                                 ?>
                                                    <button data-article="<?= $_GET['id'] ?>" data-comment="<?= $comment['id'] ?>" class="green-btn validate-btn">
                                                         <i class="bi bi-check-circle is-active"></i>
-                                                        Valider cet article
+                                                        Valider ce commentaire
                                                    </button>
                                                 <?php
                                             }

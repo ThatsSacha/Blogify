@@ -71,6 +71,7 @@ $(function() {
                     success(response) {
                         buildSideBarConnected();
                         closeModal();
+                        location.reload();
                     },
                     error(error) {
                         showNotification('form.login', 'error', error.responseJSON.message);
@@ -292,6 +293,10 @@ $(function() {
                     .always(function() {
                         hideSpinner('form');
                         $('form textarea').val('');
+
+                        setTimeout(() => {
+                            showNotification('form', 'success', 'Votre commentaire a bien été envoyé, celui-ci doit être validé par un administrateur.');
+                        }, 150);
                     });
                 } else {
                     showNotification('form', 'error', 'Une erreur s\'est produite en lien avec l\'ID de l\'article');
@@ -299,6 +304,22 @@ $(function() {
             } else {
                 showNotification('form', 'error', 'Vous devez saisir un commentaire');
             }
+        });
+    //
+
+    // VALIDATE COMMENT
+        $('main .comment-list button.validate-btn').on('click', function(e) {
+            const articleId = $('main .comment-list button.validate-btn').attr('data-article');
+            const commentId = $('main .comment-list button.validate-btn').attr('data-comment');
+            const btn = this;
+
+            $.ajax({
+                method: 'GET',
+                url: apiUrl + '/validate-comment?article_id=' + articleId + '&comment_id=' + commentId,
+                success() {
+                    btn.remove();
+                }
+            });
         });
     //
     

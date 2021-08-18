@@ -309,6 +309,7 @@ html body main.article button.add-comment {
 }
 html body main.article form {
   display: none;
+  margin-bottom: 25px !important;
 }
 html body main.article form.is-active {
   display: flex;
