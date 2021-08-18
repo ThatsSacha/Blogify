@@ -8,6 +8,22 @@
     <body>
         <?php include('assets/inc/side-bar.php'); ?>
         <main class="article">
+            <?php
+                if ($this->authService->isAdmin()) {
+                    ?>
+                        <div class="btn-group">
+                            <button class="green-btn small-btn">
+                                <i class="bi bi-pencil is-active"></i>
+                                Mettre à jour l'article
+                            </button>
+                            <button class="red-btn small-btn delete-article" data-article="<?= $_GET['id'] ?>">
+                                <i class="bi bi-trash is-active"></i>
+                                Supprimer l'article
+                            </button>
+                        </div>
+                    <?php
+                }
+            ?>
             <h1><?= $this->json['title'] ?></h1>
             <h2><?= $this->json['teaser'] ?></h2>
             <span class="small-text">

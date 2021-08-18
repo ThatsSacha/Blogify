@@ -73,6 +73,9 @@ class ArticleManager {
         return null;
     }
 
+    /**
+     * @param Article $article
+     */
     public function create(Article $data) {
         try {
             $query = $this->db->prepare(
@@ -97,6 +100,20 @@ class ArticleManager {
                 $data->getCover(),
                 $data->getCoverCredit(),
                 $data->getAuthorId()
+            ));
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function delete(int $id) {
+        try {
+            $query = $this->db->prepare(
+                "DELETE FROM article WHERE id = ?"
+            );
+            
+            $query->execute(array(
+                $id
             ));
         } catch (Exception $e) {
             throw new Exception($e->getMessage());

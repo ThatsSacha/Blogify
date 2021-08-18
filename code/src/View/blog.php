@@ -12,12 +12,14 @@
             <?php
                 if (count($_SESSION) > 0 && $_SESSION['logged'] && in_array('ROLE_SUPERADMIN', $_SESSION['user']['roles'])) {
                     ?>
-                        <a href="add-article" class="btn">
-                            <button class="green-btn">
-                                <i class="bi bi-pencil is-active"></i>
-                                Ajouter un article
-                            </button>
-                        </a>
+                        <div class="btn-group">
+                            <a href="add-article" class="btn">
+                                <button class="green-btn small-btn">
+                                    <i class="bi bi-pencil is-active"></i>
+                                    Ajouter un article
+                                </button>
+                            </a>
+                        </div>
                     <?php
                 }
             ?>

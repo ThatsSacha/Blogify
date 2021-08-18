@@ -316,12 +316,30 @@ $(function() {
             $.ajax({
                 method: 'GET',
                 url: apiUrl + '/validate-comment?article_id=' + articleId + '&comment_id=' + commentId,
+                Accept: 'application/json',
+                contentType: 'application/json',
                 success() {
                     btn.remove();
                 }
             });
         });
     //
+
+    // DELETE ARTICLE
+    $('main button.delete-article').on('click', function() {
+        const articleId = $('main button.delete-article').attr('data-article');
+
+        $.ajax({
+            method: 'GET',
+            url: apiUrl + '/delete-article?id=' + articleId,
+            Accept: 'application/json',
+            contentType: 'application/json',
+            success: function() {
+                location.replace('/blog');
+            }
+        });
+    });
+//
     
     function closeModal() {
         $('.modal').removeClass('is-active');

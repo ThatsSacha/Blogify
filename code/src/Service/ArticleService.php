@@ -62,4 +62,12 @@ class ArticleService {
             throw new Exception('Vous devez être connecté', 401);
         }
     }
+
+    public function delete(int $id) {
+        if (isset($id) && !empty($id) && is_numeric($id)) {
+            $this->articleManager->delete($id);
+        } else {
+            throw new Exception("Une erreur s'est produite en lien avec l'article");
+        }
+    }
 }

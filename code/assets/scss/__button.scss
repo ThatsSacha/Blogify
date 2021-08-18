@@ -42,4 +42,10 @@ button {
             background-color: $th-green-hover;
         }
     }
+
+    &.small-btn {
+        height: 30px;
+        width: 150px;
+        font-size: 11px;
+    }
 }

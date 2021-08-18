@@ -22,7 +22,7 @@ class RouterController {
             $this->returnView('index');
         }
         
-        else if ($url === '/blog' || strpos($url, '/validate-comment') !== false || strpos($url, 'blog') || strpos($url, 'add-comment')) {
+        else if ($url === '/blog' || strpos($url, '/delete-article') !== false || strpos($url, '/validate-comment') !== false || strpos($url, 'blog') || strpos($url, 'add-comment')) {
             $this->returnView('blog', 200, BlogController::class);
         }
 

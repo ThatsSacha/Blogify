@@ -240,6 +240,12 @@ form .form-space-between a:hover {
   top: 10%;
 }
 
+html body main.blog .btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 html body main.blog .article-container {
   display: flex;
   flex-wrap: wrap;
@@ -289,6 +295,16 @@ html body main.blog .article-container .card .bottom {
 }
 html body main.article h2 {
   color: #e0e0e0c5;
+}
+html body main.article .btn-group {
+  display: flex;
+  margin-bottom: 25px;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
+html body main.article .btn-group button:first-child {
+  margin-right: 10px;
 }
 html body main.article .small-text {
   color: white;
@@ -386,6 +402,11 @@ button.green-btn .spinner-border, button.green-btn i {
 }
 button.green-btn:hover {
   background-color: #329064;
+}
+button.small-btn {
+  height: 30px;
+  width: 150px;
+  font-size: 11px;
 }
 
 /*@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");

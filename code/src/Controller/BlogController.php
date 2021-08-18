@@ -31,6 +31,8 @@ class BlogController {
         if (in_array($this->method, ['OPTIONS', 'GET'])) {
             if (strpos($this->url, 'validate-comment')) {
                 $this->validateComment();
+            } else if (strpos($this->url, 'delete-article')) {
+                $this->delete();
             } else if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
                 $this->findOneBy();
             } else {
@@ -131,6 +133,18 @@ class BlogController {
                     'message' => "Vous n'êtes pas autorisé à valider cet article"
                 );
             }
+        }
+    }
+
+    public function delete() {
+        try {
+            $this->result = $this->articleService->delete($_GET['id']);
+        } catch (Exception $e) {
+            $this->result = [
+                'type' => 'error',
+                'status' => $e->getCode() ? $e->getCode() : 400,
+                'message' => $e->getMessage()
+            ];
         }
     }
 }
