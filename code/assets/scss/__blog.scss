@@ -68,6 +68,13 @@ html {
             &.article {
                 h2 {
                     color: $th-grey;
+                    font-size: 22px;
+                    margin-bottom: 25px;
+                }
+
+                p {
+                    color: white;
+                    margin-top: 10px;
                 }
 
                 .btn-group {

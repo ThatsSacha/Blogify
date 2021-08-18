@@ -218,31 +218,23 @@ $(function() {
                 showSpinner('form.add-article');
 
                 const formData = new FormData();
-                formData.append($('form.add-article input.cover')[0].files[0].name, $('form.add-article input.cover')[0].files[0]);
+                formData.append('title', title.val());
+                formData.append('teaser', teaser.val());
+                formData.append('cover', $('form.add-article input.cover')[0].files[0]);
+                formData.append('coverCredit', coverCredit.val());
+                formData.append('content', content.val());
 
-                // error is from formData
-
-                const myData = {
-                    title: title.val(),
-                    teaser: teaser.val(),
-                    cover: formData,
-                    coverCredit: coverCredit.val(),
-                    content: content.val()
-                };
-                console.log(myData);
+                console.log(formData);
                 $.ajax({
                     method: 'POST',
                     url: apiUrl + '/add-article',
-                    processData: true,
-                    headers: {
-                        contentType: 'multipart/form-data'
-                    },
-                    dataType: 'multipart/form-data',
-                    data: myData,
+                    processData: false,
+                    contentType: false,
+                    data: formData,
                     success(response) {
                         // Wait for hideNotification() ends
                         setTimeout(function() {
-                            showNotification('form.add-article', 'success', 'Inscription terminée !');
+                            showNotification('form.add-article', 'success', 'Article ajouté !');
                         }, 151);
                         
                         hideNotification('form.add-article');

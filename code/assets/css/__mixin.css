@@ -295,6 +295,12 @@ html body main.blog .article-container .card .bottom {
 }
 html body main.article h2 {
   color: #e0e0e0c5;
+  font-size: 22px;
+  margin-bottom: 25px;
+}
+html body main.article p {
+  color: white;
+  margin-top: 10px;
 }
 html body main.article .btn-group {
   display: flex;

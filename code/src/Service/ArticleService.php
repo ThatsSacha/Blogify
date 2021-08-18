@@ -33,6 +33,10 @@ class ArticleService {
 
         $data['authorId'] = $_SESSION['user']['id'];
         $article = new Article($data);
+        // Keep line breaks after htmlspecialchars
+        $article->setContent(
+            nl2br($article->getContent())
+        );
         $this->articleManager->create($article);
     }
 
