@@ -12,7 +12,7 @@
                 if ($this->authService->isAdmin()) {
                     ?>
                         <div class="btn-group">
-                            <a href="update-article?id=<?= $_GET['id'] ?>">
+                            <a class="btn" href="update-article?id=<?= $_GET['id'] ?>">
                                 <button class="green-btn small-btn">
                                     <i class="bi bi-pencil is-active"></i>
                                     Mettre à jour l'article

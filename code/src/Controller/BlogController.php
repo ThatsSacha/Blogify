@@ -29,10 +29,8 @@ class BlogController {
 
     private function checkRoute(): void {
         if (in_array($this->method, ['OPTIONS', 'GET'])) {
-            if (strpos($this->url, 'validate-comment')) {
+            if (strpos($this->url, 'validate-comment') !== false) {
                 $this->validateComment();
-            } else if (strpos($this->url, 'delete-article')) {
-                $this->delete();
             } else if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
                 $this->findOneBy();
             } else {
@@ -59,6 +57,12 @@ class BlogController {
                 }
             } else if ($this->url === '/add-comment') {
                 $this->addComment();
+            } else if (strpos($this->url, '/update-article') !== false) {
+                $this->updateArticle();
+            }
+        } else if (in_array($this->method, ['OPTIONS', 'DELETE'])) {
+            if (strpos($this->url, 'delete-article')) {
+                $this->delete();
             }
         } else {
             $this->result = [
@@ -74,14 +78,15 @@ class BlogController {
     }
 
     public function findAll() {
-        $articles = $this->articleManager->findAll();
-        $articlesSerialized = [];
-        
-        foreach($articles as $article) {
-            $articlesSerialized[] = $article->jsonSerialize();
+        try {
+            $this->result = $this->articleService->findAll();
+        } catch (Exception $e) {
+            $this->result = [
+                'type' => 'error',
+                'status' => 400,
+                'message' => $e->getMessage()
+            ];
         }
-
-        $this->result = $articlesSerialized;
     }
 
     public function findOneBy() {
@@ -139,6 +144,18 @@ class BlogController {
     public function delete() {
         try {
             $this->result = $this->articleService->delete($_GET['id']);
+        } catch (Exception $e) {
+            $this->result = [
+                'type' => 'error',
+                'status' => $e->getCode() ? $e->getCode() : 400,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function updateArticle() {
+        try {
+            $this->result = $this->articleService->update($_GET, $this->data);
         } catch (Exception $e) {
             $this->result = [
                 'type' => 'error',

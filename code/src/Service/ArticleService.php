@@ -74,4 +74,53 @@ class ArticleService {
             throw new Exception("Une erreur s'est produite en lien avec l'article");
         }
     }
+
+    public function update(array $get, array $data) {
+        if ($this->authService->isLogged() && $this->authService->isAdmin()) {
+            if (isset($get['id']) && !empty($get['id'])) {
+                $article = $this->articleManager->findOneBy($get['id']);
+
+                if ($article !== null) {
+                    $mandatoryFields = ['title', 'teaser', 'content', 'coverCredit'];
+                    $this->verifyMandatoryFields($data, $mandatoryFields);
+
+                    if (isset($_FILES['cover'])) {
+                        $data['cover'] = $_FILES['cover']['name'];
+                        $data['cover'] =  $this->importFileService->verifyAndUploadFile($_FILES['cover']);
+                    } else {
+                        $data['cover'] = $article->getCover();
+                    }
+                    
+                    $data['id'] = $article->getId();
+                    $article = new Article($data);
+                    // Keep line breaks after htmlspecialchars
+                    $article->setContent(
+                        nl2br($article->getContent())
+                    );
+                    $this->articleManager->update($article);
+
+                    return array();
+                }
+            }
+
+            throw new Exception("Une erreur s'est produite en lien avec l'ID.");
+        }
+
+        throw new Exception('Vous n\'êtes pas connecté(e) ou vous ne possédez pas les droits nécéssaires.', 401);
+    }
+
+    /**
+     * @return array
+     */
+    public function findAll(): array {
+        $articles = $this->articleManager->findAll();
+        
+        $articlesSerialized = [];
+        
+        foreach($articles as $article) {
+            $articlesSerialized[] = $article->jsonSerialize();
+        }
+
+        return $articlesSerialized;
+    }
 }

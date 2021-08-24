@@ -224,7 +224,6 @@ $(function() {
                 formData.append('coverCredit', coverCredit.val());
                 formData.append('content', content.val());
 
-                console.log(formData);
                 $.ajax({
                     method: 'POST',
                     url: apiUrl + '/add-article',
@@ -273,10 +272,12 @@ $(function() {
                 formData.append('coverCredit', coverCredit.val());
                 formData.append('content', content.val());
 
-                console.log(formData);
+                let searchParams = new URLSearchParams(window.location.search);
+                let id = searchParams.get('id');
+
                 $.ajax({
                     method: 'POST',
-                    url: apiUrl + '/update-article',
+                    url: apiUrl + '/update-article?id=' + id,
                     processData: false,
                     contentType: false,
                     data: formData,
@@ -365,20 +366,20 @@ $(function() {
     //
 
     // DELETE ARTICLE
-    $('main button.delete-article').on('click', function() {
-        const articleId = $('main button.delete-article').attr('data-article');
+        $('main button.delete-article').on('click', function() {
+            const articleId = $('main button.delete-article').attr('data-article');
 
-        $.ajax({
-            method: 'GET',
-            url: apiUrl + '/delete-article?id=' + articleId,
-            Accept: 'application/json',
-            contentType: 'application/json',
-            success: function() {
-                location.replace('/blog');
-            }
+            $.ajax({
+                method: 'DELETE',
+                url: apiUrl + '/delete-article?id=' + articleId,
+                Accept: 'application/json',
+                contentType: 'application/json',
+                success: function() {
+                    location.replace('/blog');
+                }
+            });
         });
-    });
-//
+    //
     
     function closeModal() {
         $('.modal').removeClass('is-active');

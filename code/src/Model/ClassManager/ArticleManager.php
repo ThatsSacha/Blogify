@@ -7,6 +7,8 @@ use Exception;
 use PDOException;
 use App\Model\Class\Article;
 
+date_default_timezone_set('Europe/Paris');
+
 class ArticleManager {
     private PDO|PDOException $db;
 
@@ -31,6 +33,7 @@ class ArticleManager {
         if (count($responses) > 0) {
             foreach($responses as $response) {
                 $response['created_at'] = date_create($response['created_at']);
+                $response['updated_at'] = $response['updated_at'] !== null ? date_create($response['updated_at']) : null;
                 $response['author_id'] = (int) $response['author_id'];
                 $articles[] = new Article($response);
             }
@@ -66,7 +69,7 @@ class ArticleManager {
                 'createdAt' => date_create($response['created_at']),
                 'updatedAt' => $response['updated_at'] === null ? null : date_create($response['updated_at'])
             ));
-    
+
             return $article;
         }
         
@@ -114,6 +117,36 @@ class ArticleManager {
             
             $query->execute(array(
                 $id
+            ));
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @param Article $article
+     */
+    public function update(Article $data) {
+        try {
+            $query = $this->db->prepare(
+                "UPDATE article SET
+                title = ?,
+                teaser = ?,
+                content = ?,
+                cover = ?,
+                cover_credit = ?,
+                updated_at = ?
+                WHERE id = ?
+            ");
+            
+            $query->execute(array(
+                $data->getTitle(),
+                $data->getTeaser(),
+                $data->getContent(),
+                $data->getCover(),
+                $data->getCoverCredit(),
+                date_format(date_create(), 'Y-m-d H:i:s'),
+                $data->getId()
             ));
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
