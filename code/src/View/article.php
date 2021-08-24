@@ -12,10 +12,12 @@
                 if ($this->authService->isAdmin()) {
                     ?>
                         <div class="btn-group">
-                            <button class="green-btn small-btn">
-                                <i class="bi bi-pencil is-active"></i>
-                                Mettre à jour l'article
-                            </button>
+                            <a href="update-article?id=<?= $_GET['id'] ?>">
+                                <button class="green-btn small-btn">
+                                    <i class="bi bi-pencil is-active"></i>
+                                    Mettre à jour l'article
+                                </button>
+                            </a>
                             <button class="red-btn small-btn delete-article" data-article="<?= $_GET['id'] ?>">
                                 <i class="bi bi-trash is-active"></i>
                                 Supprimer l'article

@@ -373,6 +373,12 @@ html body main.article .comment-list .comment .top button.validate-btn {
   right: 0;
   top: 0;
 }
+html body main.update-article form img {
+  width: 50%;
+  border-radius: 15px;
+  margin: 10px 0;
+  align-self: flex-start;
+}
 
 a.btn {
   text-decoration: none;

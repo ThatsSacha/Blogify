@@ -173,6 +173,17 @@ html {
                     }
                 }
             }
+
+            &.update-article {
+                form {
+                    img {
+                        width: 50%;
+                        border-radius: $th-border-radius;
+                        margin: 10px 0;
+                        align-self: flex-start;
+                    }
+                }
+            }
         }
     }
 }

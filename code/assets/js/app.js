@@ -239,7 +239,7 @@ $(function() {
                         
                         hideNotification('form.add-article');
                         buildSideBarConnected();
-                        $('form.register input').val('');
+                        $('form.add-article input').val('');
                         closeModal();
                     },
                     error(error) {
@@ -251,6 +251,53 @@ $(function() {
                 });
             } else {
                 showNotification('form.add-article', 'error', 'Tous les champs sont requis');
+            }
+        });
+    //
+
+    // UPDATE ARTICLE
+        $('form.update-article').on('submit', function(e) {
+            e.preventDefault();
+            const title = $('form.update-article input.title');
+            const teaser = $('form.update-article input.teaser');
+            const content = $('form.update-article textarea.content');
+            const coverCredit = $('form.update-article input.cover-credit');
+
+            if (title.val().length > 0 && teaser.val().length > 0 && content.val().length > 0 &&  coverCredit.val().length > 0) {
+                showSpinner('form.update-article');
+
+                const formData = new FormData();
+                formData.append('title', title.val());
+                formData.append('teaser', teaser.val());
+                formData.append('cover', $('form.update-article input.cover')[0].files[0]);
+                formData.append('coverCredit', coverCredit.val());
+                formData.append('content', content.val());
+
+                console.log(formData);
+                $.ajax({
+                    method: 'POST',
+                    url: apiUrl + '/update-article',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success(response) {
+                        // Wait for hideNotification() ends
+                        setTimeout(function() {
+                            showNotification('form.update-article', 'success', 'Article modifié !');
+                        }, 151);
+                        
+                        hideNotification('form.update-article');
+                        closeModal();
+                    },
+                    error(error) {
+                        showNotification('form.update-article', 'error', error);
+                    }
+                })
+                .always(function() {
+                    hideSpinner('form.update-article');
+                });
+            } else {
+                showNotification('form.update-article', 'error', 'Tous les champs sont requis');
             }
         });
     //
