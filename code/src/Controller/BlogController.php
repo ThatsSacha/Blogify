@@ -90,15 +90,19 @@ class BlogController {
     }
 
     public function findOneBy() {
-        $article = $this->articleManager->findOneBy($_GET['id']);
+        try {
+            $article = $this->articleManager->findOneBy($_GET['id']);
 
-        if ($article !== null) {
-            $this->result = $article->jsonSerialize();
-        } else {
-            $this->result = $this->result = [
+            if ($article !== null) {
+                $this->result = $article->jsonSerialize();
+            } else {
+                throw new Exception('Article not found', 404);
+            }
+        } catch (Exception $e) {
+            $this->result = [
                 'type' => 'error',
-                'status' => 404,
-                'message' => 'Not found'
+                'status' => $e->getCode() ? $e->getCode() : 400,
+                'message' => $e->getMessage()
             ];
         }
     }

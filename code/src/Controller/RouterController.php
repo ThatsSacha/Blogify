@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Service\AuthService;
+use Exception;
 
 class RouterController {
     private $url;
@@ -97,9 +98,13 @@ class RouterController {
                 require __DIR__ . '../../View/error-401.php';
             } else {
                 $this->json = json_decode($this->json, true);
-            
-                $view = __DIR__ . '../../View/'. $viewName .'.php';
-                require $view;
+                
+                if (isset($this->json['type']) && $this->json['type'] === 'error') {
+                    require __DIR__ . '../../View/error-404.php';
+                } else {
+                    $view = __DIR__ . '../../View/'. $viewName .'.php';
+                    require $view;
+                }
             }
         }
 
