@@ -19,7 +19,7 @@
             </a>
         </li>
         <li>
-            <a href="??">
+            <a href="contact">
                 <i class="bi bi-chat-right-text is-active"></i>
                 Contact
             </a>

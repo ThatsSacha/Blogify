@@ -140,13 +140,17 @@ html body main h2 {
   border-width: 0.15rem !important;
 }
 
-input, textarea, button {
+input, textarea, button, select {
   border: 1px solid transparent;
   background-color: white;
   border-radius: 15px;
   padding: 10px;
   height: 35px;
   outline: none;
+}
+
+select {
+  padding: 5px;
 }
 
 input, select, textarea {
@@ -188,6 +192,15 @@ form.w-100 {
 }
 form h1 {
   margin-bottom: 10px;
+}
+form .input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+form .input-container input {
+  width: 49%;
 }
 form .form-space-between {
   display: flex;
@@ -444,6 +457,24 @@ button.small-btn {
   height: 30px;
   width: 150px;
   font-size: 11px;
+}
+
+main.contact form {
+  width: 100%;
+  align-items: flex-start;
+}
+main.contact form .card-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 25px;
+}
+main.contact form .card-container .card {
+  width: 33.3%;
+  min-width: 210px;
+  max-width: 400px;
+  align-items: center;
+  margin: 10px;
 }
 
 /*@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");

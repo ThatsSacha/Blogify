@@ -390,6 +390,52 @@ $(function() {
             });
         });
     //
+
+    // CONTACT
+        $('main form.contact button.submit').on('click', function(e) {
+            e.preventDefault();
+            const firstName = $('form.contact input.first-name');
+            const lastName = $('form.contact input.last-name');
+            const mail = $('form.contact input.mail');
+            const subject = $('form.contact select.subject').find(':selected').text();
+            const message = $('form.contact textarea.message');
+
+            if (firstName.val().length > 0 && lastName.val().length > 0 && mail.val().length > 0 &&  message.val().length > 0) {
+                hideNotification('form.contact');
+                showSpinner('form.contact');
+
+                const data = {
+                    firstName: firstName.val(),
+                    lastName: lastName.val(),
+                    mail: mail.val(),
+                    subject: subject,
+                    message: message.val()
+                };
+
+                $.ajax({
+                    method: 'POST',
+                    url: apiUrl + '/send-message',
+                    data: data,
+                    success: function() {
+                        setTimeout(() => {
+                            showNotification('form.contact', 'success', 'Votre message a bien été envoyé !');
+                            $('form input').val('');
+                            $('form textarea').val('');
+                        }, 150);
+                    },
+                    error: function() {
+                        setTimeout(() => {
+                            showNotification('form.contact', 'error', 'Une erreur s\'est produite lors de l\'envoi de votre message...');
+                        }, 150);
+                    }
+                }).always(function() {
+                    hideSpinner('form.contact');
+                });
+            } else {
+                showNotification('form.contact', 'error', 'Tous les champs doivent être remplis');
+            }
+        });
+    //
     
     function closeModal() {
         $('.modal').removeClass('is-active');

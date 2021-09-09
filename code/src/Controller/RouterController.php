@@ -58,6 +58,10 @@ class RouterController {
         else if ($url === '/is-connected') {
             $this->returnView('user', 200, UserController::class);
         }
+
+        else if ($url === '/contact') {
+            $this->returnView('contact');
+        }
         
         else {
             $this->returnView('error', 404);
