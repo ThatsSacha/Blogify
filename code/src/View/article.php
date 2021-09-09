@@ -38,8 +38,7 @@
                 © <?= $this->json['coverCredit'] ?>
             </span>
             <p>
-                
-                <?= html_entity_decode($this->json['content']); ?>
+                <?= $this->json['content'] ?>
             </p>
             <?php
                 if (count($_SESSION) > 0 && $_SESSION['logged']) {

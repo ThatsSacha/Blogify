@@ -235,9 +235,22 @@ form .form-space-between a:hover {
   width: 70%;
   box-shadow: 1px 1px 24px -20px black;
   transition: 300ms;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .modal-background .modal.is-active {
   top: 10%;
+}
+.modal-background .modal .btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.modal-background .modal .btn-group button {
+  max-width: 250px;
+  width: 50%;
+  margin: 10px;
 }
 
 html body main.blog .btn-group {
@@ -396,6 +409,15 @@ button {
 }
 button .spinner-border, button i {
   margin-right: 5px;
+}
+button.grey-btn {
+  background-color: #e0e0e0c5;
+}
+button.grey-btn .spinner-border, button.grey-btn i {
+  color: white;
+}
+button.grey-btn:hover {
+  background-color: #bdbdbdc5;
 }
 button.red-btn {
   background-color: #A53C65;

@@ -15,15 +15,13 @@
                 <label for="cover">Photo de l'article</label>
                 <img src="../../assets/img/blog/<?= $this->json['cover'] ?>" alt="<?= $this->json['title'] ?>">
                 <input type="file" class="cover">
-                <textarea class="content" placeholder="Corps de l'article">
-                    <?= $this->json['content'] ?>
-                </textarea>
+                <textarea class="content" placeholder="Corps de l'article"><?= str_replace('<br />', '', html_entity_decode($this->json['content'])); ?></textarea>
                 <input type="text" class="cover-credit" placeholder="Crédit photo" value="<?= $this->json['coverCredit'] ?>">
                 <div class="notification"></div>
                 <button class="green-btn">
                     <div class="spinner-border small text-light" role="status"></div>
                     <i class="bi bi-plus-circle is-active"></i>
-                    Ajouter
+                    Mettre à jour
                 </button>
             </form>
         </main>

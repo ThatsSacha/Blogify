@@ -69,7 +69,14 @@ class ArticleService {
 
     public function delete(int $id) {
         if (isset($id) && !empty($id) && is_numeric($id)) {
-            $this->articleManager->delete($id);
+            $article = $this->articleManager->findOneBy($id);
+
+            if ($article !== null) {
+                unlink('./assets/img/blog/' . $article->getCover());
+                $this->articleManager->delete($id);
+            } else {
+                throw new Exception("Une erreur s'est produite en lien avec l'article");
+            }
         } else {
             throw new Exception("Une erreur s'est produite en lien avec l'article");
         }

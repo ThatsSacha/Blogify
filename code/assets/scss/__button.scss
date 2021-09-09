@@ -19,6 +19,18 @@ button {
         margin-right: 5px;
     }
 
+    &.grey-btn {
+        background-color: $th-grey;
+
+        .spinner-border, i {
+            color: white;
+        }
+
+        &:hover {
+            background-color: $th-grey-hover;
+        }
+    }
+
     &.red-btn {
         background-color: $th-red;
 

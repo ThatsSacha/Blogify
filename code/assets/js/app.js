@@ -366,7 +366,16 @@ $(function() {
     //
 
     // DELETE ARTICLE
-        $('main button.delete-article').on('click', function() {
+        $('body').on('click', 'button.delete-article', function() {
+            openDeleteArticleModal();
+        });
+
+        $('body').on('click', 'button.cancel-delete-article', function() {
+            closeModal();
+        });
+
+        $('body').on('click', 'button.confirm-delete-article', function() {
+            showSpinner('.modal');
             const articleId = $('main button.delete-article').attr('data-article');
 
             $.ajax({
@@ -375,6 +384,7 @@ $(function() {
                 Accept: 'application/json',
                 contentType: 'application/json',
                 success: function() {
+                    hideSpinner('.modal');
                     location.replace('/blog');
                 }
             });
@@ -412,6 +422,23 @@ $(function() {
 
         $.ajax({
             url: './assets/inc/register-modal.php',
+            method: 'post',
+            dataType: "html",
+            success: (function(modal) {
+                $('.modal-background').append(modal);
+            })
+        });
+
+        setTimeout(function() {
+            $('.modal').addClass('is-active');
+        }, 250);
+    }
+
+    function openDeleteArticleModal() {
+        $('.modal-background').addClass('is-active');
+
+        $.ajax({
+            url: './assets/inc/delete-article-modal.php',
             method: 'post',
             dataType: "html",
             success: (function(modal) {
