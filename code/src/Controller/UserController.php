@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use App\Model\Class\User;
-use App\Model\ClassManager\UserManager;
 use App\Service\UserService;
 
 class UserController {

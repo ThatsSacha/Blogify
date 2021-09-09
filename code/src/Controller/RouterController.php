@@ -27,11 +27,11 @@ class RouterController {
         }
 
         else if (strpos($url, '/update-article') !== false) {
-            $this->returnView('update-article', 200, BlogController::class);
+            $this->returnView('update-article', 200, BlogController::class, true);
         }
 
         else if (strpos($url, '/add-article') !== false) {
-            $this->returnView('add-article', 200, BlogController::class);
+            $this->returnView('add-article', 200, BlogController::class, true);
         }
 
         else if (strpos($url, '/article') !== false) {
@@ -51,7 +51,7 @@ class RouterController {
         }
 
         else if ($url === '/profile') {
-            $this->returnView('profile', 200, UserController::class);
+            $this->returnView('profile', 200, UserController::class, true);
         }
 
         else if ($url === '/is-connected') {
@@ -63,7 +63,7 @@ class RouterController {
         }
     }
     
-    private function returnView(string $viewName, int $statusCode = 200, $class = null) {
+    private function returnView(string $viewName, int $statusCode = 200, $class = null, $require_login = false) {
         $controllerName = str_replace('App\\Controller\\', '', $class) . '.php';
         $controllerExists = is_file(__DIR__ . '/' . $controllerName);
         
@@ -93,11 +93,14 @@ class RouterController {
 
             echo $this->json;
         } else {
-            $this->json = json_decode($this->json, true);
-            //echo $this->json;
+            if ($require_login && !isset($_SESSION['logged']) ) {
+                require __DIR__ . '../../View/error-401.php';
+            } else {
+                $this->json = json_decode($this->json, true);
             
-            $view = __DIR__ . '../../View/'. $viewName .'.php';
-            require $view;
+                $view = __DIR__ . '../../View/'. $viewName .'.php';
+                require $view;
+            }
         }
 
         http_response_code($statusCode);
