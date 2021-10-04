@@ -37,14 +37,14 @@ class ContactService {
 
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
             $mail->isSMTP();
-            $mail->Host       = 'smtp.ionos.fr';
+            $mail->Host       = $_ENV['MAIL_HOST'];
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'no-reply@blogify.sacha-cohen.fr';
+            $mail->Username   = $_ENV['MAIL_USERNAME'];
             $mail->Password   = $_ENV['MAIL_PASSWORD'];
-            //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port       = 587;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = 465;
         
             $mail->setFrom('no-reply@blogify.sacha-cohen.fr', 'Blogify');
             $mail->addAddress('contact@sacha-cohen.fr');
