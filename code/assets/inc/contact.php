@@ -26,7 +26,7 @@
     <div class="input-container">
         <input type="email" class="mail" placeholder="Votre adresse mail">
     </div>
-    <select name="subject">
+    <select class="subject">
         <option value="0" disabled selected>Sujet du message</option>
         <option value="1">Informations à propos des compétences</option>
         <option value="2">Simple contact</option>

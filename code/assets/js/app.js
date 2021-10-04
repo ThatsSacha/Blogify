@@ -397,10 +397,10 @@ $(function() {
             const firstName = $('form.contact input.first-name');
             const lastName = $('form.contact input.last-name');
             const mail = $('form.contact input.mail');
-            const subject = $('form.contact select.subject').find(':selected').text();
+            const subject = $('form.contact select.subject').find(':selected');
             const message = $('form.contact textarea.message');
 
-            if (firstName.val().length > 0 && lastName.val().length > 0 && mail.val().length > 0 &&  message.val().length > 0) {
+            if (firstName.val().length > 0 && lastName.val().length > 0 && mail.val().length > 0 &&  message.val().length > 0 && subject.val() > 0) {
                 hideNotification('form.contact');
                 showSpinner('form.contact');
 
@@ -408,7 +408,7 @@ $(function() {
                     firstName: firstName.val(),
                     lastName: lastName.val(),
                     mail: mail.val(),
-                    subject: subject,
+                    subject: subject.text(),
                     message: message.val()
                 };
 

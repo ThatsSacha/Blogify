@@ -54,7 +54,9 @@ class ArticleManager {
         $query->execute();
 
         $response = $query->fetchAll();
-
+    /*
+        TODO 
+    */
         if (count($response) > 0) {
             $response = $response[0];
 
