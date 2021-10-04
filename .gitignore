@@ -35,3 +35,4 @@ Temporary Items
 
 code/secret.php
 *.psd
+.env

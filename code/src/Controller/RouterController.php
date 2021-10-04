@@ -66,6 +66,10 @@ class RouterController {
         else if ($url === '/send-message') {
             $this->returnView('contact', 200, ContactController::class);
         }
+
+        else if ($url === '/about') {
+            $this->returnView('about');
+        }
         
         else {
             $this->returnView('error', 404);

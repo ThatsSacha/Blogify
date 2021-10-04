@@ -436,6 +436,12 @@ $(function() {
             }
         });
     //
+
+    // ABOUT
+        if (window.location.pathname === '/about') {
+            $('video')[0].play();
+        }
+    //
     
     function closeModal() {
         $('.modal').removeClass('is-active');

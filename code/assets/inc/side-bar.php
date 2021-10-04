@@ -7,7 +7,7 @@
             </a>
         </li>
         <li>
-            <a href="??">
+            <a href="about">
                 <i class="bi bi-person-bounding-box is-active"></i>
                 À propos
             </a>
