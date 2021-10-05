@@ -156,9 +156,10 @@ html {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: flex-start;
+                margin-bottom: 10px;
 
                 .card {
-                    height: 250px;
+                    height: 400px;
                     width: 33.3%;
                     min-width: 300px;
                     padding: 0;
@@ -178,7 +179,7 @@ html {
                         box-shadow: 0 0 31px -25px white;
 
                         .cover {
-                            background-size: 103%;
+                            transform: scale(1.05);
                         }
                     }
 
@@ -186,13 +187,14 @@ html {
                         height: 100%;
                         width: 100%;
                         position: absolute;
+                        z-index: 2;
                     }
 
                     .cover {
-                        height: 70%;
+                        height: 60%;
                         width: 100%;
                         background-position: center;
-                        background-size: 100%;
+                        background-size: cover;
                         transition: 500ms;
                     }
 
@@ -201,8 +203,19 @@ html {
                         flex-direction: column;
                         justify-content: center;
                         padding: 10px;
-                        height: 30%;
+                        height: 40%;
                         width: 100%;
+                        z-index: 1;
+                        background-color: $th-lighter-main;
+
+                        p {
+                            margin: 10px 0;
+                            color: white;
+                        }
+
+                        span {
+                            font-size: 13px;
+                        }
                     }
                 }
             }

@@ -32,6 +32,7 @@
                                 <div class="cover" style="background-image: url(../../assets/img/blog/<?= $article['cover'] ?>)"></div>
                                 <div class="bottom">
                                     <h3><?= $article['title'] ?></h3>
+                                    <p><?= $article['teaser'] ?></p>
                                     <span>Le 
                                         <?= strftime('%d %B', strtotime($article['createdAt']['date'])); 
                                         ?> ⸱ <?= $article['author']['firstName'] . ' ' . $article['author']['lastName'] ?>
