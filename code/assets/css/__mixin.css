@@ -127,6 +127,53 @@ html body main > h1 {
 html body main h2 {
   margin-bottom: 10px;
 }
+html body main .articles-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+html body main .articles-container .card {
+  height: 250px;
+  width: 33.3%;
+  min-width: 300px;
+  padding: 0;
+  overflow: hidden;
+  margin: 10px;
+  position: relative;
+  opacity: 1;
+  box-shadow: 0 0 31px -25px transparent;
+  transition: 300ms;
+}
+html body main .articles-container .card:first-child {
+  margin-left: 0;
+}
+html body main .articles-container .card:hover {
+  opacity: 0.9;
+  box-shadow: 0 0 31px -25px white;
+}
+html body main .articles-container .card:hover .cover {
+  background-size: 103%;
+}
+html body main .articles-container .card a {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+html body main .articles-container .card .cover {
+  height: 70%;
+  width: 100%;
+  background-position: center;
+  background-size: 100%;
+  transition: 500ms;
+}
+html body main .articles-container .card .bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  height: 30%;
+  width: 100%;
+}
 
 .spinner-border, i {
   display: none !important;
@@ -274,53 +321,6 @@ html body main.blog .btn-group {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-}
-html body main.blog .article-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-html body main.blog .article-container .card {
-  height: 250px;
-  width: 33.3%;
-  min-width: 300px;
-  padding: 0;
-  overflow: hidden;
-  margin: 10px;
-  position: relative;
-  opacity: 1;
-  box-shadow: 0 0 31px -25px transparent;
-  transition: 300ms;
-}
-html body main.blog .article-container .card:first-child {
-  margin-left: 0;
-}
-html body main.blog .article-container .card:hover {
-  opacity: 0.9;
-  box-shadow: 0 0 31px -25px white;
-}
-html body main.blog .article-container .card:hover .cover {
-  background-size: 103%;
-}
-html body main.blog .article-container .card a {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
-html body main.blog .article-container .card .cover {
-  height: 70%;
-  width: 100%;
-  background-position: center;
-  background-size: 100%;
-  transition: 500ms;
-}
-html body main.blog .article-container .card .bottom {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 10px;
-  height: 30%;
-  width: 100%;
 }
 html body main.article h2 {
   color: #e0e0e0c5;
@@ -491,7 +491,7 @@ html body main.about .video-container {
 html body main.about .video-container video {
   background-color: black;
   height: 70%;
-  max-height: 190px;
+  max-height: 160px;
   width: 50%;
 }
 html body main.about .card {
@@ -532,44 +532,109 @@ html body main.home {
   align-items: center;
   justify-content: center;
 }
-html body main.home .card {
+html body main.home section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+html body main.home section.top-section {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 95vh;
+  margin-bottom: 25px;
+  position: relative;
+}
+html body main.home section.top-section .card {
   border-radius: 100%;
   height: 250px;
   width: 250px;
 }
-html body main.home .card img {
+html body main.home section.top-section .card img {
   width: 100%;
   height: 100%;
 }
-html body main.home h1 {
+html body main.home section.top-section h1 {
   margin-bottom: 5px;
   letter-spacing: 1px;
 }
-html body main.home h2 {
+html body main.home section.top-section h2 {
   font-weight: 100;
   font-size: 18px;
   margin: 0;
 }
-html body main.home .social-networks-container {
+html body main.home section.top-section .social-networks-container {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 5px;
 }
-html body main.home .social-networks-container div {
+html body main.home section.top-section .social-networks-container div {
   margin: 0 10px;
 }
-html body main.home .social-networks-container div i {
+html body main.home section.top-section .social-networks-container div i {
   color: white;
   font-size: 25px;
   opacity: 0.8;
   cursor: pointer;
   transition: 300ms;
 }
-html body main.home .social-networks-container div i:hover {
+html body main.home section.top-section .social-networks-container div i:hover {
   opacity: 1;
 }
+html body main.home section.top-section a.btn-container {
+  width: 25%;
+}
+html body main.home section.top-section a.btn-container .red-btn {
+  align-self: center;
+  position: absolute;
+  bottom: 17%;
+  z-index: 2;
+  animation: 2.8s buttonAnimation infinite;
+}
+html body main.home section.top-section .arrow-bottom {
+  position: absolute;
+  bottom: 17%;
+  animation: 2.8s arrowAnimation infinite;
+  z-index: 1;
+}
+html body main.home section.last-articles {
+  align-items: flex-start;
+}
+html body main.home section.last-articles a.btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
+@keyframes arrowAnimation {
+  0% {
+    bottom: 17%;
+    color: #A53C65;
+  }
+  50% {
+    bottom: 13%;
+    color: white;
+  }
+  100% {
+    bottom: 17%;
+    color: #A53C65;
+  }
+}
+@keyframes buttonAnimation {
+  0% {
+    bottom: 17%;
+    box-shadow: 5px 10px 35px -20px black;
+  }
+  50% {
+    bottom: 18%;
+    box-shadow: 5px 25px 35px -15px black;
+  }
+  100% {
+    bottom: 17%;
+    box-shadow: 5px 10px 35px -20px black;
+  }
+}
 /*@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
 @include _assert-starts-at-zero($grid-breakpoints, "$grid-breakpoints");*/
 @keyframes spinner-border {

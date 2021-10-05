@@ -13,6 +13,7 @@ abstract class AbstractClass {
     public function hydrate(array $data) {
 		foreach ($data as $key => $value) {
 			$keyUnderscore = strpos($key, '_');
+
 			if ($keyUnderscore > 0) {
 				$key = str_replace('_', '', $key);
 				$key = str_replace($key[$keyUnderscore], ucfirst($key[$keyUnderscore]), $key);

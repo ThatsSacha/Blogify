@@ -119,6 +119,52 @@ class ArticleService {
     /**
      * @return array
      */
+    public function findLastArticles(): array {
+        $articlesFetched = $this->articleManager->findLastArticles();
+        $articles = [];
+
+        if (count($articlesFetched) > 0) {
+            foreach($articlesFetched as $article) {
+                $article['created_at'] = date_create($article['created_at']);
+                $article['updated_at'] = $article['updated_at'] !== null ? date_create($article['updated_at']) : null;
+                $article['authorId'] = (int) $article['author_id'];
+                
+                $articleObject = new Article($article);
+                $articles[] = $articleObject->jsonSerialize();
+            }
+        }
+
+        return $articles;
+    }
+
+    /**
+     * This function is not used yet.
+     * This function should prevent HTML code duplication in index & blog view
+     * How to inject the service into HTML file ?
+     * 
+     * @param array $article
+     * 
+     * @return string
+     */
+    public function getArticleTemplate(array $article): string {
+        return '
+            <div class="card">
+                <a href="article?id=<?= $article[' . $article['id'] . '] ?>"></a>
+                <div class="cover" style="background-image: url(../../assets/img/blog/'. $article['cover'] . ')"></div>
+                <div class="bottom">
+                    <h3>' .$article['title'] . '</h3>
+                    <span>Le 
+                        ' . strftime('%d %B', strtotime($article['createdAt']['date']))
+                        . ' ⸱ Sacha COHEN
+                    </span>
+                </div>
+            </div>
+        ';
+    }
+
+    /**
+     * @return array
+     */
     public function findAll(): array {
         $articles = $this->articleManager->findAll();
         

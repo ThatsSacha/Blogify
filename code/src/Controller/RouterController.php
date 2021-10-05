@@ -20,7 +20,7 @@ class RouterController {
         $url = $this->url;
         
         if ($url === '/') {
-            $this->returnView('index');
+            $this->returnView('index', 200, IndexController::class);
         }
         
         else if ($url === '/blog' || strpos($url, '/delete-article') !== false || strpos($url, '/validate-comment') !== false || strpos($url, 'blog') || strpos($url, 'add-comment')) {

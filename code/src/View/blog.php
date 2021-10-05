@@ -23,7 +23,7 @@
                     <?php
                 }
             ?>
-            <div class="article-container">
+            <div class="articles-container">
                 <?php
                     foreach($this->json as $article) {
                         ?>
@@ -34,7 +34,7 @@
                                     <h3><?= $article['title'] ?></h3>
                                     <span>Le 
                                         <?= strftime('%d %B', strtotime($article['createdAt']['date'])); 
-                                        ?> ⸱ Sacha COHEN
+                                        ?> ⸱ <?= $article['author']['firstName'] . ' ' . $article['author']['lastName'] ?>
                                     </span>
                                 </div>
                             </div>

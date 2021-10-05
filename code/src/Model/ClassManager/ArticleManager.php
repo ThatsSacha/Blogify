@@ -154,4 +154,13 @@ class ArticleManager {
             throw new Exception($e->getMessage());
         }
     }
+
+    public function findLastArticles() {
+        $query = $this->db->query(
+            'SELECT * FROM article ORDER BY created_at DESC LIMIT 3'
+        );
+
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

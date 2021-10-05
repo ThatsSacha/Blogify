@@ -1,0 +1,37 @@
+@keyframes arrowAnimation {
+    0% {
+        bottom: 17%;
+        color: $th-red;
+    }
+
+    50% {
+        bottom: 13%;
+        color: white;
+    }
+
+    80% {
+        
+    }
+
+    100% {
+        bottom: 17%;
+        color: $th-red;
+    }
+}
+
+@keyframes buttonAnimation {
+    0% {
+        bottom: 17%;
+        box-shadow: 5px 10px 35px -20px black;
+    }
+
+    50% {
+        bottom: 18%;
+        box-shadow: 5px 25px 35px -15px black;
+    }
+
+    100% {
+        bottom: 17%;
+        box-shadow: 5px 10px 35px -20px black;
+    }
+}

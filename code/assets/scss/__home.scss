@@ -7,46 +7,94 @@ html {
                 align-items: center;
                 justify-content: center;
 
-                .card {
-                    border-radius: 100%;
-                    height: 250px;
-                    width: 250px;
-
-                    img {
-                        width: 100%;
-                        height: 100%;
-                    }
-                }
-
-                h1 {
-                    margin-bottom: 5px;
-                    letter-spacing: 1px;
-                }
-
-                h2 {
-                    font-weight: 100;
-                    font-size: 18px;
-                    margin: 0;
-                }
-
-                .social-networks-container {
+                section {
                     display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-top: 5px;
+                    flex-direction: column;
+                    width: 100%;
 
-                    div {
-                        margin: 0 10px;
+                    &.top-section {
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+                        height: 95vh;
+                        margin-bottom: 25px;
+                        position: relative;
 
-                        i {
-                            color: white;
-                            font-size: 25px;
-                            opacity: 0.8;
-                            cursor: pointer;
-                            transition: 300ms;
+                        .card {
+                            border-radius: 100%;
+                            height: 250px;
+                            width: 250px;
+        
+                            img {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+        
+                        h1 {
+                            margin-bottom: 5px;
+                            letter-spacing: 1px;
+                        }
+        
+                        h2 {
+                            font-weight: 100;
+                            font-size: 18px;
+                            margin: 0;
+                        }
+        
+                        .social-networks-container {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-top: 5px;
+        
+                            div {
+                                margin: 0 10px;
+        
+                                i {
+                                    color: white;
+                                    font-size: 25px;
+                                    opacity: 0.8;
+                                    cursor: pointer;
+                                    transition: 300ms;
+        
+                                    &:hover {
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        a {
+                            &.btn-container {
+                                width: 25%;
 
-                            &:hover {
-                                opacity: 1;
+                                .red-btn {
+                                    align-self: center;
+                                    position: absolute;
+                                    bottom: 17%;
+                                    z-index: 2;
+                                    animation: 2.800s buttonAnimation infinite;
+                                }
+                            }
+                        }
+        
+                        .arrow-bottom {
+                            position: absolute;
+                            bottom: 17%;
+                            animation: 2.800s arrowAnimation infinite;
+                            z-index: 1;
+                        }
+                    }
+
+                    &.last-articles {
+                        align-items: flex-start;
+
+                        a {
+                            &.btn {
+                                width: 100%;
+                                display: flex;
+                                justify-content: center;
                             }
                         }
                     }
