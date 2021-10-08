@@ -65,7 +65,13 @@
             </section>
             <section class="contact">
                 <h2>Contact</h2>
-                <?php include('assets/inc/contact.php'); ?>
+                <div class="form-container">
+                    <div class="img-container">
+                        <img src="../../assets/img/memoji-love.png" loading="lazy" alt="Memoji love">
+                        <div class="bar"></div>
+                    </div>
+                    <?php include('assets/inc/contact.php'); ?>
+                </div>
             </section>
         </main>
     </body>
