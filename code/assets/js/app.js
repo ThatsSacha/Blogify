@@ -211,7 +211,7 @@ $(function() {
                     success(response) {
                         // Wait for hideNotification() ends
                         setTimeout(function() {
-                            showNotification('form.update-profile', 'success', 'Inscription terminée !');
+                            showNotification('form.update-profile', 'success', 'Profile mis à jour !');
                         }, 151);
                         
                         hideNotification('form.update-profile');

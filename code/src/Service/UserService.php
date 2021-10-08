@@ -253,45 +253,44 @@ class UserService {
                     if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
                         $users = $this->userManager->findWhereMailOrPseudoDifferent($_SESSION['user']['id'], $mail, $pseudo);
 
-                        foreach($users as $user) {
-                            /* TODO */
-                            var_dump($user['pseudo'], $pseudo, $user['pseudo'] === $pseudo);
-                                die();
-                            if ($user['id'] != $_SESSION['user']['id']) {
-                                
-                                if ($user['mail'] === $mail || $user['pseudo'] === $pseudo) {
+                        if (count($users) > 0) {
+                            $users = $users[0];
+                            $users['registeredAt'] = date_create($users['registered_at']);
+                            $user = new User($users);
+
+                            if ($user->getId() != $_SESSION['user']['id']) {
+                                if ($user->getMail() === $mail || $user->getPseudo() === $pseudo) {
                                     return array(
                                         'type' => 'error',
                                         'status' => 400,
                                         'message' => "Cette adresse mail ou ce pseudo est déjà utilisé"
                                     );
                                 }
+                            } else {
+                                $data = array(
+                                    'id' => $user->getId(),
+                                    'firstName' => $firstName,
+                                    'lastName' => $lastName,
+                                    'pseudo' => $pseudo,
+                                    'mail' => $mail,
+                                    'registeredAt' => $user->getRegisteredAt()
+                                );
+
+                                $user = new User($data);
+                                $insert = $this->userManager->update($user);
+                                $this->logUser($user);
+        
+                                if (!$insert instanceof Exception) {
+                                    return array('status' => 201, 'type' => 'success');
+                                }
+        
+                                return array(
+                                    'status' => 400,
+                                    'type' => 'error',
+                                    'message' => $insert->getMessage()
+                                );
                             }
                         }
-                        /*
-                            $data = array(
-                                'firstName' => $firstName,
-                                'lastName' => $lastName,
-                                'pseudo' => $pseudo,
-                                'mail' => $mail
-                            );
-                            var_dump($_SESSION);
-                            die();
-                            $user = new User($data);
-                            $insert = $this->userManager->update($user);
-                            $this->logUser($user);
-    
-                            if (!$insert instanceof Exception) {
-                                return array('status' => 201, 'type' => 'success');
-                            }
-    
-                            return array(
-                                'status' => 400,
-                                'type' => 'error',
-                                'message' => $insert->getMessage()
-                            );
-                        */
-                        return;
                     }
 
                     return array(

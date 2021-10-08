@@ -50,40 +50,6 @@ class UserManager {
     }
 
     /**
-     * @return array
-     */
-    public function findAll(): array {
-        $query = $this->db->query(
-            'SELECT * FROM article'
-        );
-        $query->execute();
-
-        $responses = $query->fetchAll();
-        $articles = array();
-        
-        if (count($responses) > 0) {
-            foreach($responses as $response) {
-                $article = new Article(
-                    $response['id'],
-                    $response['title'],
-                    $response['teaser'],
-                    $response['content'],
-                    $response['cover'],
-                    $response['author_id'],
-                    date_create($response['created_at']),
-                    $response['updated_at'] === null ? null : date_create($response['updated_at'])
-                );
-    
-                array_push($articles, $article->jsonSerialize());
-            }
-        } else {
-            array_push($articles, array());
-        }
-
-        return $articles;
-    }
-
-    /**
      * @param $id
      * 
      * @return User|null
@@ -149,14 +115,15 @@ class UserManager {
                     last_name = :last_name,
                     mail = :mail,
                     pseudo = :pseudo
-                WHERE mail = :mail"
+                WHERE id = :id"
             );
             
             $query->execute(array(
-                $user->getFirstName(),
-                $user->getLastName(),
-                $user->getMail(),
-                $user->getPseudo()
+                ':id' => $user->getId(),
+                ':first_name' => $user->getFirstName(),
+                ':last_name' => $user->getLastName(),
+                ':mail' => $user->getMail(),
+                ':pseudo' => $user->getPseudo()
             ));
         } catch (Exception $e) {
             return new Exception($e->getMessage());
