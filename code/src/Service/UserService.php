@@ -8,7 +8,7 @@ use Exception;
 
 class UserService {
     private $userManager;
-
+    
     public function __construct()
     {
         $this->userManager = new UserManager();
@@ -319,5 +319,65 @@ class UserService {
             'status' => 401,
             'message' => 'Unauthorized'
         );
+    }
+
+    /**
+     * @param array $data
+     */
+    public function requestPassword(array $data): array {
+        if (isset($data['mail']) && !empty($data['mail'])) {
+            $mail = $data['mail'];
+
+            if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+                $user = $this->userManager->findByMail($mail);
+
+                if (count($user) > 0) {
+                    $user = new User($user[0]);
+                    $token = $this->createToken();
+                    
+                    $user->setToken($token);
+                    $user->setTokenGeneratedAt(time());
+                    $this->userManager->update($user);
+
+                    $mailTemplateService = new MailTemplateService();
+                    $mailService = new MailService();
+
+                    $mailService->send(
+                        null,
+                        $user->getMail(),
+                        null,
+                        'Rénitialisez votre mot de passe !',
+                        $mailTemplateService->getRequestPasswordTemplate($user)
+                    );
+                } else {
+                    sleep(1);
+                }
+
+                return array(
+                    'type' => 'success',
+                    'status' => 200,
+                    'message' => 'Si l\'adresse mail correspond à un compte Blogify, un mail de rénitialisation sera envoyé sur celle-ci.'
+                );
+            } else {
+                return array(
+                    'type' => 'error',
+                    'status' => 400,
+                    'message' => 'L\'adresse mail n\'est pas au format approprié'
+                );
+            }
+        } else {
+            return array(
+                'type' => 'error',
+                'status' => 400,
+                'message' => 'L\'adresse mail est requise'
+            );
+        }
+    }
+
+    /**
+     * @return string $token
+     */
+    public function createToken(): string {
+       return md5(random_bytes(25) . time());
     }
 }

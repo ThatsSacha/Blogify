@@ -12,6 +12,8 @@ class User extends AbstractClass {
     private string $pseudo;
     private array $roles = ["ROLE_USER"];
     private DateTime|null $registeredAt;
+    private string|null $token;
+    private int|null $tokenGeneratedAt;
 
     public function __construct(array $data = []) {
         if (isset($data['roles'])) {
@@ -53,7 +55,7 @@ class User extends AbstractClass {
     }
 
     public function setFirstName(string $firstName): void {
-        $this->firstName = $firstName;
+        $this->firstName = ucwords(strtolower($firstName));
     }
 
     public function getLastName(): string {
@@ -61,7 +63,7 @@ class User extends AbstractClass {
     }
 
     public function setLastName(string $lastName): void {
-        $this->lastName = $lastName;
+        $this->lastName = strtoupper($lastName);
     }
 
     public function getMail(): string {
@@ -102,5 +104,21 @@ class User extends AbstractClass {
 
     public function setRoles(array|null $roles): void {
         $this->roles = $roles;
+    }
+
+    public function getToken(): string|null {
+        return $this->token;
+    }
+
+    public function setToken(string|null $token): void {
+        $this->token = $token;
+    }
+
+    public function getTokenGeneratedAt(): int|null {
+        return $this->tokenGeneratedAt;
+    }
+
+    public function setTokenGeneratedAt(int|null $tokenGeneratedAt): void {
+        $this->tokenGeneratedAt = $tokenGeneratedAt;
     }
 }

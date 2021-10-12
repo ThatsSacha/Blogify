@@ -6,7 +6,8 @@ a {
 }
 
 button {
-    width: 25%;
+    min-width: 25%;
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: center;

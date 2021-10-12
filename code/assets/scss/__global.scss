@@ -87,8 +87,9 @@ html {
             transition: 200ms;
 
             &.is-active {
-                height: 30px;
+                min-height: 30px;
                 opacity: 1;
+                height: auto;
             }
 
             &.error {

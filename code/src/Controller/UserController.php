@@ -29,6 +29,8 @@ class UserController {
                 $this->isConnected();
             } else if (strpos($this->url, '/update')) {
                 $this->update();
+            } else if ($this->url ==='/request-password') {
+                $this->requestPassword();
             } else {
                 $this->create();
             }
@@ -91,5 +93,9 @@ class UserController {
 
     public function update(): void {
         $this->result = $this->userService->update($this->data);
+    }
+
+    public function requestPassword(): void {
+        $this->result = $this->userService->requestPassword($this->data);
     }
 }

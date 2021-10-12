@@ -3,7 +3,7 @@
     <input type="text" class="mail" placeholder="Votre adresse mail">
     <input type="password" class="password" placeholder="Votre mot de passe">
     <div class="form-space-between">
-        <a href="??">Mot de passe oublié ?</a>
+        <a href="forgot-password">Mot de passe oublié ?</a>
         <a href="register">S'inscrire</a>
     </div>
     <div class="notification"></div>

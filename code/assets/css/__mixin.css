@@ -74,8 +74,9 @@ html body .notification {
   transition: 200ms;
 }
 html body .notification.is-active {
-  height: 30px;
+  min-height: 30px;
   opacity: 1;
+  height: auto;
 }
 html body .notification.error {
   background-color: #A53C65;
@@ -425,7 +426,8 @@ a.btn {
 }
 
 button {
-  width: 25%;
+  min-width: 25%;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;

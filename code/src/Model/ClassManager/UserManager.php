@@ -114,7 +114,9 @@ class UserManager {
                     first_name = :first_name,
                     last_name = :last_name,
                     mail = :mail,
-                    pseudo = :pseudo
+                    pseudo = :pseudo,
+                    token = :token,
+                    token_generated_at = :token_generated_at
                 WHERE id = :id"
             );
             
@@ -123,7 +125,9 @@ class UserManager {
                 ':first_name' => $user->getFirstName(),
                 ':last_name' => $user->getLastName(),
                 ':mail' => $user->getMail(),
-                ':pseudo' => $user->getPseudo()
+                ':pseudo' => $user->getPseudo(),
+                ':token' => $user->getToken(),
+                ':token_generated_at' => $user->getTokenGeneratedAt()
             ));
         } catch (Exception $e) {
             return new Exception($e->getMessage());

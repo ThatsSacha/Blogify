@@ -70,6 +70,14 @@ class RouterController {
         else if ($url === '/about') {
             $this->returnView('about');
         }
+
+        else if ($url === '/forgot-password') {
+            $this->returnView('forgot-password');
+        }
+
+        else if ($url === '/request-password') {
+            $this->returnView('forgot-password', 200, UserController::class);
+        }
         
         else {
             $this->returnView('error', 404);

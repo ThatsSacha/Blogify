@@ -468,6 +468,41 @@ $(function() {
             $('video')[0].play();
         }
     //
+
+    // FORGOT PASSWORD
+        $('form.forgot-password').on('submit', function(e) {
+            e.preventDefault();
+            const mail = $('form.forgot-password input.mail');
+
+            if (mail.val().length > 0) {
+                showSpinner('form.forgot-password');
+                hideNotification('form.forgot-password');
+
+                // Waits for hideNotification()
+                setTimeout(() => {
+                    $.ajax({
+                        method: 'POST',
+                        url: apiUrl + '/request-password',
+                        data: {
+                            mail: mail.val()
+                        },
+                        success(response) {
+                            showNotification('form.forgot-password', 'success', 'Si l\'adresse mail correspond à un compte Blogify, un mail de rénitialisation sera envoyé sur celle-ci.');
+                            mail.val('');
+                        },
+                        error(error) {
+                            showNotification('form.forgot-password', 'error', error.responseJSON.message);
+                        }
+                    })
+                    .always(function() {
+                        hideSpinner('form.forgot-password');
+                    });
+                }, 150);
+            } else {
+                showNotification('form.forgot-password', 'error', 'Tous les champs sont requis');
+            }
+        })
+    //
     
     function setModalHeight() {
         $('.modal-background').css('height', mainHeight);
