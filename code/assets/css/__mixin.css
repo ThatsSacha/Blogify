@@ -627,6 +627,13 @@ html body main.home section.last-articles a.btn {
   display: flex;
   justify-content: center;
 }
+html body main.home section.last-articles .articles-container {
+  width: 100%;
+  flex-wrap: unset;
+}
+html body main.home section.last-articles .articles-container .card {
+  min-width: 250px;
+}
 html body main.home section.contact .form-container {
   display: flex;
   align-items: center;
@@ -654,6 +661,11 @@ html body main.home section.contact .form-container form {
   margin-left: 5px;
 }
 
+@media (max-width: 1140px) {
+  html body main.home section.last-articles .articles-container .card:last-child {
+    display: none;
+  }
+}
 @keyframes arrowAnimation {
   0% {
     bottom: 17%;

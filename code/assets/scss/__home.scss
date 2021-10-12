@@ -110,6 +110,15 @@ html {
                                 justify-content: center;
                             }
                         }
+
+                        .articles-container {
+                            width: 100%;
+                            flex-wrap: unset;
+
+                            .card {
+                                min-width: 250px;
+                            }
+                        }
                     }
 
                     &.contact {
@@ -141,6 +150,28 @@ html {
                             form {
                                 margin: 0;
                                 margin-left: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1140px) {
+    html {
+        body {
+            main {
+                &.home {
+                    section {
+                        &.last-articles {
+                            .articles-container {
+                                .card {
+                                    &:last-child {
+                                        display: none;
+                                    }
+                                }
                             }
                         }
                     }
