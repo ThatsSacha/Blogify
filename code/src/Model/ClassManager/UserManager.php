@@ -96,6 +96,18 @@ class UserManager {
         return $query->fetchAll();
     }
 
+    public function findByToken(string $token) {
+        $query = $this->db->prepare(
+            'SELECT * FROM user WHERE token = :token'
+        );
+
+        $query->execute(array(
+            ':token' => $token
+        ));
+
+        return $query->fetchAll();
+    }
+
     public function findByMail(string $mail) {
         $query = $this->db->prepare(
             'SELECT * FROM user WHERE mail = :mail'
@@ -125,6 +137,35 @@ class UserManager {
                 ':first_name' => $user->getFirstName(),
                 ':last_name' => $user->getLastName(),
                 ':mail' => $user->getMail(),
+                ':pseudo' => $user->getPseudo(),
+                ':token' => $user->getToken(),
+                ':token_generated_at' => $user->getTokenGeneratedAt()
+            ));
+        } catch (Exception $e) {
+            return new Exception($e->getMessage());
+        }
+    }
+
+    public function updateWithPassword(User $user) {
+        try {
+            $query = $this->db->prepare(
+                "UPDATE user SET
+                    first_name = :first_name,
+                    last_name = :last_name,
+                    mail = :mail,
+                    password = :password,
+                    pseudo = :pseudo,
+                    token = :token,
+                    token_generated_at = :token_generated_at
+                WHERE id = :id"
+            );
+            
+            $query->execute(array(
+                ':id' => $user->getId(),
+                ':first_name' => $user->getFirstName(),
+                ':last_name' => $user->getLastName(),
+                ':mail' => $user->getMail(),
+                ':password' => $user->getPassword(),
                 ':pseudo' => $user->getPseudo(),
                 ':token' => $user->getToken(),
                 ':token_generated_at' => $user->getTokenGeneratedAt()

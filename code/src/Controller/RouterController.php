@@ -78,6 +78,14 @@ class RouterController {
         else if ($url === '/request-password') {
             $this->returnView('forgot-password', 200, UserController::class);
         }
+
+        else if (strpos($url, '/reset-password') !== false) {
+            $this->returnView('reset-password', 200, UserController::class);
+        }
+
+        else if (strpos($url, '/set-password') !== false) {
+            $this->returnView('reset-password', 200, UserController::class);
+        }
         
         else {
             $this->returnView('error', 404);

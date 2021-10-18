@@ -504,6 +504,47 @@ $(function() {
         })
     //
     
+    // RESET PASSWORD
+        $('form.reset-password').on('submit', function(e) {
+            e.preventDefault();
+            const password = $('form.reset-password input.password');
+            const passwordConfirm = $('form.reset-password input.password-confirm');
+
+            if (password.val().length > 0 && passwordConfirm.val().length > 0) {
+                showSpinner('form.reset-password');
+                hideNotification('form.reset-password');
+
+                // Waits for hideNotification()
+                setTimeout(() => {
+                    $.ajax({
+                        method: 'POST',
+                        url: apiUrl + '/set-password',
+                        headers: {
+                            Accept: 'application/json',
+                        },
+                        dataType: 'json',
+                        data: {
+                            token: window.location.search.split('?')[1].split('=')[1],
+                            password: password.val(),
+                            passwordConfirm: passwordConfirm.val()
+                        },
+                        success(response) {
+                            showNotification('form.reset-password', 'success', 'Le mot de passe a bien été créé ! Vous pouvez maintenant vous connecter.');
+                        },
+                        error(error) {
+                            showNotification('form.reset-password', 'error', error.responseJSON.message);
+                        }
+                    })
+                    .always(function() {
+                        hideSpinner('form.reset-password');
+                    });
+                }, 150);
+            } else {
+                showNotification('form.reset-password', 'error', 'Tous les champs sont requis');
+            }
+        })
+    //
+
     function setModalHeight() {
         $('.modal-background').css('height', mainHeight);
         $('.modal-background').css('padding-top', $(window).scrollTop());

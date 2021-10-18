@@ -8,7 +8,7 @@
     <body>
         <?php include('assets/inc/side-bar.php'); ?>
         <main class="contact">
-            <h1>Contactez-nous ! 📨</h1>
+            <h1>Contactez moi ! 📨</h1>
             <?php include('assets/inc/contact.php'); ?>
         </main>
     </body>

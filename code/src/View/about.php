@@ -41,7 +41,7 @@
                     <h2>Études, boulot, ???</em></h2>
                     <h3>Error 404, fin de la phrase not found</h3>
                     <p>
-                        Bac +2, stage à Paris, projets persos, embauche dans une entreprise, alternance, autoentreprise & <em>StackOverflow</em>, en résumé on est passé dans la cours des grands...
+                        Bac +2, stage à Paris, projets persos, embauche dans une entreprise, alternance, auto-entreprise & <em>StackOverflow</em>, en résumé on est passé dans la cours des grands...
                     </p>
                 </div>
             </div>

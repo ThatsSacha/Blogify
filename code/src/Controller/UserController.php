@@ -31,6 +31,8 @@ class UserController {
                 $this->update();
             } else if ($this->url ==='/request-password') {
                 $this->requestPassword();
+            } else if ($this->url ==='/set-password') {
+                $this->setPassword();
             } else {
                 $this->create();
             }
@@ -43,7 +45,9 @@ class UserController {
                 } else {
                     header('Location: /');
                 }
-            } 
+            } else if (strpos($this->url, '/reset-password') !== false) {
+                $this->resetPassword();
+            }
         } else {
             $this->result = [
                 'type' => 'error',
@@ -97,5 +101,29 @@ class UserController {
 
     public function requestPassword(): void {
         $this->result = $this->userService->requestPassword($this->data);
+    }
+
+    public function resetPassword(): void {
+        if (isset($_GET['token'])) {
+            $this->result = $this->userService->resetPassword($_GET['token']);
+        } else {
+            $this->result = array(
+                'isError' => true,
+                'status' => 400,
+                'message' => 'Token not found'
+            );
+        }
+    }
+
+    public function setPassword(): void {
+        if (isset($this->data['token'])) {
+            $this->result = $this->userService->setPassword($this->data);
+        } else {
+            $this->result = array(
+                'isError' => true,
+                'status' => 400,
+                'message' => 'Token not found'
+            );
+        }
     }
 }

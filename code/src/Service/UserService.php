@@ -180,7 +180,7 @@ class UserService {
     }
 
     /**
-     * This function determines if password is strong
+     * This function determines if password is strong enough
      * 
      * @param string $password
      * @return array
@@ -277,6 +277,7 @@ class UserService {
                                 );
 
                                 $user = new User($data);
+                                var_dump($user);
                                 $insert = $this->userManager->update($user);
                                 $this->logUser($user);
         
@@ -375,9 +376,85 @@ class UserService {
     }
 
     /**
+     * @param array $data
+     */
+    public function setPassword(array $data) {
+        try {
+            $user = $this->userManager->findByToken($data['token']);
+        
+            if (count($user) > 0) {
+                $password = $data['password'];
+                $passwordConfirm = $data['passwordConfirm'];
+    
+                if ($password === $passwordConfirm) {
+                    $isPasswordValid = $this->isPasswordValid($password);
+                    
+                    if ($isPasswordValid['isValid']) {
+                        $user = new User($user[0]);
+                        $password = password_hash($password, PASSWORD_BCRYPT);
+                        $user->setPassword($password);
+                        $user->setToken(null);
+                        $user->setTokenGeneratedAt(null);
+                        $this->userManager->updateWithPassword($user);
+    
+                        return array(
+                            'type' => 'success',
+                            'status' => 200,
+                            'message' => 'Password has been successfully updated'
+                        );
+                    }
+
+                    return array(
+                        'type' => 'error',
+                        'status' => 400,
+                        'message' => $isPasswordValid['message']
+                    );
+                }
+    
+                return array(
+                    'type' => 'error',
+                    'status' => 400,
+                    'message' => 'Both password didn\'t match'
+                );
+            }
+        } catch (Exception $e) {
+            return array(
+                'type' => 'error',
+                'status' => $e->getCode() ? $e->getCode() : 400,
+                'message' => $e->getMessage()
+            );
+        }
+    }
+
+    /**
      * @return string $token
      */
     public function createToken(): string {
        return md5(random_bytes(25) . time());
+    }
+
+    public function resetPassword(string $token) {
+        $user = $this->userManager->findByToken($token);
+        
+        if (count($user) > 0) {
+            $user = new User($user[0]);
+            $userTokenGeneratedAt = $user->getTokenGeneratedAt();
+            $tokenExpirationDate = $userTokenGeneratedAt + 600;
+            
+            if ($userTokenGeneratedAt <= $tokenExpirationDate) {
+                return array(
+                    'type' => 'success',
+                    'isError' => false,
+                    'status' => 200,
+                    'message' => 'Great'
+                );
+            }
+        }
+
+        return array(
+            'isError' => true,
+            'status' => 400,
+            'message' => 'Token invalid'
+        );
     }
 }
