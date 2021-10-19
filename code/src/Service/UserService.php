@@ -273,11 +273,12 @@ class UserService {
                                     'lastName' => $lastName,
                                     'pseudo' => $pseudo,
                                     'mail' => $mail,
-                                    'registeredAt' => $user->getRegisteredAt()
+                                    'registeredAt' => $user->getRegisteredAt(),
+                                    'token' => null,
+                                    'tokenGeneratedAt' => null
                                 );
 
                                 $user = new User($data);
-                                var_dump($user);
                                 $insert = $this->userManager->update($user);
                                 $this->logUser($user);
         
@@ -440,8 +441,8 @@ class UserService {
             $user = new User($user[0]);
             $userTokenGeneratedAt = $user->getTokenGeneratedAt();
             $tokenExpirationDate = $userTokenGeneratedAt + 600;
-            
-            if ($userTokenGeneratedAt <= $tokenExpirationDate) {
+
+            if ($tokenExpirationDate >= time()) {
                 return array(
                     'type' => 'success',
                     'isError' => false,

@@ -23,7 +23,7 @@ class ArticleManager {
      */
     public function findAll(): array {
         $query = $this->db->query(
-            'SELECT * FROM article'
+            'SELECT * FROM article ORDER BY id DESC'
         );
         $query->execute();
 
