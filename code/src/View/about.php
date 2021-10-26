@@ -3,10 +3,10 @@
     <head>
         <title>Blogify | À propos</title>
         <meta name="description" content="Blogify is a personal project realized for my school fifth project.">
-        <?php include('assets/inc/header-tags.php') ?>
+        <?php include 'assets/inc/header-tags.php'; ?>
     </head>
     <body>
-        <?php include('assets/inc/side-bar.php'); ?>
+        <?php include 'assets/inc/side-bar.php'; ?>
         <main class="about">
             <h1>À propos 💁🏻‍♂️</h1>
             <div class="video-container">

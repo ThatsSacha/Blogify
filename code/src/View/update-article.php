@@ -3,10 +3,10 @@
     <head>
         <title>Blogify | Modifier un article</title>
         <meta name="description" content="Blogify is a personal project realized for my school fifth project.">
-        <?php include('assets/inc/header-tags.php') ?>
+        <?php include 'assets/inc/header-tags.php'; ?>
     </head>
     <body>
-        <?php include('assets/inc/side-bar.php'); ?>
+        <?php include 'assets/inc/side-bar.php'; ?>
         <main class="update-article">
             <h1>Modifier un article 🖋</h1>
             <form class="w-100 update-article">

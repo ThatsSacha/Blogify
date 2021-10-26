@@ -1,3 +1,3 @@
 <div class="modal">
-    <?php include('./register.php'); ?>
+    <?php include './register.php'; ?>
 </div>

@@ -22,7 +22,7 @@ abstract class AbstractClass {
 			$setterMethod = 'set' . ucfirst($key);
 			
 			if (method_exists($this, $setterMethod)) {
-				if (gettype($value) === 'string') {
+				if (is_string($value)) {
 					$value = htmlspecialchars($value);
 				}
 

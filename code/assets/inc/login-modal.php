@@ -1,3 +1,3 @@
 <div class="modal">
-    <?php include('./login.php'); ?>
+    <?php include './login.php'; ?>
 </div>

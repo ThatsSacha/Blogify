@@ -3,10 +3,10 @@
     <head>
         <title>Blogify | Accueil</title>
         <meta name="description" content="Blogify is a personal project realized for my school fifth project.">
-        <?php include('assets/inc/header-tags.php') ?>
+        <?php include 'assets/inc/header-tags.php'; ?>
     </head>
     <body>
-        <?php include('assets/inc/side-bar.php'); ?>
+        <?php include 'assets/inc/side-bar.php'; ?>
         <main class="home">
             <section class="top-section">
                 <div class="card">
@@ -70,7 +70,7 @@
                         <img src="../../assets/img/memoji-love.png" loading="lazy" alt="Memoji love">
                         <div class="bar"></div>
                     </div>
-                    <?php include('assets/inc/contact.php'); ?>
+                    <?php include 'assets/inc/contact.php'; ?>
                 </div>
             </section>
         </main>

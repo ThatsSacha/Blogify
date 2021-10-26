@@ -3,10 +3,10 @@
     <head>
         <title>Blogify | Erreur</title>
         <meta name="description" content="">
-        <?php include('assets/inc/header-tags.php') ?>
+        <?php include 'assets/inc/header-tags.php'; ?>
     </head>
     <body>
-        <?php include('assets/inc/side-bar.php'); ?>
+        <?php include 'assets/inc/side-bar.php'; ?>
         <main class="center">
             <div class="card">
                 <h1>Une erreur s'est produite...😪</h1>

@@ -3,10 +3,10 @@
     <head>
         <title>Blogify | Mot de passe oublié</title>
         <meta name="description" content="Blogify is a personal project realized for my school fifth project.">
-        <?php include('assets/inc/header-tags.php') ?>
+        <?php include 'assets/inc/header-tags.php'; ?>
     </head>
     <body>
-        <?php include('assets/inc/side-bar.php'); ?>
+        <?php include 'assets/inc/side-bar.php'; ?>
         <main class="center">
             <form class="forgot-password">
                 <h1>Mot de passe oublié</h1>

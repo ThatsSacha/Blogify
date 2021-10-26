@@ -3,10 +3,10 @@
     <head>
         <title>Blogify | <?= $this->json['title'] ?></title>
         <meta name="description" content="<?= $this->json['teaser'] ?>">
-        <?php include('assets/inc/header-tags.php') ?>
+        <?php include 'assets/inc/header-tags.php'; ?>
     </head>
     <body>
-        <?php include('assets/inc/side-bar.php'); ?>
+        <?php include 'assets/inc/side-bar.php'; ?>
         <main class="article">
             <?php
                 if ($this->authService->isAdmin()) {
