@@ -1,4 +1,6 @@
 $(function() {
+    let mainHeight = $("main").innerHeight();
+
     function setModalHeight() {
         $(".modal-background").css("height", mainHeight);
         $(".modal-background").css("padding-top", $(window).scrollTop());
@@ -112,7 +114,6 @@ $(function() {
     let cardAnimationRotation = 0;
     let startInterval;
     let stopInterval;
-    let mainHeight = $("main").innerHeight();
 
     $("main.home section.top-section .card").on("mouseenter", function() {
         clearInterval(stopInterval);
