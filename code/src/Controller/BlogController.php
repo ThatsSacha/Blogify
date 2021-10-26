@@ -23,7 +23,7 @@ class BlogController {
         $this->commentManager = new CommentManager();
         $this->url = $url;
         $this->data = $data;
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = filter_input(INPUT_POST, $_SERVER['REQUEST_METHOD']);
         $this->checkRoute();
     }
 
