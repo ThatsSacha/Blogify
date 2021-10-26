@@ -108,35 +108,6 @@ $(function() {
         }, 150);
     }
 
-    const apiUrl = "http://localhost:8000";
-    setLogo();
-    isConnected();
-    let cardAnimationRotation = 0;
-    let startInterval;
-    let stopInterval;
-
-    $("main.home section.top-section .card").on("mouseenter", function() {
-        clearInterval(stopInterval);
-
-        startInterval = setInterval(() => {
-            if (cardAnimationRotation !== 360) {
-                cardAnimationRotation += 4;
-                $("main.home section.top-section .card img").css("transform", "rotate(" + cardAnimationRotation + "deg)");
-            }
-        });
-    });
-
-    $("main.home section.top-section .card").on("mouseleave", function() {
-        clearInterval(startInterval);
-
-        stopInterval = setInterval(() => {
-            if (cardAnimationRotation !== 0) {
-                cardAnimationRotation -= 4;
-                $("main.home section.top-section .card img").css("transform", "rotate(" + cardAnimationRotation + "deg)");
-            }
-        });
-    });
-
     function isConnected() {
         $.ajax({
             method: "POST",
@@ -166,6 +137,35 @@ $(function() {
             })
         });
     }
+
+    const apiUrl = "http://localhost:8000";
+    setLogo();
+    isConnected();
+    let cardAnimationRotation = 0;
+    let startInterval;
+    let stopInterval;
+
+    $("main.home section.top-section .card").on("mouseenter", function() {
+        clearInterval(stopInterval);
+
+        startInterval = setInterval(() => {
+            if (cardAnimationRotation !== 360) {
+                cardAnimationRotation += 4;
+                $("main.home section.top-section .card img").css("transform", "rotate(" + cardAnimationRotation + "deg)");
+            }
+        });
+    });
+
+    $("main.home section.top-section .card").on("mouseleave", function() {
+        clearInterval(startInterval);
+
+        stopInterval = setInterval(() => {
+            if (cardAnimationRotation !== 0) {
+                cardAnimationRotation -= 4;
+                $("main.home section.top-section .card img").css("transform", "rotate(" + cardAnimationRotation + "deg)");
+            }
+        });
+    });
 
     $(".login-modal").on("click", function(e) {
         e.preventDefault();
