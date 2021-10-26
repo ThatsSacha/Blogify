@@ -8,14 +8,20 @@ use Exception;
 
 class UserService {
     private $userManager;
+    private $logged;
+    private $userMail;
+    private $userId;
     
     public function __construct()
     {
         $this->userManager = new UserManager();
+        $this->logged = filter_input(INPUT_POST, $_SESSION['logged']);
+        $this->userMail = filter_input(INPUT_POST, $_SESSION['user']['mail']);
+        $this->userId = filter_input(INPUT_POST, $_SESSION['user']['id']);
     }
 
     public function isConnected() {
-        if (isset($_SESSION['logged']) && $_SESSION['logged']) {
+        if ($this->logged) {
             return array(
                 'logged' => true,
                 'code' => 200
@@ -217,9 +223,9 @@ class UserService {
      * @return User|array
      */
     public function findOneByMail(): User|array {
-        if (isset($_SESSION) && $_SESSION['logged']) {
-            if (isset($_SESSION['user']['mail']) && !empty($_SESSION['user']['mail'])) {
-                $users = $this->userManager->findByMail($_SESSION['user']['mail']);
+        if ($this->logged) {
+            if ($this->userMail && !empty($this->userMail)) {
+                $users = $this->userManager->findByMail($this->userMail);
 
                 if (count($users) > 0) {
                     $user = new User($users[0]);
@@ -242,8 +248,8 @@ class UserService {
     }
 
     public function update(array $data) {
-        if (isset($_SESSION) && $_SESSION['logged']) {
-            if (isset($_SESSION['user']['mail']) && !empty($_SESSION['user']['mail'])) {
+        if ($this->logged) {
+            if ($this->mail && !empty($this->mail)) {
                 if (isset($data['firstName']) && !empty($data['firstName']) && isset($data['lastName']) && !empty($data['lastName']) && isset($data['pseudo']) && !empty($data['pseudo']) && isset($data['mail']) && !empty($data['mail'])) {
                     $firstName = htmlspecialchars($data['firstName']);
                     $lastName = htmlspecialchars($data['lastName']);
@@ -251,14 +257,14 @@ class UserService {
                     $mail = htmlspecialchars($data['mail']);
 
                     if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-                        $users = $this->userManager->findWhereMailOrPseudoDifferent($_SESSION['user']['id'], $mail, $pseudo);
+                        $users = $this->userManager->findWhereMailOrPseudoDifferent($this->userId, $mail, $pseudo);
 
                         if (count($users) > 0) {
                             $users = $users[0];
                             $users['registeredAt'] = date_create($users['registered_at']);
                             $user = new User($users);
 
-                            if ($user->getId() != $_SESSION['user']['id']) {
+                            if ($user->getId() != $this->userId) {
                                 if ($user->getMail() === $mail || $user->getPseudo() === $pseudo) {
                                     return array(
                                         'type' => 'error',

@@ -90,10 +90,11 @@ class ArticleService {
                 if ($article !== null) {
                     $mandatoryFields = ['title', 'teaser', 'content', 'coverCredit'];
                     $this->verifyMandatoryFields($data, $mandatoryFields);
+                    $cover = filter_input(INPUT_POST, $_FILES['cover']);
 
-                    if (isset($_FILES['cover'])) {
-                        $data['cover'] = $_FILES['cover']['name'];
-                        $data['cover'] =  $this->importFileService->verifyAndUploadFile($_FILES['cover']);
+                    if ($cover) {
+                        $data['cover'] = $cover['name'];
+                        $data['cover'] = $this->importFileService->verifyAndUploadFile($cover);
                     } else {
                         $data['cover'] = $article->getCover();
                     }

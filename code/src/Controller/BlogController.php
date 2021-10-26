@@ -134,9 +134,19 @@ class BlogController {
     }
 
     public function validateComment() {
-        if (isset($_GET['article_id']) && !empty($_GET['article_id']) && is_numeric($_GET['article_id']) && isset($_GET['comment_id']) && !empty($_GET['comment_id']) && is_numeric($_GET['comment_id'])) {
+        $articleId = filter_input(INPUT_GET, $_GET['article_id']);
+        $commentId = filter_input(INPUT_GET, $_GET['comment_id']);
+
+        if (
+            $articleId &&
+            !empty($articleId) &&
+            is_numeric($articleId) &&
+            $commentId &&
+            !empty($commentId) &&
+            is_numeric($commentId)
+        ) {
             if ($this->authService->isAdmin()) {
-                $this->commentManager->validateComment($_GET['comment_id']);
+                $this->commentManager->validateComment($commentId);
             } else {
                 $this->result = array(
                     'status' => 401,
