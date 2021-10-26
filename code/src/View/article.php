@@ -12,13 +12,13 @@
                 if ($this->authService->isAdmin()) {
                     ?>
                         <div class="btn-group">
-                            <a class="btn" href="update-article?id=<?= htmlentities($_GET['id']) ?>">
+                            <a class="btn" href="update-article?id=<?= htmlspecialchars_decode($_GET['id']) ?>">
                                 <button class="green-btn small-btn">
                                     <i class="bi bi-pencil is-active"></i>
                                     Mettre à jour l'article
                                 </button>
                             </a>
-                            <button class="red-btn small-btn delete-article" data-article="<?= htmlentities($_GET['id']) ?>">
+                            <button class="red-btn small-btn delete-article" data-article="<?= htmlspecialchars_decode($_GET['id']) ?>">
                                 <i class="bi bi-trash is-active"></i>
                                 Supprimer l'article
                             </button>
@@ -26,19 +26,19 @@
                     <?php
                 }
             ?>
-            <h1><?= htmlentities($this->json['title']); ?></h1>
-            <h2><?= htmlentities($this->json['teaser']); ?></h2>
+            <h1><?= htmlspecialchars_decode($this->json['title']); ?></h1>
+            <h2><?= htmlspecialchars_decode($this->json['teaser']); ?></h2>
             <span class="small-text">
                 Le <?=
-                    strftime('%d %B %Y à %H:%M', strtotime(htmlentities($this->json['createdAt']['date'])));
+                    strftime('%d %B %Y à %H:%M', strtotime(htmlspecialchars_decode($this->json['createdAt']['date'])));
                 ?>
             </span>
-            <div class="cover" style="background-image: url(../../assets/img/blog/<?= htmlentities($this->json['cover']) ?>)"></div>
+            <div class="cover" style="background-image: url(../../assets/img/blog/<?= htmlspecialchars_decode($this->json['cover']) ?>)"></div>
             <span class="small-text">
-                © <?= htmlentities($this->json['coverCredit']); ?>
+                © <?= htmlspecialchars_decode($this->json['coverCredit']); ?>
             </span>
             <p>
-                <?= htmlentities($this->json['content']); ?>
+                <?= htmlspecialchars_decode($this->json['content']); ?>
             </p>
             <?php
                 if (count($_SESSION) > 0 && $_SESSION['logged']) {
@@ -73,14 +73,14 @@
                             ?>
                                 <div class="comment card">
                                     <div class="top">
-                                        <h6>Par <?= htmlentities($comment['user']['firstName']); ?> <?= htmlentities($comment['user']['lastName']); ?></h6>
+                                        <h6>Par <?= htmlspecialchars_decode($comment['user']['firstName']); ?> <?= htmlspecialchars_decode($comment['user']['lastName']); ?></h6>
                                         <small>
-                                            <?= htmlentities($comment['createdAtFrench']); ?>
+                                            <?= htmlspecialchars_decode($comment['createdAtFrench']); ?>
                                         </small>
                                         <?php
                                             if (!$comment['isActive'] && $this->authService->isAdmin()) {
                                                 ?>
-                                                   <button data-article="<?= htmlentities($_GET['id']); ?>" data-comment="<?= htmlentities($comment['id']); ?>" class="green-btn validate-btn">
+                                                   <button data-article="<?= htmlspecialchars_decode($_GET['id']); ?>" data-comment="<?= htmlspecialchars_decode($comment['id']); ?>" class="green-btn validate-btn">
                                                         <i class="bi bi-check-circle is-active"></i>
                                                         Valider ce commentaire
                                                    </button>
@@ -88,7 +88,7 @@
                                             }
                                         ?>
                                     </div>
-                                    <span><?= htmlentities($comment['comment']); ?></span>
+                                    <span><?= htmlspecialchars_decode($comment['comment']); ?></span>
                                 </div>
                             <?php
                         }
