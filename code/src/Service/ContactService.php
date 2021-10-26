@@ -3,9 +3,6 @@
 namespace App\Service;
 
 use Exception;
-use PHPMailer\PHPMailer\SMTP;
-//use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\PHPMailer;
 
 class ContactService {
     private $mailTemplateService;

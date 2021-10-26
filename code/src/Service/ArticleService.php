@@ -13,6 +13,7 @@ class ArticleService {
     private ImportFileService $importFileService;
     private AuthService $authService;
     private CommentManager $commentManager;
+    private $userId;
 
     public function __construct()
     {
@@ -20,18 +21,21 @@ class ArticleService {
         $this->importFileService = new ImportFileService();
         $this->authService = new AuthService();
         $this->commentManager = new CommentManager();
+        $this->userId = isset($_GET['user_id']) ? filter_input(INPUT_GET, $_GET['user_id']) : null;
     }
 
     public function create(array $data) {
-        if (isset($_FILES['cover'])) {
-            $data['cover'] = $_FILES['cover']['name'];
+        $cover = isset($_FILES['cover']) ? filter_input(INPUT_POST, $_FILES['cover']) : null;
+
+        if ($cover) {
+            $data['cover'] = $cover['name'];
         }
        
         $mandatoryFields = ['title', 'teaser', 'content', 'coverCredit', 'cover'];
         $this->verifyMandatoryFields($data, $mandatoryFields);
-        $data['cover'] =  $this->importFileService->verifyAndUploadFile($_FILES['cover']);
+        $data['cover'] =  $this->importFileService->verifyAndUploadFile($cover);
 
-        $data['authorId'] = $_SESSION['user']['id'];
+        $data['authorId'] = $this->userId;
         $article = new Article($data);
         // Keep line breaks after htmlspecialchars
         $article->setContent(
@@ -59,7 +63,7 @@ class ArticleService {
             $mandatoryFields = ['articleId', 'comment'];
             $this->verifyMandatoryFields($data, $mandatoryFields);
     
-            $data['user_id'] = $_SESSION['user']['id'];
+            $data['user_id'] = $this->userId;
             $comment = new Comment($data);
             $this->commentManager->create($comment);
         } else {
@@ -90,7 +94,7 @@ class ArticleService {
                 if ($article !== null) {
                     $mandatoryFields = ['title', 'teaser', 'content', 'coverCredit'];
                     $this->verifyMandatoryFields($data, $mandatoryFields);
-                    $cover = filter_input(INPUT_POST, $_FILES['cover']);
+                    $cover = isset($_FILES['cover']) ? filter_input(INPUT_POST, $_FILES['cover']) : null;
 
                     if ($cover) {
                         $data['cover'] = $cover['name'];
@@ -153,7 +157,7 @@ class ArticleService {
                 <a href="article?id=<?= $article[' . $article['id'] . '] ?>"></a>
                 <div class="cover" style="background-image: url(../../assets/img/blog/'. $article['cover'] . ')"></div>
                 <div class="bottom">
-                    <h3>' .$article['title'] . '</h3>
+                    <h3>' . $article['title'] . '</h3>
                     <span>Le 
                         ' . strftime('%d %B', strtotime($article['createdAt']['date']))
                         . ' ⸱ Sacha COHEN

@@ -4,7 +4,10 @@ namespace App\Service;
 
 class AuthService {
     public function isLogged(): bool {
-        return isset($_SESSION) && isset($_SESSION['logged']) && $_SESSION['logged'] ? true : false;
+        $logged = isset($_SESSION['logged']) ? filter_input(INPUT_POST, $_SESSION['logged']) : null;
+
+        // Logged could return null
+        return $logged ? true : false;
     }
 
     public function isAdmin(): bool {

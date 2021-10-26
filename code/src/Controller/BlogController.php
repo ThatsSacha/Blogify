@@ -26,7 +26,7 @@ class BlogController {
         $this->data = $data;
         $this->method = filter_input(INPUT_SERVER, $_SERVER['REQUEST_METHOD']);
         $this->checkRoute();
-        $this->id = filter_input(INPUT_GET, $_GET['id']);
+        $this->id = isset($_GET['id']) ? filter_input(INPUT_GET, $_GET['id']) : null;
     }
 
     private function checkRoute(): void {

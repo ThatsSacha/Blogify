@@ -18,7 +18,7 @@ class UserController {
         $this->url = $url;
         $this->method = filter_input(INPUT_SERVER, $_SERVER['REQUEST_METHOD']);
         $this->checkRoute();
-        $this->token = filter_input(INPUT_GET, $_GET['token']); 
+        $this->token = isset($_GET['token']) ? filter_input(INPUT_GET, $_GET['token']) : null; 
     }
 
     private function checkRoute(): void {
