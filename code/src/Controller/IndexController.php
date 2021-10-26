@@ -13,7 +13,7 @@ class IndexController {
         $this->articleService = new ArticleService();
         $this->url = $url;
         $this->data = $data;
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = filter_input(INPUT_SERVER, $_SERVER['REQUEST_METHOD']);;
         $this->checkRoute();
     }
 

@@ -15,6 +15,7 @@ class BlogController {
     private string $method;
     private $result;
     private AuthService $authService;
+    private $id;
 
     public function __construct(string $url, $data = null) {
         $this->articleManager = new ArticleManager();
@@ -23,15 +24,16 @@ class BlogController {
         $this->commentManager = new CommentManager();
         $this->url = $url;
         $this->data = $data;
-        $this->method = filter_input(INPUT_POST, $_SERVER['REQUEST_METHOD']);
+        $this->method = filter_input(INPUT_SERVER, $_SERVER['REQUEST_METHOD']);
         $this->checkRoute();
+        $this->id = filter_input(INPUT_GET, $_GET['id']);
     }
 
     private function checkRoute(): void {
         if (in_array($this->method, ['OPTIONS', 'GET'])) {
             if (strpos($this->url, 'validate-comment') !== false) {
                 $this->validateComment();
-            } else if (isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])) {
+            } else if ($this->id && !empty($this->id) && is_numeric($this->id)) {
                 $this->findOneBy();
             } else {
                 $this->findAll();
@@ -91,7 +93,7 @@ class BlogController {
 
     public function findOneBy() {
         try {
-            $article = $this->articleManager->findOneBy($_GET['id']);
+            $article = $this->articleManager->findOneBy($this->id);
 
             if ($article !== null) {
                 $this->result = $article->jsonSerialize();
@@ -147,7 +149,7 @@ class BlogController {
 
     public function delete() {
         try {
-            $this->result = $this->articleService->delete($_GET['id']);
+            $this->result = $this->articleService->delete($this->id);
         } catch (Exception $e) {
             $this->result = [
                 'type' => 'error',

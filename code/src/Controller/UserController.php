@@ -10,13 +10,15 @@ class UserController {
     private string $method;
     private $result;
     private UserService $userService;
+    private $token;
 
     public function __construct(string $url, $data = null) {
         $this->userService = new UserService();
         $this->data = $data;
         $this->url = $url;
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = filter_input(INPUT_SERVER, $_SERVER['REQUEST_METHOD']);
         $this->checkRoute();
+        $this->token = filter_input(INPUT_GET, $_GET['token']); 
     }
 
     private function checkRoute(): void {
@@ -104,8 +106,8 @@ class UserController {
     }
 
     public function resetPassword(): void {
-        if (isset($_GET['token'])) {
-            $this->result = $this->userService->resetPassword($_GET['token']);
+        if ($this->token) {
+            $this->result = $this->userService->resetPassword($this->token);
         } else {
             $this->result = array(
                 'isError' => true,

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Exception;
 use App\Service\ContactService;
+use App\Service\MailService;
 use App\Service\MailTemplateService;
 
 class ContactController {
@@ -14,10 +15,13 @@ class ContactController {
     private ContactService $contactService;
 
     public function __construct(string $url, $data = null) {
-        $this->contactService = new ContactService(new MailTemplateService());
+        $this->contactService = new ContactService(
+            new MailTemplateService(),
+            new MailService()
+        );
         $this->data = $data;
         $this->url = $url;
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = filter_input(INPUT_SERVER, $_SERVER['REQUEST_METHOD']);
         $this->checkRoute();
     }
 
