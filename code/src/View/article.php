@@ -26,7 +26,7 @@
                     <?php
                 }
             ?>
-            <h1><?= $this->json['title'] ?></h1>
+            <h1><?= htmlentities($this->json['title']); ?></h1>
             <h2><?= $this->json['teaser'] ?></h2>
             <span class="small-text">
                 Le <?=
