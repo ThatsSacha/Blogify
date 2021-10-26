@@ -12,13 +12,13 @@
                 if ($this->authService->isAdmin()) {
                     ?>
                         <div class="btn-group">
-                            <a class="btn" href="update-article?id=<?= $_GET['id'] ?>">
+                            <a class="btn" href="update-article?id=<?= htmlentities($_GET['id']) ?>">
                                 <button class="green-btn small-btn">
                                     <i class="bi bi-pencil is-active"></i>
                                     Mettre à jour l'article
                                 </button>
                             </a>
-                            <button class="red-btn small-btn delete-article" data-article="<?= $_GET['id'] ?>">
+                            <button class="red-btn small-btn delete-article" data-article="<?= htmlentities($_GET['id']) ?>">
                                 <i class="bi bi-trash is-active"></i>
                                 Supprimer l'article
                             </button>
@@ -27,18 +27,18 @@
                 }
             ?>
             <h1><?= htmlentities($this->json['title']); ?></h1>
-            <h2><?= $this->json['teaser'] ?></h2>
+            <h2><?= htmlentities($this->json['teaser']); ?></h2>
             <span class="small-text">
                 Le <?=
-                    strftime('%d %B %Y à %H:%M', strtotime($this->json['createdAt']['date']));
+                    strftime('%d %B %Y à %H:%M', strtotime(htmlentities($this->json['createdAt']['date'])));
                 ?>
             </span>
-            <div class="cover" style="background-image: url(../../assets/img/blog/<?= $this->json['cover'] ?>)"></div>
+            <div class="cover" style="background-image: url(../../assets/img/blog/<?= htmlentities($this->json['cover']) ?>)"></div>
             <span class="small-text">
-                © <?= $this->json['coverCredit'] ?>
+                © <?= htmlentities($this->json['coverCredit']); ?>
             </span>
             <p>
-                <?= htmlspecialchars_decode($this->json['content']); ?>
+                <?= htmlentities($this->json['content']); ?>
             </p>
             <?php
                 if (count($_SESSION) > 0 && $_SESSION['logged']) {
@@ -73,14 +73,14 @@
                             ?>
                                 <div class="comment card">
                                     <div class="top">
-                                        <h6>Par <?= $comment['user']['firstName'] ?> <?= $comment['user']['lastName'] ?></h6>
+                                        <h6>Par <?= htmlentities($comment['user']['firstName']); ?> <?= htmlentities($comment['user']['lastName']); ?></h6>
                                         <small>
-                                            <?= $comment['createdAtFrench'] ?>
+                                            <?= htmlentities($comment['createdAtFrench']); ?>
                                         </small>
                                         <?php
                                             if (!$comment['isActive'] && $this->authService->isAdmin()) {
                                                 ?>
-                                                   <button data-article="<?= $_GET['id'] ?>" data-comment="<?= $comment['id'] ?>" class="green-btn validate-btn">
+                                                   <button data-article="<?= htmlentities($_GET['id']); ?>" data-comment="<?= htmlentities($comment['id']); ?>" class="green-btn validate-btn">
                                                         <i class="bi bi-check-circle is-active"></i>
                                                         Valider ce commentaire
                                                    </button>
@@ -88,7 +88,7 @@
                                             }
                                         ?>
                                     </div>
-                                    <span><?= $comment['comment'] ?></span>
+                                    <span><?= htmlentities($comment['comment']); ?></span>
                                 </div>
                             <?php
                         }

@@ -231,7 +231,7 @@ $(function() {
                     $(".modal-background").removeClass("is-active");
                 },
                 error(error) {
-                    console.log(error);
+                    //console.log(error);
                 }
             });
         });
