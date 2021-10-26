@@ -1,4 +1,7 @@
-input, textarea, button, select {
+input,
+textarea,
+button,
+select {
     border: 1px solid transparent;
     background-color: white;
     border-radius: $th-border-radius;
@@ -11,7 +14,9 @@ select {
     padding: 5px;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     margin-bottom: 10px;
     width: 100%;
     color: $th-main;

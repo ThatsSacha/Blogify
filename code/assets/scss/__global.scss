@@ -5,14 +5,17 @@
     font-family: 'Rubik';
 }
 
-html, body, main {
+html,
+body,
+main {
     height: auto;
     min-height: 100vh;
 }
 
 html {
     body {
-        aside, main {
+        aside,
+        main {
             background-color: $th-main;
         }
 
@@ -65,7 +68,9 @@ html {
             }
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             color: white;
         }
 

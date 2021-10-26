@@ -16,14 +16,16 @@ button {
     color: white;
     transition: 150ms;
 
-    .spinner-border, i {
+    .spinner-border,
+    i {
         margin-right: 5px;
     }
 
     &.grey-btn {
         background-color: $th-grey;
 
-        .spinner-border, i {
+        .spinner-border,
+        i {
             color: white;
         }
 
@@ -47,7 +49,8 @@ button {
     &.green-btn {
         background-color: $th-green;
 
-        .spinner-border, i {
+        .spinner-border,
+        i {
             color: white;
         }
 
