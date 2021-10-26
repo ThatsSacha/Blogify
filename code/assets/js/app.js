@@ -1,4 +1,111 @@
 $(function() {
+    function setModalHeight() {
+        $(".modal-background").css("height", mainHeight);
+        $(".modal-background").css("padding-top", $(window).scrollTop());
+    }
+
+    function closeModal() {
+        $(".modal").removeClass("is-active");
+
+        setTimeout(function() {
+            $(".modal-background").removeClass("is-active");
+            $(".modal-background .modal").remove();
+        }, 250);
+    }
+
+    function openLoginModal() {
+        $(".modal-background").addClass("is-active");
+
+        $.ajax({
+            url: "./assets/inc/login-modal.php",
+            method: "post",
+            dataType: "html",
+            success: (function(modal) {
+                $(".modal-background").append(modal);
+            })
+        });
+
+        setTimeout(function() {
+            setModalHeight();
+            $(".modal").addClass("is-active");
+        }, 250);
+    }
+
+    function openRegisterModal() {
+        $(".modal-background").addClass("is-active");
+
+        $.ajax({
+            url: "./assets/inc/register-modal.php",
+            method: "post",
+            dataType: "html",
+            success: (function(modal) {
+                $(".modal-background").append(modal);
+            })
+        });
+
+        setTimeout(function() {
+            setModalHeight();
+            $(".modal").addClass("is-active");
+        }, 250);
+    }
+
+    function openDeleteArticleModal() {
+        $(".modal-background").addClass("is-active");
+
+        $.ajax({
+            url: "./assets/inc/delete-article-modal.php",
+            method: "post",
+            dataType: "html",
+            success: (function(modal) {
+                $(".modal-background").append(modal);
+            })
+        });
+
+        setTimeout(function() {
+            setModalHeight();
+            $(".modal").addClass("is-active");
+        }, 250);
+    }
+
+    function buildSideBarConnected() {
+        $("aside ul.secondary__menu").empty();
+        $("aside ul.secondary__menu").append("<li><a href=\"profile\"><i class=\"bi bi-person-circle is-active\"></i>Profile</a></li><li><a class=\"logout\" href=\"javascript:;\"><i class=\"bi bi-box-arrow-left is-active\"></i></i>Déconnexion</a></li>");
+    }
+
+    function showSpinner(element) {
+        $(element + " button i").removeClass("is-active");
+        $(element + " button .spinner-border").addClass("is-active");
+    }
+
+    function hideSpinner(element) {
+        $(element + " button .spinner-border").removeClass("is-active");
+        $(element + " button i").addClass("is-active");
+    }
+
+    function showNotification(domElement, type, text) {
+        $(domElement + " .notification").removeClass("error");
+        $(domElement + " .notification").removeClass("success");
+        $(domElement + " .notification").addClass(type);
+
+        $(domElement + " .notification").text(text);
+        $(domElement + " .notification").css("display", "flex");
+
+        setTimeout(function() {
+            $(domElement + " .notification").addClass("is-active");
+        }, 10);
+    }
+
+    function hideNotification(domElement) {
+        $(domElement + " .notification").removeClass("is-active");
+        $(domElement + " .notification").removeClass("error");
+        $(domElement + " .notification").removeClass("success");
+
+        setTimeout(function() {
+            $(domElement + " .notification").css("display", "none");
+            $(domElement + " .notification").empty();
+        }, 150);
+    }
+
     const apiUrl = "http://localhost:8000";
     setLogo();
     isConnected();
@@ -544,111 +651,4 @@ $(function() {
             }
         })
     //
-
-    function setModalHeight() {
-        $(".modal-background").css("height", mainHeight);
-        $(".modal-background").css("padding-top", $(window).scrollTop());
-    }
-
-    function closeModal() {
-        $(".modal").removeClass("is-active");
-
-        setTimeout(function() {
-            $(".modal-background").removeClass("is-active");
-            $(".modal-background .modal").remove();
-        }, 250);
-    }
-
-    function openLoginModal() {
-        $(".modal-background").addClass("is-active");
-
-        $.ajax({
-            url: "./assets/inc/login-modal.php",
-            method: "post",
-            dataType: "html",
-            success: (function(modal) {
-                $(".modal-background").append(modal);
-            })
-        });
-
-        setTimeout(function() {
-            setModalHeight();
-            $(".modal").addClass("is-active");
-        }, 250);
-    }
-
-    function openRegisterModal() {
-        $(".modal-background").addClass("is-active");
-
-        $.ajax({
-            url: "./assets/inc/register-modal.php",
-            method: "post",
-            dataType: "html",
-            success: (function(modal) {
-                $(".modal-background").append(modal);
-            })
-        });
-
-        setTimeout(function() {
-            setModalHeight();
-            $(".modal").addClass("is-active");
-        }, 250);
-    }
-
-    function openDeleteArticleModal() {
-        $(".modal-background").addClass("is-active");
-
-        $.ajax({
-            url: "./assets/inc/delete-article-modal.php",
-            method: "post",
-            dataType: "html",
-            success: (function(modal) {
-                $(".modal-background").append(modal);
-            })
-        });
-
-        setTimeout(function() {
-            setModalHeight();
-            $(".modal").addClass("is-active");
-        }, 250);
-    }
-
-    function buildSideBarConnected() {
-        $("aside ul.secondary__menu").empty();
-        $("aside ul.secondary__menu").append("<li><a href=\"profile\"><i class=\"bi bi-person-circle is-active\"></i>Profile</a></li><li><a class=\"logout\" href=\"javascript:;\"><i class=\"bi bi-box-arrow-left is-active\"></i></i>Déconnexion</a></li>");
-    }
-
-    function showSpinner(element) {
-        $(element + " button i").removeClass("is-active");
-        $(element + " button .spinner-border").addClass("is-active");
-    }
-
-    function hideSpinner(element) {
-        $(element + " button .spinner-border").removeClass("is-active");
-        $(element + " button i").addClass("is-active");
-    }
-
-    function showNotification(domElement, type, text) {
-        $(domElement + " .notification").removeClass("error");
-        $(domElement + " .notification").removeClass("success");
-        $(domElement + " .notification").addClass(type);
-
-        $(domElement + " .notification").text(text);
-        $(domElement + " .notification").css("display", "flex");
-
-        setTimeout(function() {
-            $(domElement + " .notification").addClass("is-active");
-        }, 10);
-    }
-
-    function hideNotification(domElement) {
-        $(domElement + " .notification").removeClass("is-active");
-        $(domElement + " .notification").removeClass("error");
-        $(domElement + " .notification").removeClass("success");
-
-        setTimeout(function() {
-            $(domElement + " .notification").css("display", "none");
-            $(domElement + " .notification").empty();
-        }, 150);
-    }
 });
