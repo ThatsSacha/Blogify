@@ -16,9 +16,9 @@ class UserController {
         $this->userService = new UserService();
         $this->data = $data;
         $this->url = $url;
-        $this->method = filter_input(INPUT_SERVER, $_SERVER['REQUEST_METHOD']);
+        $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
         $this->checkRoute();
-        $this->token = isset($_GET['token']) ? filter_input(INPUT_GET, $_GET['token']) : null; 
+        $this->token = isset($_GET['token']) ? filter_input(INPUT_GET, 'token') : null; 
     }
 
     private function checkRoute(): void {

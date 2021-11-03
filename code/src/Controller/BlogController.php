@@ -24,9 +24,9 @@ class BlogController {
         $this->commentManager = new CommentManager();
         $this->url = $url;
         $this->data = $data;
-        $this->method = filter_input(INPUT_SERVER, $_SERVER['REQUEST_METHOD']);
+        $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
         $this->checkRoute();
-        $this->id = isset($_GET['id']) ? filter_input(INPUT_GET, $_GET['id']) : null;
+        $this->id = isset($_GET['id']) ? filter_input(INPUT_GET, 'id') : null;
     }
 
     private function checkRoute(): void {

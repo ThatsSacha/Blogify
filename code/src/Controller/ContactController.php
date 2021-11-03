@@ -21,7 +21,7 @@ class ContactController {
         );
         $this->data = $data;
         $this->url = $url;
-        $this->method = filter_input(INPUT_SERVER, $_SERVER['REQUEST_METHOD']);
+        $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
         $this->checkRoute();
     }
 

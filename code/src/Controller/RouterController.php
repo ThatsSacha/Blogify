@@ -12,7 +12,7 @@ class RouterController {
     public function __construct()
     {
         $this->authService = new AuthService();
-        $this->url = filter_input(INPUT_SERVER, $_SERVER['REQUEST_URI']);
+        $this->url = filter_input(INPUT_SERVER, 'REQUEST_URI');
         $this->checkRoute();
     }
 
