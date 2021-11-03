@@ -21,11 +21,11 @@ class ArticleService {
         $this->importFileService = new ImportFileService();
         $this->authService = new AuthService();
         $this->commentManager = new CommentManager();
-        $this->userId = isset($_GET['user_id']) ? filter_input(INPUT_GET, $_GET['user_id']) : null;
+        $this->userId = isset($_GET['user_id']) ? filter_input(INPUT_GET, 'user_id') : null;
     }
 
     public function create(array $data) {
-        $cover = isset($_FILES['cover']) ? filter_input(INPUT_POST, $_FILES['cover']) : null;
+        $cover = isset($_FILES['cover']) ? filter_input(INPUT_POST, 'cover') : null;
 
         if ($cover) {
             $data['cover'] = $cover['name'];
@@ -94,7 +94,7 @@ class ArticleService {
                 if ($article !== null) {
                     $mandatoryFields = ['title', 'teaser', 'content', 'coverCredit'];
                     $this->verifyMandatoryFields($data, $mandatoryFields);
-                    $cover = isset($_FILES['cover']) ? filter_input(INPUT_POST, $_FILES['cover']) : null;
+                    $cover = isset($_FILES['cover']) ? filter_input(INPUT_POST, 'cover') : null;
 
                     if ($cover) {
                         $data['cover'] = $cover['name'];
