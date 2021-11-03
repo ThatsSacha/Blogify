@@ -95,7 +95,7 @@ class ArticleService {
                     $mandatoryFields = ['title', 'teaser', 'content', 'coverCredit'];
                     $this->verifyMandatoryFields($data, $mandatoryFields);
                     $cover = isset($_FILES['cover']) ? filter_input(INPUT_POST, 'cover') : null;
-
+ 
                     if ($cover) {
                         $data['cover'] = $cover['name'];
                         $data['cover'] = $this->importFileService->verifyAndUploadFile($cover);
