@@ -4,7 +4,7 @@ namespace App\Service;
 
 class AuthService {
     public function isLogged(): bool {
-        $logged = isset($_SESSION['logged']) ? filter_input(INPUT_POST, $_SESSION['logged']) : null;
+        $logged = isset($_SESSION['logged']) ? $_SESSION['logged'] : null;
 
         // Logged could return null
         return $logged ? true : false;

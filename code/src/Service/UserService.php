@@ -15,9 +15,9 @@ class UserService {
     public function __construct()
     {
         $this->userManager = new UserManager();
-        $this->logged = isset($_SESSION['logged']) ? filter_input(INPUT_POST, $_SESSION['logged']) : null;
-        $this->userMail = isset($_SESSION['user']['mail']) ? filter_input(INPUT_POST, $_SESSION['user']['mail']) : null;
-        $this->userId = isset($_SESSION['user']['id']) ? filter_input(INPUT_POST, $_SESSION['user']['id']) : null;
+        $this->logged = isset($_SESSION['logged']) ? $_SESSION['logged'] : null;
+        $this->userMail = isset($_SESSION['user']['mail']) ? $_SESSION['user']['mail'] : null;
+        $this->userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
     }
 
     public function isConnected() {

@@ -18,6 +18,7 @@ class BlogController {
     private $id;
 
     public function __construct(string $url, $data = null) {
+        
         $this->articleManager = new ArticleManager();
         $this->articleService = new ArticleService();
         $this->authService = new AuthService();
@@ -25,8 +26,8 @@ class BlogController {
         $this->url = $url;
         $this->data = $data;
         $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
+        $this->id = filter_input(INPUT_GET, 'id');
         $this->checkRoute();
-        $this->id = isset($_GET['id']) ? filter_input(INPUT_GET, 'id') : null;
     }
 
     private function checkRoute(): void {
