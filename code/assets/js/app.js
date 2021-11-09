@@ -133,7 +133,7 @@ $(function() {
             method: "post",
             dataType: "html",
             success: (function(logo) {
-                $("aside ul.principal__menu").before(logo);
+                $("aside .nav-container").before(logo);
             })
         });
     }

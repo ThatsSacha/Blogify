@@ -12,13 +12,15 @@ main {
     min-height: 100vh;
 }
 
+html,
+body,
+main,
+aside {
+    background-color: $th-main;
+}
+
 html {
     body {
-        aside,
-        main {
-            background-color: $th-main;
-        }
-
         aside {
             position: fixed;
             width: 30%;
@@ -31,37 +33,39 @@ html {
                 height: auto;
             }
 
-            ul {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                padding-left: 20%;
-
-                &.secondary__menu {
-                    bottom: 10%;
-                    position: absolute;
-                }
-
-                li {
+            .nav-container {
+                ul {
+                    display: flex;
+                    flex-direction: column;
                     width: 100%;
-                    list-style: none;
-                    margin-bottom: 10px;
-
-                    a {
-                        color: white;
-                        text-decoration: none;
-                        font-size: 17px;
-                        font-weight: 400;
-                        opacity: 0.8;
-                        display: flex;
-                        transition: 150ms;
-
-                        &:hover {
-                            opacity: 1;
-                        }
-
-                        i {
-                            margin-right: 5px;
+                    padding-left: 20%;
+    
+                    &.secondary__menu {
+                        bottom: 10%;
+                        position: absolute;
+                    }
+    
+                    li {
+                        width: 100%;
+                        list-style: none;
+                        margin-bottom: 10px;
+    
+                        a {
+                            color: white;
+                            text-decoration: none;
+                            font-size: 17px;
+                            font-weight: 400;
+                            opacity: 0.8;
+                            display: flex;
+                            transition: 150ms;
+    
+                            &:hover {
+                                opacity: 1;
+                            }
+    
+                            i {
+                                margin-right: 5px;
+                            }
                         }
                     }
                 }
@@ -222,6 +226,96 @@ html {
                         span {
                             font-size: 13px;
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $th-mobile) {
+    html {
+        body {
+            aside {
+                width: 100%;
+                max-width: 100%;
+                height: 100px;
+                display: flex;
+                z-index: 999;
+                background: #ffffff20;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                width: 90%;
+                padding: 0 5%;
+                left: 5%;
+                box-shadow: 0 0px 30px -20px white;
+                border-right: none;
+                border-radius: $th-border-radius;
+
+                svg {
+                    height: 100px;
+                    width: 100px;
+                    display: none;
+                }
+
+                .nav-container {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 100%;
+
+                    ul {
+                        height: 50px;
+                        flex-direction: row;
+                        padding: 0;
+                        width: 100%;
+                        justify-content: space-between;
+    
+                        &.principal__menu {
+                            padding-top: 10px;
+    
+                            li {
+                                width: auto;
+                                margin-bottom: 0;
+                            }
+                        }
+    
+                        &.secondary__menu {
+                            margin-bottom: 10px;
+                            position: unset;
+                        }
+
+                        li {
+                            margin-right: 5px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            &:last-child {
+                                margin-right: 0;
+                            }
+
+                            a {
+                                font-size: 15px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            main {
+                width: 100%;
+                left: 0;
+                padding: 0;
+                padding-top: 110px;
+
+                .articles-container {
+                    flex-direction: column;
+
+                    .card {
+                        width: 100%;
+                        margin: 0;
+                        margin-bottom: 10px;
                     }
                 }
             }

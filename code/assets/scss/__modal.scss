@@ -55,3 +55,21 @@
         }
     }
 }
+
+@media (max-width: $th-mobile) {
+    .modal-background {
+        i {
+            &.close-modal {
+                left: 5%;
+                width: 5%;
+                top: 5%;
+            }
+        }
+
+        .modal {
+            height: 20%;
+            top: 5%;
+            width: 80%;
+        }
+    }
+}
