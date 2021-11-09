@@ -35,3 +35,5 @@ composer install
 ```
 
 Then you need to import the blogify.sql file into your SQL database managment system.
+
+### Add .env

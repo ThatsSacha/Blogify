@@ -1,4 +1,5 @@
 $(function() {
+    const apiUrl = "http://localhost:8000";
     let mainHeight = $("main").innerHeight();
 
     function setModalHeight() {
@@ -22,9 +23,9 @@ $(function() {
             url: "./assets/inc/login-modal.php",
             method: "post",
             dataType: "html",
-            success: (function(modal) {
+            success: function(modal) {
                 $(".modal-background").append(modal);
-            })
+            }
         });
 
         setTimeout(function() {
@@ -132,13 +133,12 @@ $(function() {
             url: "./assets/img/logo.svg",
             method: "post",
             dataType: "html",
-            success: (function(logo) {
+            success: function(logo) {
                 $("aside .nav-container").before(logo);
-            })
+            }
         });
     }
 
-    const apiUrl = "http://localhost:8000";
     setLogo();
     isConnected();
     let cardAnimationRotation = 0;
@@ -538,7 +538,7 @@ $(function() {
                 hideNotification("form.contact");
                 showSpinner("form.contact");
 
-                const data = {
+                const formData = {
                     firstName: firstName.val(),
                     lastName: lastName.val(),
                     mail: mail.val(),
@@ -549,7 +549,7 @@ $(function() {
                 $.ajax({
                     method: "POST",
                     url: apiUrl + "/send-message",
-                    data: data,
+                    data: formData,
                     success: function() {
                         setTimeout(() => {
                             showNotification("form.contact", "success", "Votre message a bien été envoyé !");

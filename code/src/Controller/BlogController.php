@@ -135,8 +135,8 @@ class BlogController {
     }
 
     public function validateComment() {
-        $articleId = filter_input(INPUT_GET, $_GET['article_id']);
-        $commentId = filter_input(INPUT_GET, $_GET['comment_id']);
+        $articleId = filter_input(INPUT_GET, 'article_id');
+        $commentId = filter_input(INPUT_GET, 'comment_id');
 
         if (
             $articleId &&
