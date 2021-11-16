@@ -2,18 +2,21 @@
 namespace App\Controller;
 
 use App\Service\ArticleService;
+use Superglobals;
 
 class IndexController {
     private string $url;
     private string $method;
     private $result;
     private $articleService;
+    private $superglobals;
 
     public function __construct(string $url, $data = null) {
+        $this->superglobals = new Superglobals();
         $this->articleService = new ArticleService();
         $this->url = $url;
         $this->data = $data;
-        $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
+        $this->method = $this->superglobals->get_SERVER('REQUEST_METHOD');
         $this->checkRoute();
     }
 

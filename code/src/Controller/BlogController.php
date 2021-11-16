@@ -5,6 +5,7 @@ use App\Service\AuthService;
 use App\Service\ArticleService;
 use App\Model\ClassManager\ArticleManager;
 use App\Model\ClassManager\CommentManager;
+use Superglobals;
 
 class BlogController {
     private $data;
@@ -16,17 +17,18 @@ class BlogController {
     private $result;
     private AuthService $authService;
     private $id;
+    private $superglobals;
 
     public function __construct(string $url, $data = null) {
-        
+        $this->superglobals = new Superglobals();
         $this->articleManager = new ArticleManager();
         $this->articleService = new ArticleService();
         $this->authService = new AuthService();
         $this->commentManager = new CommentManager();
         $this->url = $url;
         $this->data = $data;
-        $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
-        $this->id = filter_input(INPUT_GET, 'id');
+        $this->method = $this->superglobals->get_SERVER('REQUEST_METHOD');
+        $this->id = $this->superglobals->get_GET('id');
         $this->checkRoute();
     }
 
@@ -172,7 +174,7 @@ class BlogController {
 
     public function updateArticle() {
         try {
-            $this->result = $this->articleService->update($_GET, $this->data);
+            $this->result = $this->articleService->update($this->id, $this->data);
         } catch (Exception $e) {
             $this->result = [
                 'type' => 'error',

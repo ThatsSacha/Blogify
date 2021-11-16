@@ -86,10 +86,10 @@ class ArticleService {
         }
     }
 
-    public function update(array $get, array $data) {
+    public function update(int $id, array $data) {
         if ($this->authService->isLogged() && $this->authService->isAdmin()) {
-            if (isset($get['id']) && !empty($get['id'])) {
-                $article = $this->articleManager->findOneBy($get['id']);
+            if (isset($id) && !empty($id)) {
+                $article = $this->articleManager->findOneBy($id);
 
                 if ($article !== null) {
                     $mandatoryFields = ['title', 'teaser', 'content', 'coverCredit'];

@@ -6,6 +6,7 @@ use Exception;
 use App\Service\ContactService;
 use App\Service\MailService;
 use App\Service\MailTemplateService;
+use Superglobals;
 
 class ContactController {
     private $data;
@@ -13,15 +14,17 @@ class ContactController {
     private string $method;
     private $result;
     private ContactService $contactService;
+    private $superglobals;
 
     public function __construct(string $url, $data = null) {
+        $this->superglobals = new Superglobals();
         $this->contactService = new ContactService(
             new MailTemplateService(),
             new MailService()
         );
         $this->data = $data;
         $this->url = $url;
-        $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
+        $this->method = $this->superglobals->get_SERVER('REQUEST_METHOD');
         $this->checkRoute();
     }
 

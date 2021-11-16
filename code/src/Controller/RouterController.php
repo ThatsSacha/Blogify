@@ -3,17 +3,19 @@ namespace App\Controller;
 
 use App\Service\AuthService;
 use Exception;
+use Superglobals;
 
 class RouterController {
     private $url;
     public $json = null;
     public AuthService $authService;
+    private $superglobals;
 
     public function __construct()
     {
+        $this->superglobals = new Superglobals();
         $this->authService = new AuthService();
-        $this->url = filter_input(INPUT_SERVER, 'REQUEST_URI');
-        $this->url = filter_input(INPUT_SERVER, 'REQUEST_URI');
+        $this->url = $this->superglobals->get_SERVER('REQUEST_URI');
         $this->checkRoute();
     }
 
@@ -112,7 +114,7 @@ class RouterController {
             $this->json = json_encode($class->loadResult());
         }
 
-        if ($_SERVER['HTTP_ACCEPT'] === 'application/json' && method_exists($class, 'loadResult')) {
+        if ($this->superglobals->get_SERVER('HTTP_ACCEPT') === 'application/json' && method_exists($class, 'loadResult')) {
             isset($class->loadResult()['status'])
                 && 
             $class->loadResult()['type'] === 'error' 

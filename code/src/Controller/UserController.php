@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Model\Class\User;
 use App\Service\UserService;
+use Superglobals;
 
 class UserController {
     private $data;
@@ -11,13 +12,15 @@ class UserController {
     private $result;
     private UserService $userService;
     private $token;
+    private $superglobals;
 
     public function __construct(string $url, $data = null) {
+        $this->superglobals = new Superglobals();
         $this->userService = new UserService();
         $this->data = $data;
         $this->url = $url;
-        $this->method = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
-        $this->token = isset($_GET['token']) ? filter_input(INPUT_GET, 'token') : null; 
+        $this->method = $this->superglobals->get_SERVER('REQUEST_METHOD');
+        $this->token = $this->superglobals->get_GET('token'); 
         $this->checkRoute();
     }
 
