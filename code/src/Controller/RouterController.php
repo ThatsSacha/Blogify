@@ -1,9 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Class\Superglobals;
 use App\Service\AuthService;
-use Exception;
-use Superglobals;
 
 class RouterController {
     private $url;

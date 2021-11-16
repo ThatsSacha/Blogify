@@ -1,11 +1,12 @@
 <?php
 namespace App\Controller;
+
+use App\Model\Class\Superglobals;
 use Exception;
 use App\Service\AuthService;
 use App\Service\ArticleService;
 use App\Model\ClassManager\ArticleManager;
 use App\Model\ClassManager\CommentManager;
-use Superglobals;
 
 class BlogController {
     private $data;

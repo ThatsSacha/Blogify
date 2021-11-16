@@ -1,9 +1,9 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Class\Superglobals;
 use App\Model\Class\User;
 use App\Service\UserService;
-use Superglobals;
 
 class UserController {
     private $data;

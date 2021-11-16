@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use App\Model\Class\Superglobals;
 use Exception;
 use App\Service\ContactService;
 use App\Service\MailService;
 use App\Service\MailTemplateService;
-use Superglobals;
 
 class ContactController {
     private $data;

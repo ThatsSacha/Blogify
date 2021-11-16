@@ -1,8 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Class\Superglobals;
 use App\Service\ArticleService;
-use Superglobals;
 
 class IndexController {
     private string $url;

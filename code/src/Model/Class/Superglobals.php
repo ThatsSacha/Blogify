@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Model\Class;
 class Superglobals
 {
     private $_SERVER;
