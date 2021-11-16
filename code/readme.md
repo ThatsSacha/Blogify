@@ -47,3 +47,6 @@ DB_NAME = dbname
 DB_USER = dbuser
 DB_PASSWORD = dbpassword
 ```
+You will need to specify :
+- Your SMTP provider information to be able sending mails
+- Your local database information to let the website working
