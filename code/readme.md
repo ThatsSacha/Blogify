@@ -36,4 +36,14 @@ composer install
 
 Then you need to import the blogify.sql file into your SQL database managment system.
 
-### Add .env
+### Add .env at the root of your project
+```
+MAIL_HOST='your@smtp.provider'
+MAIL_USERNAME='username'
+MAIL_PASSWORD='password'
+
+DB_HOST = dbhost
+DB_NAME = dbname
+DB_USER = dbuser
+DB_PASSWORD = dbpassword
+```
