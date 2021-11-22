@@ -11,6 +11,7 @@ class UserService {
     private $logged;
     private $userMail;
     private $userId;
+    private AuthService $authService;
     
     public function __construct()
     {
@@ -18,6 +19,7 @@ class UserService {
         $this->logged = isset($_SESSION['logged']) ? $_SESSION['logged'] : null;
         $this->userMail = isset($_SESSION['user']['mail']) ? $_SESSION['user']['mail'] : null;
         $this->userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+        $this->authService = new AuthService();
     }
 
     public function isConnected() {
@@ -223,7 +225,7 @@ class UserService {
      * @return User|array
      */
     public function findOneByMail(): User|array {
-        if ($this->logged) {
+        if ($this->authService->isLogged()) {
             if ($this->userMail && !empty($this->userMail)) {
                 $users = $this->userManager->findByMail($this->userMail);
 
@@ -248,62 +250,60 @@ class UserService {
     }
 
     public function update(array $data) {
-        if (isset($_SESSION['logged']) && $_SESSION['logged']) {
+        if ($this->authService->isLogged()) {
             if ($this->mail && !empty($this->mail)) {
+                $dataUser = new User($data);
                 
-                    $dataUser = new User($data);
-
-                    if (filter_var($dataUser->getMail(), FILTER_VALIDATE_EMAIL)) {
-                        $users = $this->userManager->findWhereMailOrPseudoDifferent($this->userId, $dataUser->getMail(), $dataUser->getPseudo());
-
-                        if (count($users) > 0) {
-                            $users = $users[0];
-                            $users['registeredAt'] = date_create($users['registered_at']);
-                            $user = new User($users);
-
-                            if ($user->getId() != $this->userId) {
-                                if ($user->getMail() === $dataUser->getMail() || $user->getPseudo() === $dataUser->getPseudo()) {
-                                    return array(
-                                        'type' => 'error',
-                                        'status' => 400,
-                                        'message' => "Cette adresse mail ou ce pseudo est déjà utilisé"
-                                    );
-                                }
-                            } else {
-                                $data = array(
-                                    'id' => $user->getId(),
-                                    'firstName' => $dataUser->getFirstName(),
-                                    'lastName' => $dataUser->getLastName(),
-                                    'pseudo' => $dataUser->getPseudo(),
-                                    'mail' => $dataUser->getMail(),
-                                    'registeredAt' => $user->getRegisteredAt(),
-                                    'token' => null,
-                                    'tokenGeneratedAt' => null
-                                );
-
-                                $user = new User($data);
-                                $insert = $this->userManager->update($user);
-                                $this->logUser($user);
-        
-                                if (!$insert instanceof Exception) {
-                                    return array('status' => 201, 'type' => 'success');
-                                }
-        
+                if (filter_var($dataUser->getMail(), FILTER_VALIDATE_EMAIL)) {
+                    $users = $this->userManager->findWhereMailOrPseudoDifferent($this->userId, $dataUser->getMail(), $dataUser->getPseudo());
+                    
+                    if (count($users) > 0) {
+                        $users = $users[0];
+                        $users['registeredAt'] = date_create($users['registered_at']);
+                        $user = new User($users);
+                        
+                        if ($user->getId() != $this->userId) {
+                            if ($user->getMail() === $dataUser->getMail() || $user->getPseudo() === $dataUser->getPseudo()) {
                                 return array(
-                                    'status' => 400,
                                     'type' => 'error',
-                                    'message' => $insert->getMessage()
+                                    'status' => 400,
+                                    'message' => "Cette adresse mail ou ce pseudo est déjà utilisé"
                                 );
                             }
+                        } else {
+                            $data = array(
+                                'id' => $user->getId(),
+                                'firstName' => $dataUser->getFirstName(),
+                                'lastName' => $dataUser->getLastName(),
+                                'pseudo' => $dataUser->getPseudo(),
+                                'mail' => $dataUser->getMail(),
+                                'registeredAt' => $user->getRegisteredAt(),
+                                'token' => null,
+                                'tokenGeneratedAt' => null
+                            );
+                            
+                            $user = new User($data);
+                            $insert = $this->userManager->update($user);
+                            $this->logUser($user);
+                            
+                            if (!$insert instanceof Exception) {
+                                return array('status' => 201, 'type' => 'success');
+                            }
+                            
+                            return array(
+                                'status' => 400,
+                                'type' => 'error',
+                                'message' => $insert->getMessage()
+                            );
                         }
                     }
-
-                    return array(
-                        'type' => 'error',
-                        'status' => 400,
-                        'message' => 'Le format de l\'adresse mail est erroné'
-                    );
+                }
                 
+                return array(
+                    'type' => 'error',
+                    'status' => 400,
+                    'message' => 'Le format de l\'adresse mail est erroné'
+                );
             }
 
             return array(
