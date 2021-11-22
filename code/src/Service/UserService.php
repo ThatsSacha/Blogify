@@ -245,7 +245,7 @@ class UserService {
             'status' => 401,
             'message' => 'Unauthorized'
         );
-    } 
+    }
 
     public function update(array $data) {
         if ($this->logged) {
