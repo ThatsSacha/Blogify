@@ -21,3 +21,20 @@ main {
         }
     }
 }
+
+@media (max-width: $th-mobile) {
+    main {
+        &.contact {
+            form {
+                .card-container {
+                    flex-direction: column;
+    
+                    .card {
+                        width: 100%;
+                        margin: 5px 0 5px 0;
+                    }
+                }
+            }
+        }
+    }
+}

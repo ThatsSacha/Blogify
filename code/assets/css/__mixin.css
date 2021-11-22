@@ -256,8 +256,7 @@ html body main .articles-container .card .bottom span {
   html body main {
     width: 100%;
     left: 0;
-    padding: 0;
-    padding-top: 110px;
+    padding: 110px 5% 50px 5%;
   }
   html body main .articles-container {
     flex-direction: column;
@@ -378,6 +377,10 @@ form .form-space-between a:hover {
   form button {
     width: 100%;
   }
+
+  button {
+    max-width: unset;
+  }
 }
 .modal-background {
   min-height: 100%;
@@ -439,6 +442,19 @@ form .form-space-between a:hover {
     height: 20%;
     top: 5%;
     width: 80%;
+    justify-content: space-evenly;
+  }
+  .modal-background .modal h3 {
+    text-align: center;
+  }
+  .modal-background .modal .btn-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  .modal-background .modal .btn-group button {
+    width: 100%;
+    max-width: unset;
+    margin: 5px 0 5px 0;
   }
 }
 html body main.blog .btn-group {
@@ -536,16 +552,8 @@ html body main.update-article form img {
 }
 
 @media (max-width: 800px) {
-  html body main.blog h1,
-html body main.blog .articles-container {
-    padding: 0 5%;
-  }
-  html body main.article h1,
-html body main.article h2,
-html body main.article span,
-html body main.article p,
-html body main.article .not-connected {
-    padding: 0 5%;
+  html body main.blog .btn-group {
+    margin-bottom: 20px;
   }
 }
 a.btn {
@@ -626,6 +634,15 @@ main.contact form .card-container .card {
   margin: 10px;
 }
 
+@media (max-width: 800px) {
+  main.contact form .card-container {
+    flex-direction: column;
+  }
+  main.contact form .card-container .card {
+    width: 100%;
+    margin: 5px 0 5px 0;
+  }
+}
 html body main.about .video-container {
   display: flex;
   align-items: center;

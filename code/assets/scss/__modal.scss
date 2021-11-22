@@ -70,6 +70,22 @@
             height: 20%;
             top: 5%;
             width: 80%;
+            justify-content: space-evenly;
+
+            h3 {
+                text-align: center;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+
+                button {
+                    width: 100%;
+                    max-width: unset;
+                    margin: 5px 0 5px 0;
+                }
+            }
         }
     }
 }

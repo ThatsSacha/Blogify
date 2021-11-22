@@ -139,19 +139,8 @@ html {
         body {
             main {
                 &.blog {
-                    h1,
-                    .articles-container {
-                        padding: 0 5%;
-                    }
-                }
-
-                &.article {
-                    h1,
-                    h2,
-                    span,
-                    p,
-                    .not-connected {
-                        padding: 0 5%;
+                    .btn-group {
+                        margin-bottom: 20px;
                     }
                 }
             }
