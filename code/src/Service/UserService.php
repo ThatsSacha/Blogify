@@ -36,34 +36,26 @@ class UserService {
         );
     }
 
+    public function isFieldMissing(array $data, array $mandatoryFields): bool {
+        foreach($mandatoryFields as $field) {
+            if (!isset($data[$field])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * @param array $data
      * 
      * @return array
      */
     public function create(array $data): array {
-        $keyErrors = array();
         $mandatoryFields = array('firstName', 'lastName', 'mail', 'password', 'pseudo');
+        $isFieldMissing = $this->isFieldMissing($data, $mandatoryFields);
 
-        foreach($mandatoryFields as $key) {
-            if (!isset($data[$key]) || empty($data[$key])) {
-                array_push($keyErrors, array(
-                    'type' => 'error',
-                    'message' => "$key key is missing or empty")
-                );
-            }
-        }
-
-        if (count($keyErrors) > 0) {
-            $keyErrors['message'] = 'Fields error';
-            $keyErrors['status'] = 400;
-            $keyErrors['type'] = 'error';
-
-            $keyErrors = array_reverse($keyErrors);
-
-            $this->result = $keyErrors;
-            return $keyErrors;
-        } else {
+        if (!$isFieldMissing) {
             if (filter_var($data['mail'], FILTER_VALIDATE_EMAIL)) {
                 $isPasswordValid = $this->isPasswordValid($data['password']);
 
@@ -107,6 +99,12 @@ class UserService {
                 );
             }
         }
+
+        return array(
+            'type' => 'error',
+            'status' => 400,
+            'message' => 'firstName, lastName, mail, password, pseudo fields are mandatory'
+        );
     }
 
     public function logout() {
