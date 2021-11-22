@@ -21,11 +21,11 @@ class ArticleService {
         $this->importFileService = new ImportFileService();
         $this->authService = new AuthService();
         $this->commentManager = new CommentManager();
-        $this->userId = isset($_GET['user_id']) ? filter_input(INPUT_GET, 'user_id') : null;
+        $this->userId = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
     }
 
     public function create(array $data) {
-        $cover = isset($_FILES['cover']) ? filter_input(INPUT_POST, 'cover') : null;
+        $cover = $_FILES['cover'];
 
         if ($cover) {
             $data['cover'] = $cover['name'];

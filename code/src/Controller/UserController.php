@@ -19,8 +19,8 @@ class UserController {
         $this->userService = new UserService();
         $this->data = $data;
         $this->url = $url;
-        $this->method = $this->superglobals->get_SERVER('REQUEST_METHOD');
-        $this->token = $this->superglobals->get_GET('token'); 
+        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->token = isset($_GET['token']) ? $_GET['token'] : null; 
         $this->checkRoute();
     }
 

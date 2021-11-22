@@ -248,16 +248,13 @@ class UserService {
     }
 
     public function update(array $data) {
-        if ($this->logged) {
+        if (isset($_SESSION['logged']) && $_SESSION['logged']) {
             if ($this->mail && !empty($this->mail)) {
-                if (isset($data['firstName']) && !empty($data['firstName']) && isset($data['lastName']) && !empty($data['lastName']) && isset($data['pseudo']) && !empty($data['pseudo']) && isset($data['mail']) && !empty($data['mail'])) {
-                    $firstName = htmlspecialchars($data['firstName']);
-                    $lastName = htmlspecialchars($data['lastName']);
-                    $pseudo = htmlspecialchars($data['pseudo']);
-                    $mail = htmlspecialchars($data['mail']);
+                
+                    $dataUser = new User($data);
 
-                    if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-                        $users = $this->userManager->findWhereMailOrPseudoDifferent($this->userId, $mail, $pseudo);
+                    if (filter_var($dataUser->getMail(), FILTER_VALIDATE_EMAIL)) {
+                        $users = $this->userManager->findWhereMailOrPseudoDifferent($this->userId, $dataUser->getMail(), $dataUser->getPseudo());
 
                         if (count($users) > 0) {
                             $users = $users[0];
@@ -265,7 +262,7 @@ class UserService {
                             $user = new User($users);
 
                             if ($user->getId() != $this->userId) {
-                                if ($user->getMail() === $mail || $user->getPseudo() === $pseudo) {
+                                if ($user->getMail() === $dataUser->getMail() || $user->getPseudo() === $dataUser->getPseudo()) {
                                     return array(
                                         'type' => 'error',
                                         'status' => 400,
@@ -275,10 +272,10 @@ class UserService {
                             } else {
                                 $data = array(
                                     'id' => $user->getId(),
-                                    'firstName' => $firstName,
-                                    'lastName' => $lastName,
-                                    'pseudo' => $pseudo,
-                                    'mail' => $mail,
+                                    'firstName' => $dataUser->getFirstName(),
+                                    'lastName' => $dataUser->getLastName(),
+                                    'pseudo' => $dataUser->getPseudo(),
+                                    'mail' => $dataUser->getMail(),
                                     'registeredAt' => $user->getRegisteredAt(),
                                     'token' => null,
                                     'tokenGeneratedAt' => null
@@ -306,13 +303,7 @@ class UserService {
                         'status' => 400,
                         'message' => 'Le format de l\'adresse mail est erroné'
                     );
-                }
-
-                return array(
-                    'type' => 'error',
-                    'status' => 400,
-                    'message' => 'Tous les champs sont requis'
-                );
+                
             }
 
             return array(

@@ -16,7 +16,7 @@ class IndexController {
         $this->articleService = new ArticleService();
         $this->url = $url;
         $this->data = $data;
-        $this->method = $this->superglobals->get_SERVER('REQUEST_METHOD');
+        $this->method = $_SERVER['REQUEST_METHOD'];
         $this->checkRoute();
     }
 

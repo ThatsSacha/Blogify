@@ -14,7 +14,7 @@ class RouterController {
     {
         $this->superglobals = new Superglobals();
         $this->authService = new AuthService();
-        $this->url = $this->superglobals->get_SERVER('REQUEST_URI');
+        $this->url = $_SERVER['REQUEST_URI'];
         $this->checkRoute();
     }
 

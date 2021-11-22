@@ -24,7 +24,7 @@ class ContactController {
         );
         $this->data = $data;
         $this->url = $url;
-        $this->method = $this->superglobals->get_SERVER('REQUEST_METHOD');
+        $this->method = $_SERVER['REQUEST_METHOD'];
         $this->checkRoute();
     }
 

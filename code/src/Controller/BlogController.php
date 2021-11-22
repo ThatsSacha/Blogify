@@ -28,8 +28,8 @@ class BlogController {
         $this->commentManager = new CommentManager();
         $this->url = $url;
         $this->data = $data;
-        $this->method = $this->superglobals->get_SERVER('REQUEST_METHOD');
-        $this->id = $this->superglobals->get_GET('id');
+        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->id = isset($_GET['id']) ? $_GET['id'] : null;
         $this->checkRoute();
     }
 
@@ -138,8 +138,8 @@ class BlogController {
     }
 
     public function validateComment() {
-        $articleId = filter_input(INPUT_GET, 'article_id');
-        $commentId = filter_input(INPUT_GET, 'comment_id');
+        $articleId = isset($_GET['article_id']) ? $_GET['article_id'] : null;
+        $commentId = isset($_GET['comment_id']) ? $_GET['comment_id'] : null;
 
         if (
             $articleId &&
