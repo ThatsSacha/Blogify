@@ -174,4 +174,15 @@ class UserManager {
             return new Exception($e->getMessage());
         }
     }
+
+    public function findUsersNotValidated() {
+        $query = $this->db->prepare(
+            'SELECT * FROM user WHERE is_validated = :is_validated'
+        );
+        $query->execute(array(
+            'is_validated' => false
+        ));
+
+        return $query->fetchAll();
+    }
 }

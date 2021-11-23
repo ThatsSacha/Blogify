@@ -139,6 +139,24 @@ $(function() {
         });
     }
 
+    function findUsersNotValidated() {
+        console.log('there');
+        $.ajax({
+            url: apiUrl + "/users/not-validated",
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+            },
+            dataType: "json",
+            success: function(users) {
+                console.log(users);
+                users.users.forEach(user => {
+                    $("main section.users-not-validated").append('<div class="card"><h3>'+ user.firstName +' '+ user.lastName +'</h3><span>'+ user.mail +'</span><span>'+ user.pseudo +'</span><button class="green-btn"><i class="bi bi-person-check-fill is-active"></i> Valider</button></div>');
+                });
+            }
+        });
+    }
+
     setLogo();
     isConnected();
     let cardAnimationRotation = 0;
@@ -651,5 +669,12 @@ $(function() {
                 showNotification("form.reset-password", "error", "Tous les champs sont requis");
             }
         })
+    //
+
+    // USER VALIDATE 
+        if (window.location.href.indexOf('profile') > -1) {
+            console.log('here');
+            findUsersNotValidated();
+        }
     //
 });

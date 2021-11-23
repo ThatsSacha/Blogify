@@ -453,4 +453,32 @@ class UserService {
             'message' => 'Token invalid'
         );
     }
+
+    public function getUsersNotValidated() {
+        $isAdmin = $this->authService->isAdmin();
+
+        if ($isAdmin) {
+            $users = $this->userManager->findUsersNotValidated();
+            $usersSerialized = array();
+
+            if (count($users) > 0) {
+                foreach($users as $user) {
+                    $userObject = new User($user);
+                    $usersSerialized[] = $userObject->jsonSerialize();
+                }
+            }
+            
+            return array(
+                'type' => 'success',
+                'status' => 200,
+                'users' => $usersSerialized
+            );
+        }
+
+        return array(
+            'type' => 'error',
+            'status' => 401,
+            'message' => 'You don\'t have the rights'
+        );
+    }
 }

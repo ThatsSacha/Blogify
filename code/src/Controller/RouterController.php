@@ -57,7 +57,7 @@ class RouterController {
             $this->returnView('profile', 200, UserController::class, true);
         }
 
-        else if ($url === '/is-connected') {
+        else if ($url === '/is-connected' || $url === '/users/not-validated') {
             $this->returnView('user', 200, UserController::class);
         }
 
@@ -113,7 +113,7 @@ class RouterController {
             $this->json = json_encode($class->loadResult());
         }
 
-        if ($this->superglobals->get_SERVER('HTTP_ACCEPT') === 'application/json' && method_exists($class, 'loadResult')) {
+        if ($_SERVER['HTTP_ACCEPT'] === 'application/json' && method_exists($class, 'loadResult')) {
             isset($class->loadResult()['status'])
                 && 
             $class->loadResult()['type'] === 'error' 

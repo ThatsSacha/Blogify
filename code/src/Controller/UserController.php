@@ -52,6 +52,8 @@ class UserController {
                 }
             } else if (strpos($this->url, '/reset-password') !== false) {
                 $this->resetPassword();
+            } else if (strpos($this->url, '/users/not-validated') !== false) {
+                $this->findUsersNotValidated();
             }
         } else {
             $this->result = [
@@ -130,5 +132,9 @@ class UserController {
                 'message' => 'Token not found'
             );
         }
+    }
+
+    public function findUsersNotValidated(): void {
+        $this->result = $this->userService->getUsersNotValidated();
     }
 }

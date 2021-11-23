@@ -14,6 +14,7 @@ class User extends AbstractClass {
     private DateTime|null $registeredAt;
     private string|null $token;
     private int|null $tokenGeneratedAt;
+    private bool $isValidated = false;
 
     public function __construct(array $data = []) {
         if (isset($data['roles'])) {
@@ -38,7 +39,8 @@ class User extends AbstractClass {
             'mail' => $this->getMail(),
             'pseudo' => $this->getPseudo(),
             'roles' => $this->getRoles(),
-            'registeredAt' => $this->getRegisteredAt()
+            'registeredAt' => $this->getRegisteredAt(),
+            'isValidated' => $this->getIsValidated()
         );
     }
 
@@ -120,5 +122,13 @@ class User extends AbstractClass {
 
     public function setTokenGeneratedAt(int|null $tokenGeneratedAt): void {
         $this->tokenGeneratedAt = $tokenGeneratedAt;
+    }
+
+    public function getIsValidated(): bool {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(bool $isValidated): void {
+        $this->isValidated = $isValidated;
     }
 }

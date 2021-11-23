@@ -37,6 +37,9 @@
                     </span>
                 </div>
             </section>
+            <section class="users-not-validated">
+                <h3>Utilisateurs à valider 🙆🏻‍♂️</h3>
+            </section>
         </main>
     </body>
 </html>
