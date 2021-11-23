@@ -39,11 +39,11 @@ class UserService {
     public function isFieldMissing(array $data, array $mandatoryFields): bool {
         foreach($mandatoryFields as $field) {
             if (!isset($data[$field])) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     /**

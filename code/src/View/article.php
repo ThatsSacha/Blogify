@@ -32,7 +32,15 @@
                 Le <?=
                     strftime('%d %B %Y à %H:%M', strtotime(htmlspecialchars_decode($this->json['createdAt']['date'])));
                 ?>
+                , par <?= htmlspecialchars_decode($this->json['author']['firstName']); ?> <?= htmlspecialchars_decode($this->json['author']['lastName']); ?>.
             </span>
+            <?php
+                if (isset($this->json['updatedAt']['date']) && $this->json['updatedAt']['date'] !== null) {
+                    ?>
+                        <span class="small-text">Mit à jour le <?= strftime('%d %B %Y à %H:%M', strtotime(htmlspecialchars_decode($this->json['updatedAt']['date']))); ?></span>
+                    <?php
+                }
+            ?>
             <div class="cover" style="background-image: url(../../assets/img/blog/<?= htmlspecialchars_decode($this->json['cover']) ?>)"></div>
             <span class="small-text">
                 © <?= htmlspecialchars_decode($this->json['coverCredit']); ?>
