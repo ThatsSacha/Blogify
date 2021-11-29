@@ -259,7 +259,7 @@ class UserService {
 
     public function update(array $data) {
         if ($this->authService->isLogged()) {
-            if ($this->mail && !empty($this->mail)) {
+            if ($this->userMail && !empty($this->userMail)) {
                 $dataUser = new User($data);
                 
                 if (filter_var($dataUser->getMail(), FILTER_VALIDATE_EMAIL)) {
@@ -287,7 +287,8 @@ class UserService {
                                 'mail' => $dataUser->getMail(),
                                 'registeredAt' => $user->getRegisteredAt(),
                                 'token' => null,
-                                'tokenGeneratedAt' => null
+                                'tokenGeneratedAt' => null,
+                                'is_validated' => $user->getIsValidated()
                             );
                             
                             $user = new User($data);
