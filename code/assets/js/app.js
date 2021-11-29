@@ -140,7 +140,6 @@ $(function() {
     }
 
     function findUsersNotValidated() {
-        console.log('there');
         $.ajax({
             url: apiUrl + "/users/not-validated",
             method: "GET",
@@ -149,9 +148,8 @@ $(function() {
             },
             dataType: "json",
             success: function(users) {
-                console.log(users);
                 users.users.forEach(user => {
-                    $("main section.users-not-validated").append('<div class="card"><h3>'+ user.firstName +' '+ user.lastName +'</h3><span>'+ user.mail +'</span><span>'+ user.pseudo +'</span><button class="green-btn"><i class="bi bi-person-check-fill is-active"></i> Valider</button></div>');
+                    $("main section.users-not-validated").append('<div class="card"><h3>'+ user.firstName +' '+ user.lastName +'</h3><span>'+ user.mail +'</span><span>'+ user.pseudo +'</span><button class="green-btn confirm-user" data-ref="'+ user.token +'"><div class="spinner-border small text-light" role="status"></div><i class="bi bi-person-check-fill is-active"></i> Valider</button></div>');
                 });
             }
         });
@@ -286,13 +284,11 @@ $(function() {
                         success(response) {
                             // Wait for hideNotification() ends
                             setTimeout(function() {
-                                showNotification("form.register", "success", "Inscription terminée !");
+                                showNotification("form.register", "success", "Inscription terminée ! D'ici 24h, votre compte sera activé par un administrateur.");
                             }, 151);
 
                             hideNotification("form.register");
-                            buildSideBarConnected();
                             $("form.register input").val("");
-                            closeModal();
                         },
                         error(error) {
                             showNotification("form.register", "error", error.responseJSON.message);
@@ -673,8 +669,26 @@ $(function() {
 
     // USER VALIDATE 
         if (window.location.href.indexOf('profile') > -1) {
-            console.log('here');
             findUsersNotValidated();
         }
+
+        $(document).on('click', '.confirm-user', function() {
+            const userToken = $(this).attr('data-ref');
+
+            $.ajax({
+                method: "POST",
+                url: apiUrl + "/users/validate",
+                headers: {
+                    Accept: "application/json",
+                },
+                dataType: "json",
+                data: {
+                    token: userToken
+                }
+            })
+            .always(
+                $('[data-ref='+ userToken +']').parent().remove()
+            );
+        });
     //
 });

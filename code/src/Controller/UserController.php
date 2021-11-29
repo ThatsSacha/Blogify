@@ -38,6 +38,8 @@ class UserController {
                 $this->requestPassword();
             } else if ($this->url ==='/set-password') {
                 $this->setPassword();
+            } else if (strpos($this->url, '/users/validate') !== false) {
+                $this->validateUser();
             } else {
                 $this->create();
             }
@@ -136,5 +138,9 @@ class UserController {
 
     public function findUsersNotValidated(): void {
         $this->result = $this->userService->getUsersNotValidated();
+    }
+
+    public function validateUser(): void {
+        $this->result = $this->userService->validateUser($this->data);
     }
 }

@@ -37,9 +37,15 @@
                     </span>
                 </div>
             </section>
-            <section class="users-not-validated">
-                <h3>Utilisateurs à valider 🙆🏻‍♂️</h3>
-            </section>
+            <?php
+                if ($_SESSION['user']['isAdmin']) {
+                    ?>
+                        <section class="users-not-validated">
+                            <h3>Utilisateurs à valider 🙆🏻‍♂️</h3>
+                        </section>
+                    <?php
+                }
+            ?>
         </main>
     </body>
 </html>

@@ -65,8 +65,8 @@ class UserService {
 
                     if (strlen($isEmailAndPseudoUnique) <= 0) {
                         $user = new User($data);
+                        $user->setToken($this->createToken());
                         $insert = $this->userManager->create($user);
-                        $this->logUser(new User($insert));
 
                         if (!$insert instanceof Exception) {
                             return array('status' => 201, 'type' => 'success');
@@ -119,12 +119,20 @@ class UserService {
             $user = $this->userManager->findByMail($data['mail']);
             
             if (count($user) > 0 && password_verify($password, $user[0]['password'])) {
-                $this->logUser(new User($user[0]));
+                if ($user[0]['is_validated'] == '1') {
+                    $this->logUser(new User($user[0]));
+
+                    return array(
+                        'type' => 'success',
+                        'status' => 200,
+                        'message' => 'Successfully logged in'
+                    );
+                }
 
                 return array(
-                    'type' => 'success',
-                    'status' => 200,
-                    'message' => 'Successfully logged in'
+                    'type' => 'error',
+                    'status' => 401,
+                    'message' => 'Your account is not validated yet'
                 );
             }
             
@@ -149,8 +157,10 @@ class UserService {
             'firstName' => $user->getFirstName(),
             'lastName' => $user->getLastName(),
             'mail' => $user->getMail(),
-            'roles' => $user->getRoles(),
+            'roles' => $user->getRoles()
         );
+
+        $_SESSION['user']['isAdmin'] = $this->authService->isAdmin();
     }
 
     /**
@@ -454,7 +464,7 @@ class UserService {
         );
     }
 
-    public function getUsersNotValidated() {
+    public function getUsersNotValidated(): array {
         $isAdmin = $this->authService->isAdmin();
 
         if ($isAdmin) {
@@ -462,9 +472,11 @@ class UserService {
             $usersSerialized = array();
 
             if (count($users) > 0) {
-                foreach($users as $user) {
+                foreach($users as $i => $user) {
                     $userObject = new User($user);
+                    $token = $userObject->getToken();
                     $usersSerialized[] = $userObject->jsonSerialize();
+                    $usersSerialized[$i]['token'] = $token;
                 }
             }
             
@@ -472,6 +484,46 @@ class UserService {
                 'type' => 'success',
                 'status' => 200,
                 'users' => $usersSerialized
+            );
+        }
+
+        return array(
+            'type' => 'error',
+            'status' => 401,
+            'message' => 'You don\'t have the rights'
+        );
+    }
+
+    public function validateUser(array $data): array {
+        if ($this->authService->isAdmin()) {
+            if (isset($data['token'])) {
+                $user = $this->userManager->findByToken($data['token']);
+
+                if (count($user) > 0) {
+                    $user = $user[0];
+                    $user = new User($user);
+                    $user->setIsValidated(true);
+                    $user->setToken(null);
+
+                    $this->userManager->update($user);
+
+                    return array(
+                        'type' => 'success',
+                        'status' => 200
+                    );
+                }
+
+                return array(
+                    'type' => 'error',
+                    'status' => 400,
+                    'message' => 'Token not valid'
+                );
+            }
+
+            return array(
+                'type' => 'error',
+                'status' => 400,
+                'message' => 'Token not found'
             );
         }
 

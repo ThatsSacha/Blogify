@@ -26,10 +26,11 @@ class UserManager {
                         mail,
                         password,
                         pseudo,
-                        roles
+                        roles,
+                        token
                     )
                     VALUES(
-                        ?, ?, ?, ?, ?, ?
+                        ?, ?, ?, ?, ?, ?, ?
                     );"
             );
             
@@ -39,7 +40,8 @@ class UserManager {
                 $data->getMail(),
                 $data->getPassword(),
                 $data->getPseudo(),
-                json_encode($data->getRoles())
+                json_encode($data->getRoles()),
+                $data->getToken()
             ));
 
             $query = $this->db->query('SELECT * FROM user WHERE id = LAST_INSERT_ID()');
@@ -128,7 +130,8 @@ class UserManager {
                     mail = :mail,
                     pseudo = :pseudo,
                     token = :token,
-                    token_generated_at = :token_generated_at
+                    token_generated_at = :token_generated_at,
+                    is_validated = :is_validated
                 WHERE id = :id"
             );
             
@@ -139,7 +142,8 @@ class UserManager {
                 ':mail' => $user->getMail(),
                 ':pseudo' => $user->getPseudo(),
                 ':token' => $user->getToken(),
-                ':token_generated_at' => $user->getTokenGeneratedAt()
+                ':token_generated_at' => $user->getTokenGeneratedAt(),
+                ':is_validated' => $user->getIsValidated()
             ));
         } catch (Exception $e) {
             return new Exception($e->getMessage());

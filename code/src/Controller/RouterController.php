@@ -57,7 +57,7 @@ class RouterController {
             $this->returnView('profile', 200, UserController::class, true);
         }
 
-        else if ($url === '/is-connected' || $url === '/users/not-validated') {
+        else if ($url === '/is-connected' || $url === '/users/not-validated' || $url === '/users/validate') {
             $this->returnView('user', 200, UserController::class);
         }
 
