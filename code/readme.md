@@ -36,16 +36,16 @@ composer install
 
 Then you need to import the blogify.sql file into your SQL database managment system.
 
-If you run Blogify under MAMP or WAMP, run on your browser http://localhost:[port]/Blogify
+If you run _Blogify_ under MAMP or WAMP, run on your browser http://localhost:[port]/Blogify
 
 Or run into terminal
 ```
 $ php -S localhost:8000
 ```
 
-Then, you could connect to admin profile with this following credentials :
-    - admin@blogify.fr
-    - admin123
+###### Then, you could connect to admin profile with this following credentials :
+- admin@blogify.fr
+- admin123
 
 ### Add .env at the root of your project
 ```
