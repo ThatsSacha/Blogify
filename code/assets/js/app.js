@@ -125,7 +125,7 @@ $(function() {
             error(error) {
                 showNotification("form.login", "error", error.responseJSON.message);
             }
-        })
+        });
     }
 
     function setLogo() {
